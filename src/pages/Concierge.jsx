@@ -1,7 +1,10 @@
+import { ContentPageMain } from "../styles/nav/nav";
 
 
 export default function Concierge(){
     return <>
-        <h1>Concierge</h1>
+        <ContentPageMain>
+            <h1>Concierge</h1>
+        </ContentPageMain>
     </>
 }

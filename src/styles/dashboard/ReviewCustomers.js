@@ -6,6 +6,26 @@ export const ReviewCustomers = styled.div`
     height: 27.063em;
     box-shadow: 0px 4px 4px #00000005;
     border-radius: 1.25em;
+    position: relative;
+    margin-top: 2em;
+
+    & .btnnextswiperReview{
+        width: 56px;
+        height: 56px;
+        background-color: #135846;
+        border-radius: .75em;
+        color: rgba(0,0,0,0);
+        display: block !important;
+        & img{
+            display: block !important;
+            margin: 0 auto;
+        }
+    }
+
+    & .btnnextswiperReview:nth-child(2){
+        transform: rotate(180deg);
+    }
+
     & h2{
         font-family: 'poppinsmedium';
         font-size: 1.25rem;
@@ -21,6 +41,9 @@ export const ReviewCustomers = styled.div`
             border: 1px solid #EBEBEB;
             border-radius: 1.25em;
             background-color: #fff;
+            &:hover{
+                box-shadow: 0px 16px 30px #00000014;
+            }
             & p{
                 display: block;
                 font-family: 'poppinsregular';
@@ -28,6 +51,7 @@ export const ReviewCustomers = styled.div`
                 text-align: left;
                 line-height: 28px;
                 margin-bottom: 3.25em;
+                color: #4E4E4E;
             }
             
             &__contentinfo{
@@ -59,6 +83,7 @@ export const ReviewCustomers = styled.div`
                         font-family: 'poppinsregular';
                         line-height: 21px;
                         text-align: left;
+                        color: #799283;
                     }
                 }
                 &__state{

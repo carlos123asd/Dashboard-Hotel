@@ -1,7 +1,9 @@
-
+import { ContentPageMain } from "../styles/nav/nav";
 
 export default function Booking(){
     return <>
-        <h1>Booking</h1>
+        <ContentPageMain>
+            <h1>Booking</h1>
+        </ContentPageMain>
     </>
 }

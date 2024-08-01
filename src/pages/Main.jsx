@@ -5,6 +5,8 @@ import { ReviewCustomers } from "../styles/dashboard/ReviewCustomers"
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
+import next from '../assets/imgs/arrow.svg'
+import back from '../assets/imgs/arrow.svg'
 
 export default function Main(){
     return <>
@@ -71,9 +73,20 @@ export default function Main(){
                                     nextEl: '.swiper-button-next',
                                     prevEl: '.swiper-button-prev'
                                 }}
+                    breakpoints= {{
+                            1000:{
+                                slidesPerView: 1
+                            },
+                            1400: {
+                                slidesPerView: 2
+                            },
+                            1900:{
+                                slidesPerView: 3
+                            }
+                        }}
                      className="ReviewCustomersContent"
                 >
-                        <SwiperSlide>
+                        <SwiperSlide style={{width:431.667}}>
                             <div className="ReviewCustomersContent__review">
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
                                 <div className="ReviewCustomersContent__review__contentinfo">
@@ -101,7 +114,7 @@ export default function Main(){
                                 </div>
                             </div>
                         </SwiperSlide>
-                        <SwiperSlide>
+                        <SwiperSlide style={{width:431.667}}>
                             <div className="ReviewCustomersContent__review">
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
                                 <div className="ReviewCustomersContent__review__contentinfo">
@@ -129,7 +142,7 @@ export default function Main(){
                                 </div>
                             </div>
                         </SwiperSlide>
-                        <SwiperSlide>
+                        <SwiperSlide style={{width:431.667}}>
                             <div className="ReviewCustomersContent__review">
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
                                 <div className="ReviewCustomersContent__review__contentinfo">
@@ -157,7 +170,7 @@ export default function Main(){
                                 </div>
                             </div>
                         </SwiperSlide>
-                        <SwiperSlide>
+                        <SwiperSlide style={{width:431.667}}>
                             <div className="ReviewCustomersContent__review">
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
                                 <div className="ReviewCustomersContent__review__contentinfo">
@@ -185,8 +198,8 @@ export default function Main(){
                                 </div>
                             </div>
                         </SwiperSlide>
-                    <div className="swiper-button-prev"></div>
-                    <div className="swiper-button-next"></div>
+                    <div className="swiper-button-prev btnnextswiperReview"><img src={next} width={24} height={'100%'} alt="Next Element" /></div>
+                    <div className="swiper-button-next btnnextswiperReview"><img src={back} width={24} height={'100%'} alt="Back Element" /></div>
                 </Swiper>
             </ReviewCustomers>
         </ContentPageMain>
