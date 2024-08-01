@@ -10,6 +10,8 @@ export const ContentNavMain = styled.div`
     animation-duration: 3s;
     animation-name: slidein;
     padding-left: 25%;
+    grid-column: 1 / 3;
+    grid-row: 1;
 `
 
 export const ContentNavImg = styled.div`
@@ -35,6 +37,8 @@ export const ContentNavVertical = styled.div`
     left: 0%;
     top: 0;
     background: #fff;
+    grid-column: 1;
+    grid-row: 1 / auto;
 `
 
 export const SubTitLogoNavVertical = styled.span`
@@ -161,14 +165,12 @@ export const ContentContactNavVertical = styled.div`
     }
 `
 export const ContentPageMain = styled.div`
-    //Borrar height
-    height: 100vh;
-    padding: 3.125em 0;
-    padding-left: calc(25% + 3.125em);
-    padding-right: 3.125em;
+    padding: 3.125em;
     animation-duration: 3s;
     animation-name: slidecontent;
     background: #F8F8F8;
+    grid-column: 2;
+    grid-row: 2/auto;
 `
 export const ContentCopyNavVertical = styled.div`
     text-align: center;

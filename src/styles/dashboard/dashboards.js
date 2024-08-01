@@ -2,12 +2,12 @@ import styled from 'styled-components'
 
 export const KpiDashboard = styled.div`
     width: 100%;
-    height: 7.813em;
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
     flex-direction: row;
     gap: 2.375em;
+    margin-bottom: 2.5em;
     & .kpicontent{
         width: 20.875em;
         height: 100%;

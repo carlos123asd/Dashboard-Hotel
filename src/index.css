@@ -63,10 +63,10 @@
 
   @keyframes slidecontent{
     0% {
-        padding-left: 0%;
+        transform: translateX(-30%);
     }
   
     100% {
-        padding-left: calc(25% + 3.125em);
+      transform: translateX(0px);
     }
   }

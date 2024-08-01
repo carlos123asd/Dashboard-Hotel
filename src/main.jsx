@@ -6,16 +6,19 @@ import Room from './pages/Room'
 import Booking from './pages/Booking'
 import Guest from './pages/Guest'
 import Concierge from './pages/Concierge'
+import Main from './pages/Main'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <Routes>
-      <Route path='/' element={<Login />} />
-      <Route path='/dashboard' element={<Dashboard />} />
-      <Route path='/room' element={<Room />} />
-      <Route path='/bookings' element={<Booking />} />
-      <Route path='/guest' element={<Guest />} />
-      <Route path='/concierge' element={<Concierge />} />
+      <Route path='/login' element={<Login />} />
+      <Route path='/' element={<Dashboard />}>
+        <Route path='/' element={<Main />} />
+        <Route path='/room' element={<Room />} />
+        <Route path='/bookings' element={<Booking />} />
+        <Route path='/guest' element={<Guest />} />
+        <Route path='/concierge' element={<Concierge />} />
+      </Route>
     </Routes>
   </BrowserRouter>
 )

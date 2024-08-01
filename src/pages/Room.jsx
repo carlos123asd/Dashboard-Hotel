@@ -1,11 +1,8 @@
-import Nav from "../components/Nav";
-import { ContentPageMain } from "../styles/nav/nav";
+import { Outlet } from 'react-router-dom'
 
 export default function Room(){
     return <>
-     <Nav />
-     <ContentPageMain>
+        <Outlet />
         <h1>Room</h1>
-     </ContentPageMain>
     </>
 }
