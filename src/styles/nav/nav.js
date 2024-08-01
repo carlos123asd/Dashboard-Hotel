@@ -161,9 +161,14 @@ export const ContentContactNavVertical = styled.div`
     }
 `
 export const ContentPageMain = styled.div`
+    //Borrar height
+    height: 100vh;
+    padding: 3.125em 0;
     padding-left: calc(25% + 3.125em);
+    padding-right: 3.125em;
     animation-duration: 3s;
     animation-name: slidecontent;
+    background: #F8F8F8;
 `
 export const ContentCopyNavVertical = styled.div`
     text-align: center;
