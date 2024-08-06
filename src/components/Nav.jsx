@@ -10,7 +10,7 @@ import {
 } from '../styles/nav/nav'
 
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Toastify from 'toastify-js'
 import "toastify-js/src/toastify.css"
 
@@ -19,6 +19,7 @@ export default function Nav(){
     const [style,setStyle] = useState({'padding-left': '5%'});
     const [styleleft,setStyleleft] = useState({'left': '-5%'});
     const navigate = useNavigate();
+    const path = useLocation();
 
     const showNavVertical = () => {
         if(vertical === false){
@@ -55,7 +56,7 @@ export default function Nav(){
             }).showToast();
 
         setTimeout(() => {
-            navigate('/')
+            navigate('/login')
         },1000)
     }
 
@@ -63,7 +64,7 @@ export default function Nav(){
         <ContentNavMain>
             <div style={style}>
                 <img onClick={showNavVertical} src={iconmenu} alt="Menu" />
-                <ContentNavTit>Dashboard</ContentNavTit>
+                <ContentNavTit>{path.pathname === '/' ? 'Dashboard' : (path.pathname.split('/')[1])[0].toUpperCase()+(path.pathname.split('/')[1]).slice(1)}</ContentNavTit>
             </div>
             
             <div style={styleleft}>

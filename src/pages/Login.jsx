@@ -22,7 +22,7 @@ export default function Login(){
                 }).showToast();
 
             setTimeout(() => {
-                navigate('/dashboard')
+                navigate('/')
             }, 2000)
         }
         else{
