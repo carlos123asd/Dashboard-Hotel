@@ -31,6 +31,10 @@ export const TrMainTable = styled.tr`
             background-color: #E23428;
         }
 
+        & .statusinprogress{
+            background-color: #FF9C3A;
+        }
+
         & .nightroom{
             font-size: .88rem;
             line-height: 21px;

@@ -171,6 +171,12 @@ export const ContentPageMain = styled.div`
     background: #F8F8F8;
     grid-column: 2;
     grid-row: 2/auto;
+
+    & div[contentflex="true"]{
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+    }
 `
 export const ContentCopyNavVertical = styled.div`
     text-align: center;

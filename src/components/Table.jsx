@@ -6,11 +6,13 @@ import 'swiper/css/navigation';
 import { useState } from "react";
 
 import more from '../assets/imgs/more.svg'
+import { useLocation } from "react-router-dom";
 
 export default function Table({columns,data}){
     const [nextdate,setNextdate] = useState(10);
     const [actualdate,setActualdate] = useState(0);
     const [lengthdate,setLengthdate] = useState(Math.trunc(data.length / 10));
+    const locationname = useLocation().pathname;
     let i = 0
     const nextPaginationData = () => {
         if(nextdate <= data.length){
@@ -28,7 +30,17 @@ export default function Table({columns,data}){
         setActualdate((num * 10) - 10);
         setNextdate(num * 10);
     }
-    return <>
+
+    const otherState = (state) => {
+        if(state === 'In Progress'){
+            return <div className="status statusinprogress">In Progress</div>
+        }else if(state === 'Check Out'){
+            return <div className="status statusbooked">Check Out</div>
+        }
+    }
+    
+    if(locationname === '/bookings'){
+        return <>
         <ContentTable>
             {
                 <TableObj>
@@ -42,7 +54,61 @@ export default function Table({columns,data}){
                         }
                     </TrMainTable>
                     
-                    {data.slice(actualdate,nextdate).map(room => {
+                    {
+                    data.slice(actualdate,nextdate).map(register => {
+                        return <>  
+                            <TrMainTable>
+                                <div>
+                                    <td>
+                                        <img className="imgroomnameColum" width={150} height={77} src={''} alt="Image Room" />
+                                        <div className="roomnameColumn">
+                                            <span className="numtit">{`#000${register.guest}`}</span>
+                                            <span className="deluxenum">{`${'Double Room'}-${'12341'}`}</span>
+                                        </div>
+                                    </td>
+                                </div>
+                                <td>{register.orderDate}<br/>{register.ordertime}</td>
+                                <td>{register.checkin}<br/>{register.timein}</td>
+                                <td>{register.checkout}<br/>{register.timeout}</td>
+                                <td>{register.specialRequest}</td>
+                                <td>{register.roomType}</td>
+                                <td>{register.status === 'Check In' ? <div className="status">Check In</div> : otherState(register.status)}</td>
+                            </TrMainTable>
+                        </>
+                    })}
+                </TableObj>
+            }
+        </ContentTable>
+        <PaginationTable>
+            <div onClick={backPaginationData}>Prev</div>
+            {
+                data.slice(0,lengthdate).map(element => {
+                    i++
+                    return <>
+                        <div valuepagination={i} onClick={(event) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{i}</div>
+                    </>
+                })
+            }
+            <div onClick={nextPaginationData}>Next</div>
+        </PaginationTable>
+        </>
+    }else if(locationname === '/room'){
+        return <>
+        <ContentTable>
+            {
+                <TableObj>
+                    <TrMainTable>
+                        {
+                            columns.map(column => {
+                                return <>
+                                    <th className="headercolumn">{column}</th>
+                                </>
+                            })
+                        }
+                    </TrMainTable>
+                    
+                    {
+                    data.slice(actualdate,nextdate).map(room => {
                         return <>  
                             <TrMainTable>
                                 <div>
@@ -79,7 +145,8 @@ export default function Table({columns,data}){
             }
             <div onClick={nextPaginationData}>Next</div>
         </PaginationTable>
-    </>
+        </>
+    }
 } 
 
 
