@@ -7,12 +7,25 @@ import { useState } from "react";
 
 import more from '../assets/imgs/more.svg'
 import { useLocation } from "react-router-dom";
+import { Modal } from "@mui/material";
+import { ModalNewNotes } from "../styles/table/ModalNotes";
+import { ModalNewRoom } from "../styles/table/ModalNewRoom";
+import ViewBooking from "./ViewBooking";
 
 export default function Table({columns,data}){
     const [nextdate,setNextdate] = useState(10);
     const [actualdate,setActualdate] = useState(0);
     const [lengthdate,setLengthdate] = useState(Math.trunc(data.length / 10));
     const locationname = useLocation().pathname;
+    const [open, setOpen] = useState(false);
+    const [note, setNote] = useState('');
+    const [bookingvisible, setBookingvisible] = useState(false);
+    const [databooking, setDatabooking] = useState({});
+    const handleOpen = (note) => {
+        setNote(note)
+        setOpen(true)
+    };
+    const handleClose = () => setOpen(false);
     let i = 0
     const nextPaginationData = () => {
         if(nextdate <= data.length){
@@ -38,6 +51,19 @@ export default function Table({columns,data}){
             return <div className="status statusbooked">Check Out</div>
         }
     }
+/*
+    const databooking = (idBooking) => {
+        return data.filter(room => {
+            if(room.idroom === idBooking){
+                return
+            }
+        })
+    }*/
+
+        const viewbooking = (booking) => {
+            setBookingvisible(true);
+            setDatabooking(booking)
+        }
     
     if(locationname === '/bookings'){
         return <>
@@ -55,30 +81,58 @@ export default function Table({columns,data}){
                     </TrMainTable>
                     
                     {
+                    
                     data.slice(actualdate,nextdate).map(register => {
                         return <>  
                             <TrMainTable>
                                 <div>
-                                    <td>
+                                    <td onClick={() => viewbooking(register)}>
                                         <img className="imgroomnameColum" width={150} height={77} src={''} alt="Image Room" />
                                         <div className="roomnameColumn">
-                                            <span className="numtit">{`#000${register.guest}`}</span>
-                                            <span className="deluxenum">{`${'Double Room'}-${'12341'}`}</span>
+                                            <span className="deluxenum numtit--black">{`${register.guest}`}</span>
+                                            <span className="numtit">{`${'Double Room'}-${'12341'}`}</span>
                                         </div>
                                     </td>
                                 </div>
-                                <td>{register.orderDate}<br/>{register.ordertime}</td>
+                                <td>{register.orderDate} {register.ordertime}</td>
                                 <td>{register.checkin}<br/>{register.timein}</td>
                                 <td>{register.checkout}<br/>{register.timeout}</td>
-                                <td>{register.specialRequest}</td>
+                                <td onClick={() => handleOpen(register.specialRequest)} notes='true'>View Notes</td>
                                 <td>{register.roomType}</td>
                                 <td>{register.status === 'Check In' ? <div className="status">Check In</div> : otherState(register.status)}</td>
+                                <td><img width={6} src={more} alt="more actions" /></td>
                             </TrMainTable>
                         </>
                     })}
                 </TableObj>
             }
         </ContentTable>
+
+        <Modal
+        open={bookingvisible}
+        onClose={() => setBookingvisible(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        style={{alignContent: 'center'}}
+        >
+            <ModalNewRoom>
+                <ViewBooking booking={databooking}></ViewBooking>
+            </ModalNewRoom>
+        </Modal>
+
+        <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        style={{alignContent: 'center'}}
+        >
+            <ModalNewNotes>
+                <div className="contentRoomNewRoom">
+                    <h2>{note}</h2>
+                </div>
+            </ModalNewNotes>
+        </Modal>
         <PaginationTable>
             <div onClick={backPaginationData}>Prev</div>
             {
@@ -148,21 +202,3 @@ export default function Table({columns,data}){
         </>
     }
 } 
-
-
-/* <Swiper
-                    pagination={{
-                    type: 'fraction',
-                    }}
-                    modules={[Pagination, Navigation]}
-                    className="TableRoom"
-                    slidesPerView={10}
-                    //spaceBetween={40}
-                    navigation={{ 
-                                    nextEl: '.swiper-button-next',
-                                    prevEl: '.swiper-button-prev'
-                                }}
-                    >*/
-
-                    /*<div className="swiper-button-prev btnnextswiperReview"><img src={next} width={24} height={'100%'} alt="Next Element" /></div>
-                            <div className="swiper-button-next btnnextswiperReview"><img src={back} width={24} height={'100%'} alt="Back Element" /></div>*/

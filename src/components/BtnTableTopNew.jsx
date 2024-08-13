@@ -5,6 +5,8 @@ import { ModalNewRoom } from "../styles/table/ModalNewRoom";
 import imagestandar from '../assets/imgs/logo.svg';
 import Toastify from 'toastify-js'
 import "toastify-js/src/toastify.css"
+import { useLocation } from "react-router-dom";
+import dataroom from '../data/room.json'
 
 export default function BtnTableTopNew({title}){
     const [open, setOpen] = useState(false);
@@ -19,8 +21,9 @@ export default function BtnTableTopNew({title}){
     const [image1,setImage1] = useState(imagestandar);
     const [image2,setImage2] = useState(imagestandar);
     const [image3,setImage3] = useState(imagestandar);
+    const [Typeroombooking,setTyperoombooking] = useState('Single Bed');
     
-   
+   const location = useLocation().pathname;
     
     useEffect(() => {
         if(open){
@@ -270,7 +273,8 @@ export default function BtnTableTopNew({title}){
         }
     }
 
-    return <>
+    if(location === '/room'){
+        return <>
         <BtnTopNew>
             <div onClick={handleOpen} className="contentBtn">
                 + {title}
@@ -380,5 +384,85 @@ export default function BtnTableTopNew({title}){
                 </div>
             </ModalNewRoom>
         </Modal>
-    </>
+        </>
+    }else if(location === '/bookings'){
+        return <>
+        <BtnTopNew>
+            <div onClick={handleOpen} className="contentBtn">
+                + {title}
+            </div>
+        </BtnTopNew>
+
+        <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        style={{alignContent: 'center'}}
+        >
+            <ModalNewRoom className="modalbooking">
+                <h1>{title}</h1>
+                <div className="contentRoomNewRoom">
+                    <form action="">
+                        <h2>Booking Details</h2>
+                        <div className="sectionformbooking">
+                            <div className="contentRoomNewRoom__firstblock">
+                                <label htmlFor="nameguest">Guest</label>
+                                <input className="inputroom" id="nameguest" name="nameguest" type="text" placeholder="Carlos Alexander Medina Salas"></input>
+                            </div>
+                            <div className="contentRoomNewRoom__firstblock">
+                                <label htmlFor="orderdate">Order Date </label>
+                                <input onChange={event => handleRoomNumber(event.target.value)} id="orderdate " name="orderdate" type="datetime-local" placeholder="30 Apr 2024 09:35 am"></input>
+                            </div>
+                        </div>
+
+                        <h2>Check in-out</h2>
+                        <div className="contentRoomNewRoom__priceblock sectionformbooking">
+                            <label htmlFor="checkin">Check in</label>
+                            <div className="checkbooking">
+                                <input  id="checkin" name="checkin" type="datetime-local" placeholder="01 May 2024 09:00 am"/>
+                            </div>
+                            <label htmlFor="checkout">Check Out</label>
+                            <div className="checkbooking">
+                                <input  id="checkout" name="checkout" type="datetime-local" placeholder="05 May 2024 12:00 am"/>
+                            </div>
+
+                            <label htmlFor="specialrequest">Special Request</label>
+                            <textarea name="specialrequest" id="specialrequest" placeholder="Special Request(Notes)"></textarea>
+                        </div>
+
+                        <h2>Room</h2>
+                        <div className="contentRoomNewRoom__firstblock sectionformbooking">
+                                <label htmlFor="roomtype">Room Type</label>
+                                <select name="selectroomtype" onChange={event => setTyperoombooking(event.target.value)} id="contentRoomNewRoom__roomtype">
+                                    <option value={'Single Bed'}>Single Bed</option>
+                                    <option value={'Double Bed'}>Double Bed</option>
+                                    <option value={'Double Superior'}>Double Superior</option>
+                                    <option value={'Suite'}>Suite</option>
+                                </select>
+                        </div>
+                    </form>
+
+                    <div className="contentRoomInfo contentbooking">
+                        <div>
+                            <ul>
+                                {
+                                    dataroom.map(room => {
+                                        if(room.status === "Available" && room.typeRoom === Typeroombooking){
+                                            return <>
+                                                <li><input id="roomselected" name="roomselected" type="checkbox" value={`${room.typeRoom}-${room.roomNumber}`}/>{room.typeRoom}-{room.roomNumber}</li>
+                                            </>
+                                        }
+                                        
+                                    })
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </ModalNewRoom>
+        </Modal>
+        </>
+    }
+    
 }

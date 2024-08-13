@@ -10,6 +10,9 @@ export const TrMainTable = styled.tr`
             font-family: 'poppinsregular';
             color: #799283;
             line-height: 21px;
+            &--black{
+                color: black;
+            }
         }
         & .deluxenum{
             color: #393939;
@@ -40,17 +43,22 @@ export const TrMainTable = styled.tr`
             line-height: 21px;
             color: #799283;
         }
+        & td{
+            vertical-align: baseline;
+            text-align: -webkit-center;
+        }
         & td:nth-child(5){
             font-family: 'poppinssemibold';
         }
         & th{
+            width: 200px;
             height: 4.063em;
             font-size: 1.13rem;
             line-height: 27px;
             color: #393939;
             font-family: 'poppinssemibold';
-            text-align: center;
             border-bottom: 1px solid #fefefe;
+            text-align: center;
         }
         & th:nth-last-child(-n+1){
             width: 3em;
@@ -69,6 +77,21 @@ export const TrMainTable = styled.tr`
         }
         & .imgroomnameColum{
             margin-right: 1.75em;
+        }
+        & td[notes="true"]{
+            height: 3.063em;
+            border-radius: 1rem;
+            padding: .5em;
+            background: #5AD07A;
+            color: black;
+            cursor: pointer;
+            display: block;
+            align-content: center;
+            &:hover{
+                background: #fff;
+                color: #5AD07A;
+                border: 1px solid #5AD07A;
+            }
         }
 `
 

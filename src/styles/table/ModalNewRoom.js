@@ -2,14 +2,19 @@ import styled from "styled-components";
 
 export const ModalNewRoom = styled.div`
     width: 80%;
-    height: 90%;
+    height: 80%;
     background: #fff;
     margin: 0 auto;
-    overflow: scroll;
+    overflow-y: scroll;
     padding: 1em;
     border-radius: 1rem;
     background: #f8f8f8;
     outline: none;
+    & .contentbooking{
+        width: 20em !important;
+        height: 60% !important;
+        overflow-y: scroll;
+    }
     & h1{
         font-family: 'poppinssemibold';
         line-height: 30px;
@@ -50,6 +55,16 @@ export const ModalNewRoom = styled.div`
         color: black;
         text-align: center;
         background: #f8f8f8;
+    }
+    & .inputroom{
+        width: 30em !important;
+    }
+    & .checkbooking{
+        margin-bottom: 1em;
+    }
+    & .sectionformbooking{
+        width: 100%;
+        margin-bottom: 1.2em;
     }
     & textarea{
         width: 100%;
