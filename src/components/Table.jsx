@@ -21,6 +21,7 @@ export default function Table({columns,data}){
     const [note, setNote] = useState('');
     const [bookingvisible, setBookingvisible] = useState(false);
     const [databooking, setDatabooking] = useState({});
+
     const handleOpen = (note) => {
         setNote(note)
         setOpen(true)
@@ -51,14 +52,6 @@ export default function Table({columns,data}){
             return <div className="status statusbooked">Check Out</div>
         }
     }
-/*
-    const databooking = (idBooking) => {
-        return data.filter(room => {
-            if(room.idroom === idBooking){
-                return
-            }
-        })
-    }*/
 
         const viewbooking = (booking) => {
             setBookingvisible(true);

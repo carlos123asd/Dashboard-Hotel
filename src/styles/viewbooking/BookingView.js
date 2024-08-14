@@ -158,11 +158,18 @@ export const BookingView = styled.div`
     & .imagesbooking{
         width: 100%;
         height: 100%;
-        background: red;
         border-top-right-radius: 1em;
         border-bottom-right-radius: 1em;
         position: relative;
         overflow: hidden;
+        -webkit-mask-image: linear-gradient(to top, transparent, black 20%);
+        mask-image: linear-gradient(to top, transparent, black 20%);
+        & .imagebookingRight{
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 49.5em;
+        }
         & .barbooking{
             width: 15em;
             padding: 1em 0;
@@ -176,6 +183,39 @@ export const BookingView = styled.div`
             top: 1em;
             transform: rotate(40deg);
             z-index: 0;
+        }
+        & .titroom{
+            font-size: 1.50rem;
+            font-family: 'poppinsmedium';
+            line-height: 35px;
+            color: #fff;
+        }
+        & .descriptionroom{
+            font-size:  .88rem;
+            font-family: 'poppinsmedium';
+            line-height: 21px;
+            color: #fff;
+        }
+        & .contentninfoRoomBooking{
+            position: absolute;
+            z-index: 1000;
+            bottom: 3em;
+            padding: 0 3em;
+        }
+        & .btnnextBooking,.btnbackBooking{
+            display: block !important;
+            width: 3em;
+            height: 3em;
+            border-radius: .88em;
+            background: #6e6e6e;
+            text-align: center;
+        }
+        & .btnbackBooking{
+            transform: rotate(180deg);
+        }
+        & .contentNavigationBooking{
+            display: flex;
+            justify-content: space-between;
         }
     }
 `
