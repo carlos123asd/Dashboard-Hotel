@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-const Filtername = styled.div`
+export const Filtername = styled.div`
     width: max-content;
     height: 4.313em;
     padding: 1.875em;
@@ -16,4 +16,9 @@ const Filtername = styled.div`
         border-bottom: 2px solid #135846;
     }
 ` 
-export default Filtername;
+export const ContentFilterTop = styled.div`
+    & img{
+        vertical-align: middle;
+        cursor: pointer;
+    }
+`

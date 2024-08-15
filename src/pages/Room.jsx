@@ -10,11 +10,11 @@ export default function Room(){
     const columns = ['Room Name','Room Type','Room Floor','Facilities','Price','Offer Price','Status',' ']
     const filterstop = ['All Rooms','Avaible Room','Inactive Room']
     const filtername = useSelector(state => state.filterToptable.orderby)
-    const [dataroom,setDataroom] = useState(data)
+    const [dataroom,setDataroom] = useState(data.sort((a, b) => parseInt(b.roomNumber) - parseInt(a.roomNumber)))
 
     useEffect(() => {
         if(filtername === 'All Rooms'){
-            setDataroom(data)
+            setDataroom(data.sort((a, b) => parseInt(b.roomNumber) - parseInt(a.roomNumber)));
         }
         else if(filtername === 'Avaible Room'){
             setDataroom(data.filter(room => {
@@ -26,6 +26,8 @@ export default function Room(){
             }))
         }
     },[filtername])
+
+    
 
     return <>
         <ContentPageMain>

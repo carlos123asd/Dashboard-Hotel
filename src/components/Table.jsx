@@ -11,8 +11,11 @@ import { Modal } from "@mui/material";
 import { ModalNewNotes } from "../styles/table/ModalNotes";
 import { ModalNewRoom } from "../styles/table/ModalNewRoom";
 import ViewBooking from "./ViewBooking";
+import { useDispatch } from "react-redux";
+import { setfilter } from "../features/filterTopTable/sliceFilterTopTable";
 
 export default function Table({columns,data}){
+    console.log(data)
     const [nextdate,setNextdate] = useState(10);
     const [actualdate,setActualdate] = useState(0);
     const [lengthdate,setLengthdate] = useState(Math.trunc(data.length / 10));
@@ -21,6 +24,10 @@ export default function Table({columns,data}){
     const [note, setNote] = useState('');
     const [bookingvisible, setBookingvisible] = useState(false);
     const [databooking, setDatabooking] = useState({});
+    const [desc,setDesc] = useState(false);
+    const [descletter,setDescletter] = useState(false);
+    const [rotate,setRotate] = useState({});
+    const dispatch = useDispatch()
 
     const handleOpen = (note) => {
         setNote(note)
@@ -52,11 +59,64 @@ export default function Table({columns,data}){
             return <div className="status statusbooked">Check Out</div>
         }
     }
-
-        const viewbooking = (booking) => {
-            setBookingvisible(true);
-            setDatabooking(booking)
+    const othercolumns = (column) => {
+        if(column === 'Room Type'){
+            return <span style={rotate} onClick={handleOrderByLetter} className="filtercolumn"></span>
         }
+    }
+    const otherStatusMessage = (status) => {
+        if(status === 'published'){
+            return <span className="controlsmessage">Published</span>
+        }else if(status === 'archived'){
+            return <span className="controlsmessage" style={{color:'#E23428'}}>Archived</span>
+        }
+    }
+
+    const viewbooking = (booking) => {
+        setBookingvisible(true);
+        setDatabooking(booking)
+    }
+
+    const rotateiconOrderBy = (order) =>{
+        if(order === true){
+            setRotate({
+                transform: 'rotate(45deg)',
+                verticalAlign: 'text-top'
+            })
+        }else{
+            setRotate({
+                transform: 'rotate(224deg)',
+                verticalAlign: 'sub'
+            })
+        }
+    }
+
+    const handleOrderBy = () => {
+        if(desc === false){
+            setDesc(true)
+            rotateiconOrderBy(false)
+            data.sort((a, b) => parseInt(a.price.split("$")[1])  - parseInt(b.price.split("$")[1]));
+            dispatch(setfilter(true))
+        }else{
+            setDesc(false)
+            rotateiconOrderBy(true)
+            data.sort((a, b) => parseInt(b.price.split("$")[1])  - parseInt(a.price.split("$")[1]));
+            dispatch(setfilter(true))
+        }
+    }
+    const handleOrderByLetter = () => {
+        if(descletter === false){
+            setDescletter(true)
+            rotateiconOrderBy(false)
+            data.sort((a, b) => a.typeRoom.localeCompare(b.typeRoom)); 
+            dispatch(setfilter(true))
+        }else{
+            setDescletter(false)
+            rotateiconOrderBy(true)
+            data.sort((a, b) => b.typeRoom.localeCompare(a.typeRoom)); 
+            dispatch(setfilter(true))
+        }
+    }
     
     if(locationname === '/bookings'){
         return <>
@@ -148,7 +208,7 @@ export default function Table({columns,data}){
                         {
                             columns.map(column => {
                                 return <>
-                                    <th className="headercolumn">{column}</th>
+                                    <th className="headercolumn">{column}{column === 'Price' ? <span style={rotate} onClick={handleOrderBy} className="filtercolumn"></span> : othercolumns(column)}</th>
                                 </>
                             })
                         }
@@ -192,6 +252,102 @@ export default function Table({columns,data}){
             }
             <div onClick={nextPaginationData}>Next</div>
         </PaginationTable>
+        </>
+    }else if(locationname === '/contact'){
+        return <>
+            <ContentTable style={{marginTop:'1em'}}>
+                {
+                    <TableObj>
+                        <TrMainTable>
+                            {
+                                columns.map(column => {
+                                    return <>
+                                        <th className="headercolumn">{column}</th>
+                                    </>
+                                })
+                            }
+                        </TrMainTable>
+                        
+                        {
+                        
+                        data.slice(actualdate,nextdate).map(register => {
+                            return <>  
+                                <TrMainTable>
+                                    <div>
+                                        <td>#{register.idmessage}</td>
+                                    </div>
+                                    <td>{register.date}</td>
+                                    <td>{register.customer}</td>
+                                    <td>{register.comment}</td>
+                                    <td>{register.status === 'none' ? <div><span className="controlsmessage">Publish</span><span className="controlsmessage">Archive</span></div> : otherStatusMessage(register.status)}</td>
+                                </TrMainTable>
+                            </>
+                        })}
+                    </TableObj>
+                }
+            </ContentTable>
+            <PaginationTable>
+                <div onClick={backPaginationData}>Prev</div>
+                {
+                    data.slice(0,lengthdate).map(element => {
+                        i++
+                        return <>
+                            <div valuepagination={i} onClick={(event) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{i}</div>
+                        </>
+                    })
+                }
+                <div onClick={nextPaginationData}>Next</div>
+            </PaginationTable>
+        </>
+    }else if(locationname === '/users'){
+        return <>
+            <ContentTable>
+                {
+                    <TableObj>
+                        <TrMainTable>
+                            {
+                                columns.map(column => {
+                                    return <>
+                                        <th className="headercolumn">{column}</th>
+                                    </>
+                                })
+                            }
+                        </TrMainTable>
+                        
+                        {
+                        data.slice(actualdate,nextdate).map(employee => {
+                            return <>  
+                                <TrMainTable>
+                                    <div>
+                                        <td>
+                                            <img className="imgroomnameColum" width={150} height={77} src={employee.photo} alt="Image Employee" />
+                                            <div className="roomnameColumn">
+                                                <span className="numtit">{employee.name}</span>
+                                                <span className="deluxenum">#{employee.idemployee}<br/>Joined on {employee.startdate}</span>
+                                            </div>
+                                        </td>
+                                    </div>
+                                    <td>{employee.description}</td>
+                                    <td><span>{employee.phone}</span><br /><span>{employee.email}</span></td>
+                                    <td>{employee.status}</td>
+                                </TrMainTable>
+                            </>
+                        })}
+                    </TableObj>
+                }
+            </ContentTable>
+            <PaginationTable>
+                <div onClick={backPaginationData}>Prev</div>
+                {
+                    data.slice(0,lengthdate).map(element => {
+                        i++
+                        return <>
+                            <div valuepagination={i} onClick={(event) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{i}</div>
+                        </>
+                    })
+                }
+                <div onClick={nextPaginationData}>Next</div>
+            </PaginationTable>
         </>
     }
 } 

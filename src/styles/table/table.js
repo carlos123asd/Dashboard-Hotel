@@ -5,6 +5,34 @@ export const TrMainTable = styled.tr`
         font-family: 'poppinsregular';
         color: #212121;
         line-height: 25px;
+        & .controlsmessage{
+            font-family: 'poppinsmedium';
+            font-size: 1rem;
+            line-height: 25px;
+            color: #5AD07A;
+            cursor: pointer;
+            &:hover{
+               border-bottom: 1px solid #5AD07A;
+            }
+        }
+        & .controlsmessage:nth-child(2){
+            color: #E23428;
+            margin-left: 2.563em;
+            &:hover{
+               border-bottom: 1px solid #E23428;
+            }
+        }
+        & .filtercolumn{
+            width: 14px;
+            height: 14px;
+            display: inline-block;
+            border-right: 2px solid black;
+            transform: rotate(45deg);
+            vertical-align: text-top;
+            border-bottom: 2px solid black;
+            margin-left: .6em;
+            cursor: pointer;
+        }
         & .numtit{
             font-size: .875rem;
             font-family: 'poppinsregular';
@@ -46,6 +74,7 @@ export const TrMainTable = styled.tr`
         & td{
             vertical-align: baseline;
             text-align: -webkit-center;
+            padding-bottom: 1em;
         }
         & td:nth-child(5){
             font-family: 'poppinssemibold';
@@ -116,7 +145,8 @@ export const TableObj = styled.table`
         width: 24.375em;
     }
     & tr th:nth-child(4){
-        width: 15.563em;
+        //width: 15.563em;
+        width: 30.563em;
     }
 `
 

@@ -10,14 +10,10 @@ import { useEffect, useState } from "react";
 
 export default function ViewBooking({booking}){
     console.log(booking)
-    //HACER UN NUEVO MOCKEADO CON EL ID DE RESERVA Y ID DE ROOM
-    const [room,setRoom] = useState({})
-    useEffect(() => {
-        setRoom((rooms.filter(room => {
-            return room.idRoom === booking.idroom
-        }))[0])
-    }, [])
-    console.log(room)
+    const roomselected = (rooms.filter(room => {
+        return room.idRoom === booking.idroom
+    }))[0]
+    console.log(roomselected)
     return <>
         <BookingView>
             <div>
@@ -55,7 +51,7 @@ export default function ViewBooking({booking}){
                     </div>
                     <div>
                         <span>Price</span>
-                        <span>{room.price} <span>/night</span></span>
+                        <span>{roomselected.price} <span>/night</span></span>
                     </div>
                 </div>
                 <p>
@@ -64,7 +60,13 @@ export default function ViewBooking({booking}){
 
                 <div className="facilitiesbooking">
                     <span>Facilities</span>
-                    <div>3 Bed Space</div>
+                    {
+                        roomselected.amenities.split(',').map((amenitie) => {
+                                return <>
+                                   <div>{amenitie}</div>
+                                </> 
+                        })
+                    }
                 </div>
             </div>
             <div className="imagesbooking">
@@ -79,13 +81,13 @@ export default function ViewBooking({booking}){
                      className="ReviewCustomersContent"
                 >
                     {
-                        room.photo.map((img) => {
+                        roomselected.photo.map((img) => {
                             return <>
                                 <SwiperSlide>
                                         <div style={{backgroundImage:`url('${img}')`}} className="imagebookingRight" alt="Room of the Booking"></div>
                                         <div className="contentninfoRoomBooking">
-                                            <h2 className="titroom">{room.typeRoom}</h2>
-                                            <p className="descriptionroom">{room.description}</p>
+                                            <h2 className="titroom">{roomselected.typeRoom}</h2>
+                                            <p className="descriptionroom">{roomselected.description}</p>
                                         </div>
                                 </SwiperSlide>
                             </> 

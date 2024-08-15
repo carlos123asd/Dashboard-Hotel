@@ -130,6 +130,7 @@ export const BookingView = styled.div`
                 margin-bottom: 0.625em;
         }
         & div{
+            display: inline-block;
             width: max-content;
             color: #135846;
             background: #EEF9F2;
@@ -139,6 +140,9 @@ export const BookingView = styled.div`
             font-family: 'poppinssemibold';
             font-size: 0.88rem;
             border-radius: 0.75em;
+            margin-right: 1em;
+            margin-bottom: 1em;
+            border: 1px solid #135846;
         }
     }
     & p{
@@ -199,23 +203,58 @@ export const BookingView = styled.div`
         & .contentninfoRoomBooking{
             position: absolute;
             z-index: 1000;
-            bottom: 3em;
+            bottom: 4em;
             padding: 0 3em;
         }
         & .btnnextBooking,.btnbackBooking{
-            display: block !important;
             width: 3em;
             height: 3em;
             border-radius: .88em;
-            background: #6e6e6e;
             text-align: center;
+            text-align: -webkit-center;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            &:hover{
+                border: 1px solid #fff;
+            }
         }
+        & .btnnextBooking::before{
+            content: ' ';
+            position: absolute;
+            bottom: 0;
+            width: 3em;
+            height: 3em;
+            left: 0;
+            background: #C5C5C5;
+            opacity: .3;
+        }
+        & .btnbackBooking::before{
+            content: ' ';
+            position: absolute;
+            bottom: 0;
+            width: 3em;
+            height: 3em;
+            right: 0;
+            background: #C5C5C5;
+            opacity: .3;
+        }
+
+
         & .btnbackBooking{
             transform: rotate(180deg);
+            margin-left: 3em;
+        }
+        & .btnnextBooking{
+            margin-right: 3em;
         }
         & .contentNavigationBooking{
+            width: 100%;
             display: flex;
             justify-content: space-between;
+            position: absolute;
+            bottom: 30%;
+            z-index: 1000;
         }
     }
 `
