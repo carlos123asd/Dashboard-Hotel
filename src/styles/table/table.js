@@ -5,6 +5,16 @@ export const TrMainTable = styled.tr`
         font-family: 'poppinsregular';
         color: #212121;
         line-height: 25px;
+        & .editdelete{
+            display: inline-block;
+            cursor: pointer;
+            &:hover{
+                scale: 1.1;
+            }
+        }
+        & .editdelete:nth-child(1){
+                margin-right: 1em;
+            }
         & .controlsmessage{
             font-family: 'poppinsmedium';
             font-size: 1rem;
@@ -90,7 +100,7 @@ export const TrMainTable = styled.tr`
             text-align: center;
         }
         & th:nth-last-child(-n+1){
-            width: 3em;
+            width: 16em;
         }
         & .roomnameColumn,.imgroomnameColum{
             display: inline-block

@@ -1,41 +1,54 @@
 import Table from "../components/Table";
 import { ContentPageMain } from "../styles/nav/nav";
-import data from '../data/room.json'
 import BtnTableTopNew from "../components/BtnTableTopNew";
 import FilterTableTop from "../components/FilterTableTop";
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from "react";
+import { dbThunk } from "../features/filterTopTable/dbThunk";
 
 export default function Room(){
-    const columns = ['Room Name','Room Type','Room Floor','Facilities','Price','Offer Price','Status',' ']
+    const columns = ['Room Name','Room Type','Facilities','Price','Offer Price','Status',' ']
     const filterstop = ['All Rooms','Avaible Room','Inactive Room']
+    const dispatch = useDispatch()
     const filtername = useSelector(state => state.filterToptable.orderby)
-    const [dataroom,setDataroom] = useState(data.sort((a, b) => parseInt(b.roomNumber) - parseInt(a.roomNumber)))
+    const stateDbStatus = useSelector(state => state.db.status);
+    const selectorDbData = useSelector(state => state.db.data);
+    const [loading,setLoading] = useState(true);
+    const [dataroom,setDataroom] = useState([])
 
+    useEffect(() =>{
+        if(stateDbStatus === 'idle'){
+            dispatch(dbThunk());
+        }else if(stateDbStatus === 'fulfilled'){
+            setLoading(false);
+            setDataroom(selectorDbData)
+        }
+    },[stateDbStatus])
+     
     useEffect(() => {
         if(filtername === 'All Rooms'){
-            setDataroom(data.sort((a, b) => parseInt(b.roomNumber) - parseInt(a.roomNumber)));
+            setDataroom(selectorDbData);
         }
         else if(filtername === 'Avaible Room'){
-            setDataroom(data.filter(room => {
+           setDataroom(selectorDbData.filter(room => {
                 return room.status === 'Available'
             }))
         }else if(filtername === 'Inactive Room'){
-            setDataroom(data.filter(room => {
+            setDataroom(selectorDbData.filter(room => {
                 return room.status === 'Booked'
             }))
         }
     },[filtername])
 
-    
-
-    return <>
-        <ContentPageMain>
-            <div contentflex='true'>
-                <FilterTableTop title={filterstop} />
-                <BtnTableTopNew title='New Room' />
-            </div>
-            <Table columns={columns} data={dataroom} />
-        </ContentPageMain>
-    </>
+    if(loading === false){
+        return <>
+            <ContentPageMain>
+                <div contentflex='true'>
+                    <FilterTableTop title={filterstop} />
+                    <BtnTableTopNew title='New Room' />
+                </div>
+                <Table columns={columns} data={dataroom} />
+            </ContentPageMain>
+        </>
+    }
 }

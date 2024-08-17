@@ -3,19 +3,16 @@ import { TableObj, TrMainTable, ContentTable, PaginationTable } from "../styles/
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import more from '../assets/imgs/more.svg'
 import { useLocation } from "react-router-dom";
 import { Modal } from "@mui/material";
 import { ModalNewNotes } from "../styles/table/ModalNotes";
 import { ModalNewRoom } from "../styles/table/ModalNewRoom";
 import ViewBooking from "./ViewBooking";
 import { useDispatch } from "react-redux";
-import { setfilter } from "../features/filterTopTable/sliceFilterTopTable";
 
 export default function Table({columns,data}){
-    console.log(data)
     const [nextdate,setNextdate] = useState(10);
     const [actualdate,setActualdate] = useState(0);
     const [lengthdate,setLengthdate] = useState(Math.trunc(data.length / 10));
@@ -27,6 +24,27 @@ export default function Table({columns,data}){
     const [desc,setDesc] = useState(false);
     const [descletter,setDescletter] = useState(false);
     const [rotate,setRotate] = useState({});
+    const [datastate,setDatastate] = useState(data.map((info) => {
+        return info
+    }))
+    const [edit,setEdit] = useState(false)
+    const [showbtngroup2,setShowbtngroup2] = useState({
+        display: 'none'
+    })
+    const [showbtngroup3,setShowbtngroup3] = useState({
+        display: 'none'
+    })
+    const [hideedit,setHideedit] = useState({
+        display: 'inline-block'
+    })
+    const [roomtype,setRoomtype] = useState()
+
+    useEffect(() => {
+        setDatastate(data.map((info) => {
+            return info
+        }))
+    },[data])
+
     const dispatch = useDispatch()
 
     const handleOpen = (note) => {
@@ -95,28 +113,74 @@ export default function Table({columns,data}){
         if(desc === false){
             setDesc(true)
             rotateiconOrderBy(false)
-            data.sort((a, b) => parseInt(a.price.split("$")[1])  - parseInt(b.price.split("$")[1]));
-            dispatch(setfilter(true))
+            setDatastate(datastate.sort((a, b) => parseInt(a.price.split("$")[1])  - parseInt(b.price.split("$")[1])));
         }else{
             setDesc(false)
             rotateiconOrderBy(true)
-            data.sort((a, b) => parseInt(b.price.split("$")[1])  - parseInt(a.price.split("$")[1]));
-            dispatch(setfilter(true))
+            setDatastate(datastate.sort((a, b) => parseInt(b.price.split("$")[1])  - parseInt(a.price.split("$")[1])));
         }
     }
     const handleOrderByLetter = () => {
         if(descletter === false){
             setDescletter(true)
             rotateiconOrderBy(false)
-            data.sort((a, b) => a.typeRoom.localeCompare(b.typeRoom)); 
-            dispatch(setfilter(true))
+            setDatastate(datastate.sort((a, b) => a.typeRoom.localeCompare(b.typeRoom))); 
         }else{
             setDescletter(false)
             rotateiconOrderBy(true)
-            data.sort((a, b) => b.typeRoom.localeCompare(a.typeRoom)); 
-            dispatch(setfilter(true))
+            setDatastate(datastate.sort((a, b) => b.typeRoom.localeCompare(a.typeRoom))); 
         }
     }
+
+    const handleClickFunctionEdit = () => {
+        if(edit === false){
+            setEdit(true)
+            setShowbtngroup2({
+                display: 'inline-block'
+            })
+            setHideedit({
+                display: 'none'
+            })
+        }else{
+            setEdit(false)
+            setShowbtngroup2({
+                display: 'none'
+            })
+            setHideedit({
+                display: 'inline-block'
+            })
+        }
+        
+    }
+    const handleClickFunctionDelete = () => {
+            setShowbtngroup3({
+                display: 'inline-block'
+            })
+            setHideedit({
+                display: 'none'
+            })
+    }
+    const handleClickFunctionCancelDelete = () => {
+        console.log('ee')
+        setShowbtngroup3({
+            display: 'none'
+        })
+        setHideedit({
+            display: 'inline-block'
+        })
+    }
+    const handleClickFunctionConfirmDelete = () => {
+        alert('delete')
+    }
+    const handleClickFunctionSave = () => {
+        alert('dave')
+    }
+
+    const handleSelectEdit = (value) => {
+        setRoomtype(value)
+    }
+
+
     
     if(locationname === '/bookings'){
         return <>
@@ -215,8 +279,50 @@ export default function Table({columns,data}){
                     </TrMainTable>
                     
                     {
-                    data.slice(actualdate,nextdate).map(room => {
-                        return <>  
+                    datastate.slice(actualdate,nextdate).map(room => {
+                        return (edit === true) ? <>
+                            <TrMainTable>
+                                <div>
+                                    <td>
+                                        <img className="imgroomnameColum" width={150} height={77} src={room.photo[0]} alt="Image Room" />
+                                        <div className="roomnameColumn">
+                                            <span className="numtit">{`#000${room.idRoom}`}</span>
+                                            <span className="deluxenum">{`${roomtype}-`}<input type="text" placeholder={room.roomNumber}/></span>
+                                        </div>
+                                    </td>
+                                </div>
+                                <td>
+                                    <span className="deluxenum">
+                                        <select onChange={(e) => handleSelectEdit(e.target.value)} name="selectroomtype" id="contentRoomNewRoom__roomtype">
+                                            <option value={'Single Bed'}>Single Bed</option>
+                                            <option value={'Double Bed'}>Double Bed</option>
+                                            <option value={'Double Superior'}>Double Superior</option>
+                                            <option value={'Suite'}>Suite</option>
+                                        </select>
+                                    </span>
+                                </td>
+                                <td>{room.amenities}</td>
+                                <td>{room.price}<span className="nightroom"> /night</span></td>
+                                <td>{`$${(parseInt(room.price.slice(1))-((parseInt(room.price.slice(1))*room.discount)/100)).toFixed(2)}(${((parseInt(room.price.slice(1))*room.discount)/100)}%)`}</td>
+                                <td>{room.status === 'Available' ? <div className="status">Available</div> : <div className="status statusbooked">Booked</div>}</td>
+                                <td style={{position:'relative'}}>
+                                    <div style={hideedit}>
+                                        <div className="status editdelete" onClick={handleClickFunctionEdit}>Edit</div>
+                                        <div className="status statusbooked editdelete" onClick={handleClickFunctionDelete}>Delete</div>
+                                    </div>
+                                    
+                                    <div style={showbtngroup2}>
+                                        <div className="status editdelete" onClick={handleClickFunctionSave}>Save</div>
+                                        <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
+                                    </div>
+                                    <div style={showbtngroup3}>
+                                        <div className="status editdelete" onClick={handleClickFunctionConfirmDelete}>Confirm</div>
+                                        <div className="status statusbooked editdelete" onClick={handleClickFunctionCancelDelete}>Cancel</div>
+                                    </div>
+                                </td>
+                            </TrMainTable>
+                        </> :
+                        <>
                             <TrMainTable>
                                 <div>
                                     <td>
@@ -228,12 +334,25 @@ export default function Table({columns,data}){
                                     </td>
                                 </div>
                                 <td>{room.typeRoom}</td>
-                                <td>Floor A-1</td>
                                 <td>{room.amenities}</td>
                                 <td>{room.price}<span className="nightroom"> /night</span></td>
                                 <td>{`$${(parseInt(room.price.slice(1))-((parseInt(room.price.slice(1))*room.discount)/100)).toFixed(2)}(${((parseInt(room.price.slice(1))*room.discount)/100)}%)`}</td>
                                 <td>{room.status === 'Available' ? <div className="status">Available</div> : <div className="status statusbooked">Booked</div>}</td>
-                                <td><img width={6} src={more} alt="more actions" /></td>
+                                <td style={{position:'relative'}}>
+                                <div style={hideedit}>
+                                        <div className="status editdelete" onClick={handleClickFunctionEdit}>Edit</div>
+                                        <div className="status statusbooked editdelete" onClick={handleClickFunctionDelete}>Delete</div>
+                                    </div>
+                                    
+                                    <div style={showbtngroup2}>
+                                        <div className="status editdelete" onClick={handleClickFunctionSave}>Save</div>
+                                        <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
+                                    </div>
+                                    <div style={showbtngroup3}>
+                                        <div className="status editdelete" onClick={handleClickFunctionConfirmDelete}>Confirm</div>
+                                        <div className="status statusbooked editdelete" onClick={handleClickFunctionCancelDelete}>Cancel</div>
+                                    </div>
+                                </td>
                             </TrMainTable>
                         </>
                     })}
