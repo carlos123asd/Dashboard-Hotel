@@ -4,7 +4,8 @@ import BtnTableTopNew from "../components/BtnTableTopNew";
 import FilterTableTop from "../components/FilterTableTop";
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from "react";
-import { dbThunk } from "../features/filterTopTable/dbThunk";
+import { dbThunk } from "../features/db/dbThunk";
+import { resetStatus } from "../features/db/dbSlice";
 
 export default function Room(){
     const columns = ['Room Name','Room Type','Facilities','Price','Offer Price','Status',' ']
@@ -13,15 +14,18 @@ export default function Room(){
     const filtername = useSelector(state => state.filterToptable.orderby)
     const stateDbStatus = useSelector(state => state.db.status);
     const selectorDbData = useSelector(state => state.db.data);
+    const selectorDbError = useSelector(state => state.db.error);
     const [loading,setLoading] = useState(true);
     const [dataroom,setDataroom] = useState([])
-
+    
     useEffect(() =>{
         if(stateDbStatus === 'idle'){
-            dispatch(dbThunk());
+            dispatch(dbThunk('rooms'));
         }else if(stateDbStatus === 'fulfilled'){
             setLoading(false);
             setDataroom(selectorDbData)
+        }else if(stateDbStatus === 'rejected'){
+            console.log(selectorDbError)
         }
     },[stateDbStatus])
      

@@ -5,10 +5,9 @@ import { ModalNewRoom } from "../styles/table/ModalNewRoom";
 import imagestandar from '../assets/imgs/logo.svg';
 import "toastify-js/src/toastify.css"
 import { useLocation } from "react-router-dom";
-import dataroom from '../data/room.json'
-import handlesubmitnewRoom from "../features/filterTopTable/forms/validationformRoom";
+import handlesubmitnewRoom from "../features/forms/validationformRoom";
 
-export default function BtnTableTopNew({title}){
+export default function BtnTableTopNew({title,databooking}){
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -284,12 +283,12 @@ export default function BtnTableTopNew({title}){
                                     </select>
                             </div>
                         </form>
-
+                        
                         <div className="contentRoomInfo contentbooking">
                             <div>
                                 <ul>
                                     {
-                                        dataroom.map(room => {
+                                        databooking.map(room => {
                                             if(room.status === "Available" && room.typeRoom === Typeroombooking){
                                                 return <>
                                                     <li><input id="roomselected" name="roomselected" type="checkbox" value={`${room.typeRoom}-${room.roomNumber}`}/>{room.typeRoom}-{room.roomNumber}</li>

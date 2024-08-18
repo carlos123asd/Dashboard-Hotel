@@ -5,6 +5,53 @@ export const TrMainTable = styled.tr`
         font-family: 'poppinsregular';
         color: #212121;
         line-height: 25px;
+        & .textareainputroomeditable{
+            width: 100%;
+            height: 7em;
+            resize: none;
+            border: none;
+            padding: 1em;
+            outline: none;
+            font-family: 'poppinsmedium';
+        }
+        & .inputSelect{
+            width: 60%;
+            height: 100%;
+            border-radius: 1em;
+            border: none;
+            &--statusAvaible{
+                width: 70%;
+                border: none;
+                outline: none;
+                font-family: 'poppinsmedium';
+                background-color: #5AD07A;
+                color: #fff;
+                font-size: 1rem;
+                line-height: 25px;
+            }
+            &--statusBooked{
+                width: 80%;
+                border: none;
+                outline: none;
+                font-family: 'poppinsmedium';
+                color: #fff;
+                background-color: #E23428;
+                font-size: 1rem;
+                line-height: 25px;
+            }
+        }
+        & .inputText{
+            display: inline-block;
+            text-align: center;
+            width: 4em;
+            border-radius: 1em;
+            padding: .3em;
+            outline: none;
+            border: 1px solid black;
+            &--size{
+                width: 7em;
+            }
+        }
         & .editdelete{
             display: inline-block;
             cursor: pointer;

@@ -11,6 +11,9 @@ const dbSlice = createSlice({
     reducers:{
         setOrderData(state,action){
              state.data = action.payload.sort((a, b) => parseInt(b.roomNumber) - parseInt(a.roomNumber))
+        },
+        resetStatus(state){
+            state.status = 'idle'
         }
     },
     extraReducers: (builder) => {
@@ -30,4 +33,4 @@ const dbSlice = createSlice({
 
 export default dbSlice.reducer;
 
-export const { setOrderData } = dbSlice.actions
+export const { setOrderData,resetStatus } = dbSlice.actions

@@ -3,14 +3,34 @@ import Table from "../components/Table";
 import { ContentPageMain } from "../styles/nav/nav";
 import data from '../data/booking.json'
 import FilterTableTop from "../components/FilterTableTop";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { dbThunk } from "../features/db/dbThunk";
+import { resetStatus } from "../features/db/dbSlice";
 
 export default function Booking(){
     const columns = ['Guest','Order Date','Check in','Check out','Special Request','Room Type','Status',' ']
     const filterstop = ['All Bookings','Checking In','Checking Out','In Progress']
     const filtername = useSelector(state => state.filterToptable.orderby)
-    const [databooking,setDatabooking] = useState(data)
+    const stateDbStatus = useSelector(state => state.db.status);
+    const selectorDbData = useSelector(state => state.db.data);
+    const selectorDbError = useSelector(state => state.db.error);
+    const dispatch = useDispatch()
+    const [loading,setLoading] = useState(true);
+    const [databooking,setDatabooking] = useState([])
+
+    console.log(stateDbStatus)
+
+    useEffect(() =>{
+        if(stateDbStatus === 'idle'){
+            dispatch(dbThunk('bookings'));
+        }else if(stateDbStatus === 'fulfilled'){
+            setLoading(false);
+            setDatabooking(selectorDbData)
+        }else if(stateDbStatus === 'rejected'){
+            console.log(selectorDbError)
+        }
+    },[stateDbStatus])
 
     useEffect(() => {
         if(filtername === 'All Bookings'){
@@ -31,13 +51,17 @@ export default function Booking(){
         }
     }, [filtername])
 
-    return <>
-       <ContentPageMain>
-            <div contentflex='true'>
-                <FilterTableTop title={filterstop}></FilterTableTop>
-                <BtnTableTopNew title='New Booking'/>
-            </div>
-            <Table columns={columns} data={databooking}/>
-        </ContentPageMain>
-    </>
+    console.log(databooking)
+
+    if(loading === false){
+        return <>
+        <ContentPageMain>
+                <div contentflex='true'>
+                    <FilterTableTop title={filterstop}></FilterTableTop>
+                    <BtnTableTopNew title='New Booking' databooking={databooking}/>
+                </div>
+                <Table columns={columns} data={databooking}/>
+            </ContentPageMain>
+        </>
+    }
 }
