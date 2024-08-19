@@ -40,6 +40,24 @@
     font-family: 'poppinsmedium';
     src: url('./assets/fonts/poppins/Poppins-Medium.ttf');
   }
+
+  .tooltipcheckout{
+    background: #E23428;
+  }
+  .tooltipinprogress{
+    background: #FF9C3A;
+  }
+  .tooltipcheckin{
+    background: #135846;
+  }
+  .tooltipcheckout,.tooltipinprogress,.tooltipcheckin{
+    color: #fff;
+    font-family: 'poppinsregular';
+    font-size: .8rem;
+    padding: .3em;
+    border-radius: 1em;
+    z-index: 1000;
+  }
   
   @keyframes slidein{
     0% {

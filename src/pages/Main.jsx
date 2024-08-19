@@ -1,6 +1,9 @@
 import { ContentPageMain } from "../styles/nav/nav"
 import { KpiDashboard } from '../styles/dashboard/dashboards'
 import Review from "../components/Review"
+import Calendar from "../components/Calendar"
+import { Contentcalendargrafics } from "../styles/dashboard/Contentcalendargrafics"
+import Graphic from "../components/Graphic"
 
 export default function Main(){
     return <>
@@ -53,10 +56,10 @@ export default function Main(){
                     </div>
                 </div>
             </KpiDashboard>
-            <div style={{width:'100%',height:'max-content'}}>
-                <div style={{display:'inline-block',height:'21.875em',width:'48%',background:'#fff',boxShadow:'0px 4px 4px #00000005',borderRadius:20,marginRight:'2.313em'}}></div>
-                <div style={{display:'inline-block',height:'21.875em',width:'48%',background:'#fff',boxShadow:'0px 4px 4px #00000005',borderRadius:20}}></div>
-            </div>
+            <Contentcalendargrafics>
+                <Calendar />
+                <Graphic />
+            </Contentcalendargrafics>
 
             <Review></Review>
             
