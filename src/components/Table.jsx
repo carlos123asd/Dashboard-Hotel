@@ -10,15 +10,15 @@ import { Modal } from "@mui/material";
 import { ModalNewNotes } from "../styles/table/ModalNotes";
 import { ModalNewRoom } from "../styles/table/ModalNewRoom";
 import ViewBooking from "./ViewBooking";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import handleValidateFormEditRoom from "../features/forms/validationformEditRoom";
-import deleteRoom from "../features/forms/deleteRoom";
+import deleteRoom from "../features/db/fecths/deleteRoom";
+import deleteBooking from "../features/db/fecths/deleteBooking";
 
 export default function Table({columns,data}){
     console.log(data)
     const [nextdate,setNextdate] = useState(10);
     const [actualdate,setActualdate] = useState(0);
-    const [lengthdate,setLengthdate] = useState(Math.trunc(data.length / 10));
     const locationname = useLocation().pathname;
     const [open, setOpen] = useState(false);
     const [note, setNote] = useState('');
@@ -30,6 +30,7 @@ export default function Table({columns,data}){
     const [datastate,setDatastate] = useState(data.map((info) => {
         return info
     }))
+    const [lengthdate,setLengthdate] = useState(Math.trunc(datastate.length / 10));
     const [edit,setEdit] = useState(false)
     const [showbtngroup2,setShowbtngroup2] = useState({
         display: 'none'
@@ -46,6 +47,7 @@ export default function Table({columns,data}){
     const [priceedit,setPriceedit] = useState("")
     const [discountedit,setDiscountedit] = useState("")
     const [statusedit,setStatusedit] = useState("")
+    const selectorDbData = useSelector(state => state.db.data);
 
     useEffect(() => {
         setDatastate(data.map((info) => {
@@ -87,6 +89,15 @@ export default function Table({columns,data}){
         if(column === 'Room Type'){
             return <span style={rotate} onClick={handleOrderByLetter} className="filtercolumn"></span>
         }else if(column === 'Check in'){
+            return <span style={rotate} onClick={() => handleOrderByDate('checkin')} className="filtercolumn"></span>
+        }else if(column === 'Check out'){
+            return <span style={rotate} onClick={() => handleOrderByDate('checkout')} className="filtercolumn"></span>
+        }else if(column === 'Order Date'){
+            return <span style={rotate} onClick={() => handleOrderByDate('checkdate')} className="filtercolumn"></span>
+        }
+    }
+    const othercolumnsBooking = (column) => {
+        if(column === 'Check in'){
             return <span style={rotate} onClick={() => handleOrderByDate('checkin')} className="filtercolumn"></span>
         }else if(column === 'Check out'){
             return <span style={rotate} onClick={() => handleOrderByDate('checkout')} className="filtercolumn"></span>
@@ -155,27 +166,26 @@ export default function Table({columns,data}){
         }
     }
     const handleOrderByDate = (typedate) => {
-        console.log(typedate)
+        console.log(datastate.sort((a, b) => new Date(a.orderDate) - new Date(b.orderDate)))
         if(descletter === false){
             setDescletter(true)
             rotateiconOrderBy(false)
             if(typedate === 'checkin'){
-                setDatastate(datastate.sort((a, b) => new Date(a.checkin) > new Date(b.checkin))); 
+                setDatastate(datastate.sort((a, b) => new Date(a.checkin) - new Date(b.checkin))); 
             }else if(typedate === 'checkout'){
-                setDatastate(datastate.sort((a, b) => new Date(a.checkout) > new Date(b.checkout))); 
+                setDatastate(datastate.sort((a, b) => new Date(a.checkout) - new Date(b.checkout))); 
             }else if(typedate === 'checkdate'){
-                setDatastate(datastate.sort((a, b) => new Date(a.orderDate) > new Date(b.orderDate))); 
+                setDatastate(datastate.sort((a, b) => new Date(a.orderDate) - new Date(b.orderDate))); 
             }
-            
         }else{
             setDescletter(false)
             rotateiconOrderBy(true)
             if(typedate === 'checkin'){
-                setDatastate(datastate.sort((a, b) => new Date(b.checkin) < new Date(a.checkin))); 
+                setDatastate(datastate.sort((a, b) => new Date(b.checkin) - new Date(a.checkin))); 
             }else if(typedate === 'checkout'){
-                setDatastate(datastate.sort((a, b) => new Date(b.checkout) < new Date(a.checkout))); 
+                setDatastate(datastate.sort((a, b) => new Date(b.checkout) - new Date(a.checkout))); 
             }else if(typedate === 'checkdate'){
-                setDatastate(datastate.sort((a, b) => new Date(b.orderDate) < new Date(a.orderDate))); 
+                setDatastate(datastate.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate))); 
             }
         }
     }
@@ -217,14 +227,15 @@ export default function Table({columns,data}){
         })
     }
 
-    const handleClickSave = (id,cancellation,description) => {
+    const handleClickSave = (id,cancellation,description,photo) => {
         if(parseInt(discountedit) > 0){
             handleValidateFormEditRoom({
-                idRoom: id,
-                typeroom: typeroomedit,
-                numroom: numroomedit,
-                facilities: facilitiesedit,
-                price: priceedit,
+                id: id,
+                photo: photo,
+                typeRoom: typeroomedit,
+                roomNumber: numroomedit,
+                amenities: facilitiesedit,
+                price: `$${priceedit}`,
                 offer: true,
                 discount: discountedit,
                 status: statusedit,
@@ -233,11 +244,12 @@ export default function Table({columns,data}){
             })
         }else{
             handleValidateFormEditRoom({
-                idRoom: id,
-                typeroom: typeroomedit,
-                numroom: numroomedit,
-                facilities: facilitiesedit,
-                price: priceedit,
+                id: id,
+                photo: photo,
+                typeRoom: typeroomedit,
+                roomNumber: numroomedit,
+                amenities: facilitiesedit,
+                price: `$${priceedit}`,
                 offer: false,
                 discount: discountedit,
                 status: statusedit,
@@ -245,7 +257,7 @@ export default function Table({columns,data}){
                 description: description
             })
         }
-        
+        handleClickFunctionEdit()
     }
 
     const handledeleteRoom = (id) => {
@@ -254,6 +266,18 @@ export default function Table({columns,data}){
             return room.id !== id
         }))
         handleClickFunctionCancelDelete()
+    }
+    const handledeleteBooking = (id) => {
+        console.log(id)
+        deleteBooking(id.toString())
+        setDatastate(data.filter((booking) => {
+            return booking.id !== id
+        }))
+        handleClickFunctionCancelDelete()
+    }
+
+    const handlechangeTypeRoom = (typeroom) => {
+        setTyperoomedit(typeroom)
     }
     
     if(locationname === '/bookings'){
@@ -265,7 +289,7 @@ export default function Table({columns,data}){
                         {
                             columns.map(column => {
                                 return <>
-                                    <th className="headercolumn">{column}{column === 'Guest' ? <span style={rotate} onClick={handleOrderByLetterBooking} className="filtercolumn"></span> : othercolumns(column)}</th>
+                                    <th className="headercolumn">{column}{column === 'Guest' ? <span style={rotate} onClick={handleOrderByLetterBooking} className="filtercolumn"></span> : othercolumnsBooking(column)}</th>
                                 </>
                             })
                         }
@@ -338,7 +362,7 @@ export default function Table({columns,data}){
                                             <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
                                         </div>
                                         <div style={showbtngroup3}>
-                                            <div className="status editdelete">Confirm</div>
+                                            <div className="status editdelete" onClick={() => handledeleteBooking(register.id)}>Confirm</div>
                                             <div className="status statusbooked editdelete" onClick={handleClickFunctionCancelDelete}>Cancel</div>
                                         </div>
                                 </TrMainTable>
@@ -417,11 +441,11 @@ export default function Table({columns,data}){
                                 </div>
                                 <td>
                                     <span className="deluxenum">
-                                        <select name="typeroomEditable" className="inputSelect" onChange={(e) => setTyperoomedit(e.target.value)} id="contentRoomNewRoom__roomtype">
-                                            <option value={'Single Bed'}>Single Bed</option>
-                                            <option value={'Double Bed'}>Double Bed</option>
-                                            <option value={'Double Superior'}>Double Superior</option>
-                                            <option value={'Suite'}>Suite</option>
+                                        <select name="typeroomEditable" className="inputSelect" onChange={(e) => handlechangeTypeRoom(e.target.value)} id="contentRoomNewRoom__roomtype">
+                                            <option value='Single Bed'>Single Bed</option>
+                                            <option value='Double Bed'>Double Bed</option>
+                                            <option value='Double Superior'>Double Superior</option>
+                                            <option value='Suite'>Suite</option>
                                         </select>
                                     </span>
                                 </td>
@@ -435,7 +459,7 @@ export default function Table({columns,data}){
                                         <div className="status statusbooked editdelete" onClick={handleClickFunctionDelete}>Delete</div>
                                     </div>
                                     <div style={showbtngroup2}>
-                                        <div className="status editdelete" onClick={() => handleClickSave(room.id,room.cancellation,room.description)}>Save</div>
+                                        <div className="status editdelete" onClick={() => handleClickSave(room.id,room.cancellation,room.description,room.photo)}>Save</div>
                                         <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
                                     </div>
                                     <div style={showbtngroup3}>
@@ -459,7 +483,7 @@ export default function Table({columns,data}){
                                 <td>{room.typeRoom}</td>
                                 <td>{room.amenities}</td>
                                 <td>{room.price}<span className="nightroom"> /night</span></td>
-                                <td>{`$${(parseInt(room.price.slice(1))-((parseInt(room.price.slice(1))*room.discount)/100)).toFixed(2)}(${((parseInt(room.price.slice(1))*room.discount)/100)}%)`}</td>
+                                <td>{`$${(parseInt(room.price.slice(1))-((parseInt(room.price.slice(1))*room.discount)/100)).toFixed(2)}(${room.discount}%)`}</td>
                                 <td>{room.status === 'Available' ? <div className="status">Available</div> : <div className="status statusbooked">Booked</div>}</td>
                                 <td style={{position:'relative'}}>
                                     <div style={hideedit}>
@@ -484,10 +508,9 @@ export default function Table({columns,data}){
         <PaginationTable>
             <div onClick={backPaginationData}>Prev</div>
             {
-                data.slice(0,lengthdate).map(element => {
-                    i++
+                datastate.slice(0,lengthdate).map((val,index) => {
                     return <>
-                        <div valuepagination={i} onClick={(event) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{i}</div>
+                        <div valuepagination={index} onClick={(event) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{index}</div>
                     </>
                 })
             }

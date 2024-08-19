@@ -7,13 +7,20 @@ const dbSlice = createSlice({
         status: 'idle',
         data: [],
         error: null,
+        update: false
     },
     reducers:{
         setOrderData(state,action){
              state.data = action.payload.sort((a, b) => parseInt(b.roomNumber) - parseInt(a.roomNumber))
         },
-        resetStatus(state){
-            state.status = 'idle'
+        updateDataRoom(state,action){
+            state.data.rooms = action.payload
+        },
+        updateDataBooking(state,action){
+            state.data.bookings = action.payload
+        },
+        update(state){
+            state.update = true
         }
     },
     extraReducers: (builder) => {
@@ -33,4 +40,4 @@ const dbSlice = createSlice({
 
 export default dbSlice.reducer;
 
-export const { setOrderData,resetStatus } = dbSlice.actions
+export const { setOrderData,updateDataRoom,updateDataBooking,update } = dbSlice.actions

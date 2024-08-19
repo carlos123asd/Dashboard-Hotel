@@ -21,23 +21,23 @@ export default function ViewBooking({booking}){
     const selectorDbData = useSelector(state => state.db.data);
     const selectorDbError = useSelector(state => state.db.error);
     const [loading,setLoading] = useState(true);
-    const [roomSelected,setRoomSelected] = useState([])
+    const [roomselected,setRoomselected] = useState([])
 
-    //Ver view y roomselect para traer datos Room y no bookings
-   useEffect(() =>{
+    useEffect(() => {
+        dispatch(resetStatus())
         if(stateDbStatus === 'idle'){
-            dispatch(dbThunk('rooms'));
+        setLoading(true)
+        dispatch(dbThunk('rooms'))
         }else if(stateDbStatus === 'fulfilled'){
-            setLoading(false);
-            setRoomSelected(selectorDbData.filter((room) => {
+            setRoomselected(selectorDbData.filter((room) => {
                 return room.id === booking.idRoom
             }))
         }else if(stateDbStatus === 'rejected'){
             console.log(selectorDbError)
         }
-    },[stateDbStatus])
+    },[])
 
-    console.log(roomSelected)
+    console.log(roomselected)
     if(loading === false){
         return <>
             <BookingView>
@@ -76,7 +76,7 @@ export default function ViewBooking({booking}){
                         </div>
                         <div>
                             <span>Price</span>
-                            <span>{roomSelected.price} <span>/night</span></span>
+                            <span>{roomselected.price} <span>/night</span></span>
                         </div>
                     </div>
                     <p>
@@ -86,7 +86,7 @@ export default function ViewBooking({booking}){
                     <div className="facilitiesbooking">
                         <span>Facilities</span>
                         {
-                            roomSelected.amenities.split(',').map((amenitie) => {
+                            roomselected.amenities.split(',').map((amenitie) => {
                                     return <>
                                         <div>{amenitie}</div>
                                     </> 
@@ -106,13 +106,13 @@ export default function ViewBooking({booking}){
                         className="ReviewCustomersContent"
                     >
                         {
-                            roomSelected.photo.map((img) => {
+                            roomselected.photo.map((img) => {
                                 return <>
                                     <SwiperSlide>
                                             <div style={{backgroundImage:`url('${img}')`}} className="imagebookingRight" alt="Room of the Booking"></div>
                                             <div className="contentninfoRoomBooking">
-                                                <h2 className="titroom">{roomSelected.typeRoom}</h2>
-                                                <p className="descriptionroom">{roomSelected.description}</p>
+                                                <h2 className="titroom">{roomselected.typeRoom}</h2>
+                                                <p className="descriptionroom">{roomselected.description}</p>
                                             </div>
                                     </SwiperSlide>
                                 </> 
