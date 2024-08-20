@@ -72,7 +72,7 @@ export default function NavVertical(){
                     </ImageProfileHeaderNavVertical>
                     <span className='titprofile'>William Johanson</span>
                     <span className='subtitprofile'>williamjhon@mail.com</span>
-                    <div className='btnContactUs'>Contact Us</div>
+                    <div className='btnContactUs'>Edit Profile</div>
                 </ContentContactNavVertical>
                 <ContentCopyNavVertical>
                     <span className='titcopy'>Travl Hotel Admin Dashboard</span>

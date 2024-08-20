@@ -1,14 +1,19 @@
 import styled from 'styled-components'
 export const ReviewCustomers = styled.div`
     padding: 1.875em;
-    background: #fff;
     width: 100%;
     height: 27.063em;
-    box-shadow: 0px 4px 4px #00000005;
     border-radius: 1.25em;
     position: relative;
     margin-top: 2em;
-
+    align-content: center;
+    & h2{
+        font-family: 'poppinsmedium';
+        font-size: 1.25rem;
+        line-height: 20px;
+        color: #393939;
+        font-weight: 200;
+    }
     & .btnnextswiperReview{
         width: 56px;
         height: 56px;
@@ -36,11 +41,11 @@ export const ReviewCustomers = styled.div`
     & .ReviewCustomersContent{
         &__review{
             width: 26.938em;
-            height: 100%;
+            height: 20em;
             padding: 1.875em;
-            border: 1px solid #EBEBEB;
             border-radius: 1.25em;
             background-color: #fff;
+            align-content: center;
             &:hover{
                 box-shadow: 0px 16px 30px #00000014;
             }
@@ -52,6 +57,8 @@ export const ReviewCustomers = styled.div`
                 line-height: 28px;
                 margin-bottom: 3.25em;
                 color: #4E4E4E;
+                height: 135px;
+                overflow-y: auto;
             }
             
             &__contentinfo{
@@ -89,6 +96,10 @@ export const ReviewCustomers = styled.div`
                 &__state{
                     & svg[height="22"]{
                         margin-right: 1em;
+                    }
+                    & svg:hover{
+                        cursor: pointer;
+                        scale: 1.1;
                     }
                 }
             }

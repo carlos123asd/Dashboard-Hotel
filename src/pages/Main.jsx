@@ -4,8 +4,14 @@ import Review from "../components/Review"
 import Calendar from "../components/Calendar"
 import { Contentcalendargrafics } from "../styles/dashboard/Contentcalendargrafics"
 import Graphic from "../components/Graphic"
+import { useSelector } from "react-redux"
+import { useState } from "react"
 
 export default function Main(){
+
+    const selectorDbData = useSelector(state => state.db.data.comment);
+    const [datamessage,setDatamessage] = useState(selectorDbData)
+
     return <>
         <ContentPageMain>
             <KpiDashboard>
@@ -60,9 +66,7 @@ export default function Main(){
                 <Calendar />
                 <Graphic />
             </Contentcalendargrafics>
-
-            <Review></Review>
-            
+            <Review data={datamessage} />
         </ContentPageMain>
     </>
 }

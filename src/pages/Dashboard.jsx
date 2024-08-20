@@ -10,7 +10,6 @@ import { useContextAuth } from '../features/context/AuthContext';
 export default function Dashboard(){
 
     const stateDbStatus = useSelector(state => state.db.status);
-    const selectorDbData = useSelector(state => state.db.data);
     const selectorDbError = useSelector(state => state.db.error);
     const [loading,setLoading] = useState(true);
     const dispatch = useDispatch()
@@ -27,9 +26,6 @@ export default function Dashboard(){
             console.log(selectorDbError)
         }
     },[stateDbStatus])
-
-
-    console.log(selectorDbData)
 
     if(loading === false){
         return <>

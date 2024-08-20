@@ -5,6 +5,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { useEffect, useState } from "react";
 
+import phonecontact from '../assets/imgs/phone.svg'
 import { useLocation } from "react-router-dom";
 import { Modal } from "@mui/material";
 import { ModalNewNotes } from "../styles/table/ModalNotes";
@@ -109,7 +110,7 @@ export default function Table({columns,data}){
         if(status === 'published'){
             return <span className="controlsmessage">Published</span>
         }else if(status === 'archived'){
-            return <span className="controlsmessage" style={{color:'#E23428'}}>Archived</span>
+            return <span className="controlsmessage controlsmessage--borderbottomred" style={{color:'#E23428'}}>Archived</span>
         }
     }
 
@@ -141,6 +142,17 @@ export default function Table({columns,data}){
             setDesc(false)
             rotateiconOrderBy(true)
             setDatastate(datastate.sort((a, b) => parseInt(b.price.split("$")[1])  - parseInt(a.price.split("$")[1])));
+        }
+    }
+    const handleOrderByNameEmployee = () => {
+        if(desc === false){
+            setDesc(true)
+            rotateiconOrderBy(false)
+            setDatastate(datastate.sort((a, b) => a.name.localeCompare(b.name))); 
+        }else{
+            setDesc(false)
+            rotateiconOrderBy(true)
+            setDatastate(datastate.sort((a, b) => b.name.localeCompare(a.name))); 
         }
     }
     const handleOrderByLetter = () => {
@@ -342,16 +354,16 @@ export default function Table({columns,data}){
                                         <td onClick={() => viewbooking(register)}>
                                             <img className="imgroomnameColum" width={150} height={77} src={''} alt="Image Room" />
                                             <div className="roomnameColumn">
-                                                <span className="deluxenum numtit--black">{`${register.guest}`}</span>
+                                                <span className="deluxenum numtit--black namebooking">{`${register.guest}`}</span>
                                                 <span className="numtit">{`${'Double Room'}-${'12341'}`}</span>
                                             </div>
                                         </td>
                                     </div>
                                     <td>{register.orderDate} {register.ordertime}</td>
-                                    <td>{register.checkin}<br/>{register.timein}</td>
-                                    <td>{register.checkout}<br/>{register.timeout}</td>
+                                    <td><span className="namebooking">{register.checkin}</span><br/><span className="timeinbooking">{register.timein}</span></td>
+                                    <td><span className="namebooking">{register.checkout}</span><br/><span className="timeinbooking">{register.timeout}</span></td>
                                     <td onClick={() => handleOpen(register.specialRequest)} notes='true'>View Notes</td>
-                                    <td>{register.roomType}</td>
+                                    <td className="namebooking">{register.roomType}</td>
                                     <td>{register.status === 'Check In' ? <div className="status">Check In</div> : otherState(register.status)}</td>
                                         <div style={hideedit}>
                                             <div className="status editdelete" onClick={handleClickFunctionEdit}>Edit</div>
@@ -476,13 +488,13 @@ export default function Table({columns,data}){
                                         <img className="imgroomnameColum" width={150} height={77} src={room.photo[0]} alt="Image Room" />
                                         <div className="roomnameColumn">
                                             <span className="numtit">{`#000${room.id}`}</span>
-                                            <span className="deluxenum">{`${room.typeRoom}-${room.roomNumber}`}</span>
+                                            <span className="deluxenum mediumletter">{`${room.typeRoom}-${room.roomNumber}`}</span>
                                         </div>
                                     </td>
                                 </div>
-                                <td>{room.typeRoom}</td>
-                                <td>{room.amenities}</td>
-                                <td>{room.price}<span className="nightroom"> /night</span></td>
+                                <td className="mediumletter">{room.typeRoom}</td>
+                                <td className="mediumletter">{room.amenities}</td>
+                                <td><span className="priceRoom">{room.price}</span><span className="nightroom"> /night</span></td>
                                 <td>{`$${(parseInt(room.price.slice(1))-((parseInt(room.price.slice(1))*room.discount)/100)).toFixed(2)}(${room.discount}%)`}</td>
                                 <td>{room.status === 'Available' ? <div className="status">Available</div> : <div className="status statusbooked">Booked</div>}</td>
                                 <td style={{position:'relative'}}>
@@ -572,28 +584,40 @@ export default function Table({columns,data}){
                             {
                                 columns.map(column => {
                                     return <>
-                                        <th className="headercolumn">{column}</th>
+                                        <th className="headercolumn">{column}{column === 'Name' ? <span style={rotate} onClick={handleOrderByNameEmployee} className="filtercolumn"></span> : <></>}</th>
                                     </>
                                 })
                             }
                         </TrMainTable>
                         
                         {
-                        data.slice(actualdate,nextdate).map(employee => {
+                        datastate.slice(actualdate,nextdate).map(employee => {
                             return <>  
                                 <TrMainTable>
                                     <div>
                                         <td>
                                             <img className="imgroomnameColum" width={150} height={77} src={employee.photo} alt="Image Employee" />
                                             <div className="roomnameColumn">
-                                                <span className="numtit">{employee.name}</span>
-                                                <span className="deluxenum">#{employee.idemployee}<br/>Joined on {employee.startdate}</span>
+                                                <span className="nameemployee">{employee.name}</span>
+                                                <span className="deluxenum">#{employee.id}<br/>Joined on {employee.startdate}</span>
                                             </div>
                                         </td>
                                     </div>
-                                    <td>{employee.description}</td>
-                                    <td><span>{employee.phone}</span><br /><span>{employee.email}</span></td>
-                                    <td>{employee.status}</td>
+                                    <td className="descriptionemployee">{employee.description}</td>
+                                    <td className="contactemployee"><span><img src={phonecontact} alt="Contact Employee" />{employee.phone}</span><br /><span>{employee.email}</span></td>
+                                    {employee.status === 'active' ? <td className="statusemployee statusemployee--active">{employee.status}</td> : <td className="statusemployee statusemployee--inactive">{employee.status}</td>}
+                                        <div style={hideedit}>
+                                            <div className="status editdelete" onClick={handleClickFunctionEdit}>Edit</div>
+                                            <div className="status statusbooked editdelete" onClick={handleClickFunctionDelete}>Delete</div>
+                                        </div>
+                                        <div style={showbtngroup2}>
+                                            <div className="status editdelete">Save</div>
+                                            <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
+                                        </div>
+                                        <div style={showbtngroup3}>
+                                            <div className="status editdelete" onClick={() => handledeleteBooking(register.id)}>Confirm</div>
+                                            <div className="status statusbooked editdelete" onClick={handleClickFunctionCancelDelete}>Cancel</div>
+                                        </div>
                                 </TrMainTable>
                             </>
                         })}

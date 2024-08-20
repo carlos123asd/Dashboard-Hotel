@@ -5,14 +5,14 @@ import { Navigation } from 'swiper/modules';
 import next from '../assets/imgs/arrow.svg'
 import back from '../assets/imgs/arrow.svg'
 import  profile from '../assets/imgs/menu/lateral/perfil.jpg'
-import comments from '../data/comment.json'
 
-export default function Review(){
+export default function Review({data}){
     return <>
-            <ReviewCustomers style={{marginBottom:'5.406em'}}>
+            <ReviewCustomers>
+                <h2>Latest Review by Customers</h2>
                 <Swiper
                     modules={[Navigation]}
-                    spaceBetween={40}
+                    spaceBetween={150}
                     slidesPerView={3}
                     navigation={{ 
                                     nextEl: '.swiper-button-next',
@@ -32,9 +32,9 @@ export default function Review(){
                     className="ReviewCustomersContent"
                 >
                     {
-                        comments.map((comment) => {
+                        data.map((comment) => {
                             return <>
-                                <SwiperSlide style={{width:431.667}}>
+                                <SwiperSlide style={{width:'max-content',height:'100%'}}>
                                     <div className="ReviewCustomersContent__review">
                                         <p>{comment.comment}</p>
                                         <div className="ReviewCustomersContent__review__contentinfo">

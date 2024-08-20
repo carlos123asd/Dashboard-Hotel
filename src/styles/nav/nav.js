@@ -155,7 +155,6 @@ export const ContentContactNavVertical = styled.div`
     & .btnContactUs{
         font-family: 'poppinssemibold';
         width: 9.875em;
-        height: 2.938em;
         background-color: #EBF1EF;
         color: #135846;
         text-align: center;
@@ -163,6 +162,11 @@ export const ContentContactNavVertical = styled.div`
         margin: 0 auto;
         margin-top: 1em;
         border-radius: 0.5em;
+        box-shadow: 0px 4px 4px #135846;
+        cursor: pointer;
+        &:hover{
+            scale: 1.1;
+        } 
     }
 `
 export const ContentPageMain = styled.div`

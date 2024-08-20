@@ -5,6 +5,45 @@ export const TrMainTable = styled.tr`
         font-family: 'poppinsregular';
         color: #212121;
         line-height: 25px;
+        & .mediumletter{
+            font-family: 'poppinsmedium';
+        }
+        & .priceRoom{
+            color: #212121;
+            font-family: 'poppinssemibold';
+        }
+        & .timeinbooking{
+            font-size: 0.88rem;
+        }
+        & .namebooking{
+            font-family: 'poppinsmedium';
+            line-height: 25px;
+            color: #393939;
+        }
+        & .nameemployee{
+            font-family: 'poppinsmedium';
+            color: #212121;
+        }
+        & .descriptionemployee{
+            line-height: 25px;
+            color: #393939;
+        }
+        & .contactemployee{
+            font-family: 'poppinssemibold';
+            & img{
+                vertical-align: text-bottom;
+            }
+        }
+        & .statusemployee{
+            text-transform: uppercase;
+            font-family: 'poppinssemibold';
+            &--active{
+                color: #5AD07A;
+            }
+            &--inactive{
+                color: #E23428;
+            }
+        }
         & .textareainputroomeditable{
             width: 100%;
             height: 7em;
@@ -70,6 +109,9 @@ export const TrMainTable = styled.tr`
             cursor: pointer;
             &:hover{
                border-bottom: 1px solid #5AD07A;
+            }
+            &--borderbottomred:hover{
+                border-bottom: 1px solid #E23428;
             }
         }
         & .controlsmessage:nth-child(2){
@@ -166,10 +208,11 @@ export const TrMainTable = styled.tr`
         }
         & td[notes="true"]{
             height: 3.063em;
+            border: 1px solid #799283;
             border-radius: 1rem;
             padding: .5em;
-            background: #5AD07A;
-            color: black;
+            background: #fff;
+            color: #799283;
             cursor: pointer;
             display: block;
             align-content: center;
@@ -177,6 +220,7 @@ export const TrMainTable = styled.tr`
                 background: #fff;
                 color: #5AD07A;
                 border: 1px solid #5AD07A;
+                scale: 1.1;
             }
         }
 `
