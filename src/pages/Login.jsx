@@ -3,14 +3,28 @@ import logo from '../assets/imgs/logo.svg'
 import {LoginImg,LoginTit,LoginSub,LoginLabel,LoginContentInline,LoginInput,LoginForm,LoginBtn,LoginContentMain} from '../styles/login/login'
 import Toastify from 'toastify-js'
 import "toastify-js/src/toastify.css"
+import { useContextAuth } from '../features/context/AuthContext';
+import { useState } from 'react';
 
 export default function Login(){
     sessionStorage.setItem('auth',true);
     const navigate = useNavigate(); 
+    const {dispatch} = useContextAuth()
+    const [inputName,setInputName] = useState("")
+    const [email,setEmail] = useState("carlos-medin@hotmail.com")
 
+    console.log(useContextAuth())
+    
     const validateAuth = (event) => {
         event.preventDefault();
-        if(sessionStorage.getItem('auth')){
+        if(sessionStorage.getItem('auth') === 'true'){
+            dispatch({
+                type: 'LOGIN',
+                payload: {
+                    name: inputName,
+                    email: email
+                }
+            })
             Toastify({
                 text: "Correcto, Bienvenido!!",
                 duration: 2000,
@@ -48,7 +62,7 @@ export default function Login(){
             <LoginForm onSubmit={validateAuth} action="">
                 <LoginContentInline>
                     <LoginLabel htmlFor="username">Username:</LoginLabel>
-                    <LoginInput id='username' type="text" placeholder='Enter username' />
+                    <LoginInput onChange={(e) => setInputName(e.target.value)} id='username' type="text" placeholder='Enter username' />
                 </LoginContentInline>
                 <LoginContentInline>
                     <LoginLabel htmlFor="password">Password:</LoginLabel>

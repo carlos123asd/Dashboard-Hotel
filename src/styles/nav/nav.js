@@ -17,6 +17,7 @@ export const ContentNavMain = styled.div`
 export const ContentNavImg = styled.div`
     display: inline-block;
     margin-right: 3em;
+    cursor: pointer;
 `
 
 export const ContentNavTit = styled.span`

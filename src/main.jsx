@@ -9,20 +9,23 @@ import Concierge from './pages/Concierge'
 import Main from './pages/Main'
 import { Provider } from 'react-redux'
 import { store } from './store/store'
+import { AuthProvider } from './features/context/AuthContext'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    <BrowserRouter>
-      <Routes>
-        <Route path='/login' element={<Login />} />
-        <Route path='/' element={<Dashboard />}>
-          <Route path='/' element={<Main />} />
-          <Route path='/room' element={<Room />} />
-          <Route path='/bookings' element={<Booking />} />
-          <Route path='/users' element={<Guest />} />
-          <Route path='/contact' element={<Concierge />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/login' element={<Login />} />
+          <Route path='/' element={<Dashboard />}>
+            <Route path='/' element={<Main />} />
+            <Route path='/room' element={<Room />} />
+            <Route path='/bookings' element={<Booking />} />
+            <Route path='/users' element={<Guest />} />
+            <Route path='/contact' element={<Concierge />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   </Provider>
 )

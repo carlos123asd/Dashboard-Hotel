@@ -13,6 +13,7 @@ import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Toastify from 'toastify-js'
 import "toastify-js/src/toastify.css"
+import { useContextAuth } from '../features/context/AuthContext'
 
 export default function Nav(){
     const [vertical,setVertical] = useState(false);
@@ -20,6 +21,7 @@ export default function Nav(){
     const [styleleft,setStyleleft] = useState({'left': '-5%'});
     const navigate = useNavigate();
     const path = useLocation();
+    const { dispatch } = useContextAuth()
 
     const showNavVertical = () => {
         if(vertical === false){
@@ -45,6 +47,9 @@ export default function Nav(){
     }
 
     const logout = () => {
+        dispatch({
+            type: 'LOGOUT'
+        })
         Toastify({
             text: "Hasta Luego 👋🏻",
             duration: 1000,

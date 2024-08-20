@@ -5,6 +5,7 @@ import NavVertical from '../components/NavVertical'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { dbThunk } from '../features/db/dbThunk';
+import { useContextAuth } from '../features/context/AuthContext';
 
 export default function Dashboard(){
 
@@ -13,6 +14,9 @@ export default function Dashboard(){
     const selectorDbError = useSelector(state => state.db.error);
     const [loading,setLoading] = useState(true);
     const dispatch = useDispatch()
+
+    const authcontext = useContextAuth()
+    console.log(authcontext)
     
     useEffect(() =>{
         if(stateDbStatus === 'idle'){
