@@ -12,12 +12,33 @@ export const ContentNavMain = styled.div`
     padding-left: 25%;
     grid-column: 1 / 3;
     grid-row: 1;
+
+    & .pos-relative{
+        position: relative;
+    }
 `
 
 export const ContentNavImg = styled.div`
     display: inline-block;
     margin-right: 3em;
     cursor: pointer;
+    position: relative;
+    & .contennotification{
+        &__num{
+            width: 30px;
+            height: 30px;
+            background-color: #E23428;
+            color: #fff;
+            font-size: .88rem;
+            font-family: 'poppinssemibold';
+            padding: 0.38rem;
+            border-radius: 8px;
+            position: absolute;
+            top: -1em;
+            right: -1em;
+            text-align: center;
+        }
+    }
 `
 
 export const ContentNavTit = styled.span`

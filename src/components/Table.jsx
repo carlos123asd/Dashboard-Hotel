@@ -21,7 +21,7 @@ export default function Table({columns,data}){
     const [nextdate,setNextdate] = useState(10);
     const [actualdate,setActualdate] = useState(0);
     const locationname = useLocation().pathname;
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false); 
     const [note, setNote] = useState('');
     const [bookingvisible, setBookingvisible] = useState(false);
     const [databooking, setDatabooking] = useState({});
@@ -32,7 +32,7 @@ export default function Table({columns,data}){
         return info
     }))
     const [lengthdate,setLengthdate] = useState(Math.trunc(datastate.length / 10));
-    const [edit,setEdit] = useState(false)
+    const [edit,setEdit] = useState(false) //evaluar de bool a id
     const [showbtngroup2,setShowbtngroup2] = useState({
         display: 'none'
     })
@@ -48,7 +48,6 @@ export default function Table({columns,data}){
     const [priceedit,setPriceedit] = useState("")
     const [discountedit,setDiscountedit] = useState("")
     const [statusedit,setStatusedit] = useState("")
-    const selectorDbData = useSelector(state => state.db.data);
 
     useEffect(() => {
         setDatastate(data.map((info) => {

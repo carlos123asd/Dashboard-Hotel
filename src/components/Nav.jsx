@@ -14,6 +14,12 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import Toastify from 'toastify-js'
 import "toastify-js/src/toastify.css"
 import { useContextAuth } from '../features/context/AuthContext'
+import ListBookings from './ListBookings'
+import { useDispatch, useSelector } from 'react-redux'
+import { hidemessage, hidenotBookings, shownotificationBooking, shownotificationMessage } from '../features/TopMenu/NotificationSlice'
+import { styled } from '@mui/material/styles';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import ListMessage from './ListMessage'
 
 export default function Nav(){
     const [vertical,setVertical] = useState(false);
@@ -21,7 +27,30 @@ export default function Nav(){
     const [styleleft,setStyleleft] = useState({'left': '-5%'});
     const navigate = useNavigate();
     const path = useLocation();
-    const { dispatch } = useContextAuth()
+    const dispatchNav = useDispatch();
+    const { dispatch } = useContextAuth();
+    const selectorDBBookings = useSelector(state => state.db.data.bookings)
+    const selectorDBMessage = useSelector(state => state.db.data.comment)
+    const filterbymonthActualNum = (selectorDBBookings.filter((booking) => {
+        return new Date(booking.orderDate).getMonth() === new Date().getMonth()
+    })).length
+    const Messagewaiting = (selectorDBMessage.filter((message) => {
+        return message.status === 'none'
+    })).length
+
+
+    const NotificationTooltip = styled(({ className, ...props }) => (
+        <Tooltip {...props} classes={{ popper: className }} />
+      ))(({ theme }) => ({
+        [`& .${tooltipClasses.tooltip}`]: {
+          backgroundColor: '#135846',
+          color: '#fff',
+          fontFamily:'poppinssemibold',
+          boxShadow: theme.shadows[1],
+          fontSize: 11,
+        },
+      }));
+
 
     const showNavVertical = () => {
         if(vertical === false){
@@ -65,6 +94,16 @@ export default function Nav(){
         },1000)
     }
 
+    const handleShowListBookings = () => {
+        dispatchNav(shownotificationBooking())
+        dispatchNav(hidemessage(false))
+    }
+    const handleShowListMessage = () => {
+        dispatchNav(shownotificationMessage())
+        dispatchNav(hidenotBookings(false))
+        
+    }
+
     return <>
         <ContentNavMain>
             <div style={style}>
@@ -72,10 +111,32 @@ export default function Nav(){
                 <ContentNavTit>{path.pathname === '/' ? 'Dashboard' : (path.pathname.split('/')[1])[0].toUpperCase()+(path.pathname.split('/')[1]).slice(1)}</ContentNavTit>
             </div>
             
-            <div style={styleleft}>
-                <ContentNavImg><img width={26} height={35} src={iconmessage} alt="Messages" /></ContentNavImg>
-                <ContentNavImg><img width={26} height={35} src={iconnotification} alt="Notifications" /></ContentNavImg>
-                <ContentNavImg onClick={logout} className='margin-2'><img width={22} height={31} src={iconlogout} alt="Log Out" /></ContentNavImg>
+            <div className='pos-relative' style={styleleft}>
+                <ContentNavImg>
+                    <NotificationTooltip title="Latest Review by Customers" onClick={handleShowListMessage} className='contennotification'>
+                        <img width={26} height={35} src={iconmessage} alt="Messages" />
+                        <div className='contennotification__num'>{Messagewaiting}</div>
+                    </NotificationTooltip>
+                    <div style={{left: 0,position: 'absolute'}}>
+                        <ListMessage />
+                    </div>
+                </ContentNavImg>
+
+                <ContentNavImg>
+                    <NotificationTooltip title="Reservations for this month" onClick={handleShowListBookings} className='contennotification'>
+                        <img width={26} height={35} src={iconnotification} alt="Notifications" />
+                        <div className='contennotification__num'>{filterbymonthActualNum}</div>
+                    </NotificationTooltip>
+                    <div style={{left: 0,position: 'absolute'}}>
+                        <ListBookings />
+                    </div>
+                </ContentNavImg>
+
+                <ContentNavImg onClick={logout} className='margin-2'>
+                    <NotificationTooltip title="Log Out">
+                        <img width={22} height={31} src={iconlogout} alt="Log Out" />
+                    </NotificationTooltip>
+                </ContentNavImg>
             </div>
         </ContentNavMain>
     </>

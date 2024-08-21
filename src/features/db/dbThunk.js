@@ -14,8 +14,8 @@ export const dbThunk = createAsyncThunk('dbThunk', async (table="") => {
             const jsonemployee = await employee.json()
             const jsoncomment = await comment.json()
             data = {
-                "rooms":jsonrooms,
-                "bookings":jsonbookings,
+                "rooms":jsonrooms.sort((a, b) => b.roomNumber - a.roomNumber),
+                "bookings":jsonbookings.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate)),
                 "employee":jsonemployee.sort((a, b) => new Date(b.startdate) - new Date(a.startdate)),
                 "comment":jsoncomment.sort((a, b) => new Date((b.date.split(' '))[0]) - new Date((a.date.split(' '))[0])),
             }

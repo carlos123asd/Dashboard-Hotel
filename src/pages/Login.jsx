@@ -26,7 +26,7 @@ export default function Login(){
                 }
             })
             Toastify({
-                text: "Correcto, Bienvenido!!",
+                text: "🏠 Bienvenido!!",
                 duration: 2000,
                 gravity: 'top',
                 position: 'center',
@@ -41,7 +41,7 @@ export default function Login(){
         }
         else{
         Toastify({
-            text: "Usuario no Valido",
+            text: "Usuario no encontrado",
             duration: 3000,
             gravity: 'top',
             position: 'center',
@@ -66,7 +66,7 @@ export default function Login(){
                 </LoginContentInline>
                 <LoginContentInline>
                     <LoginLabel htmlFor="password">Password:</LoginLabel>
-                    <LoginInput id='password' type="text" placeholder='Enter password' />
+                    <LoginInput id='password' type="password" placeholder='Enter password' />
                 </LoginContentInline>
                 <LoginBtn type='submit' value="Log In" />
             </LoginForm>

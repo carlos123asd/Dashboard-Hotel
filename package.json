@@ -11,13 +11,13 @@
     "server": "json-server --watch ./src/data/room.json --port 3004"
   },
   "dependencies": {
-    "@emotion/react": "^11.13.0",
+    "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@fullcalendar/core": "^6.1.15",
     "@fullcalendar/daygrid": "^6.1.15",
     "@fullcalendar/interaction": "^6.1.15",
     "@fullcalendar/react": "^6.1.15",
-    "@mui/material": "^5.16.6",
+    "@mui/material": "^5.16.7",
     "@reduxjs/toolkit": "^2.2.7",
     "bizcharts": "^4.1.23",
     "bootstrap": "^5.3.3",
