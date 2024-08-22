@@ -5,6 +5,10 @@ export const TrMainTable = styled.tr`
         font-family: 'poppinsregular';
         color: #212121;
         line-height: 25px;
+       /* & th[type="room"]:nth-last-child(n+4){
+            border: 1px solid red;
+            width: 6em;
+        }*/
         & .mediumletter{
             font-family: 'poppinsmedium';
         }
@@ -106,12 +110,25 @@ export const TrMainTable = styled.tr`
             font-size: 1rem;
             line-height: 25px;
             color: #5AD07A;
-            cursor: pointer;
+            margin-right: .6em;
+            &--cursor{
+                cursor: pointer;
+            }
             &:hover{
                border-bottom: 1px solid #5AD07A;
             }
             &--borderbottomred:hover{
                 border-bottom: 1px solid #E23428;
+            }
+            &--bordernone{
+                border: none !important;
+            }
+        }
+        & img[alt="Unpublish"],img[alt="Unarchive"]{
+            transition: scale .6s;
+            cursor: pointer;
+            &:hover{
+                scale: 1.2;
             }
         }
         & .controlsmessage:nth-child(2){

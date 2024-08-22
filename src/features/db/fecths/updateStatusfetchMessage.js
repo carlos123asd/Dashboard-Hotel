@@ -1,12 +1,12 @@
 import Toastify from 'toastify-js'
 
-const updateStatusfetchMessage = (message,type) => {
-    if(type === 'publish'){
+const updateStatusfetchMessage = (message,type,notification) => {
+    console.log(notification)
         fetch(`http://localhost:3004/comment/${message.id}`,{
             method: 'PUT',
             body: JSON.stringify({
                 ...message,
-                status: "published"
+                status: type
             }), //Objeto -> JSON
             headers: {
                 'Content-type': 'application/json; charset=UTF-8'
@@ -15,7 +15,7 @@ const updateStatusfetchMessage = (message,type) => {
                 if(response.ok){
                     console.log(response.json())
                     Toastify({
-                        text: "Message Published",
+                        text: notification,
                         duration: 3000,
                         gravity: 'top',
                         position: 'center',
@@ -25,31 +25,6 @@ const updateStatusfetchMessage = (message,type) => {
                     }).showToast();
                 }
             }).catch(error => console.log(error))
-    }else if(type === 'archive'){
-        fetch(`http://localhost:3004/comment/${message.id}`,{
-            method: 'PUT',
-            body: JSON.stringify({
-                ...message,
-                status: "archived"
-            }), //Objeto -> JSON
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8'
-            }
-            }).then(response => {
-                if(response.ok){
-                    console.log(response.json())
-                    Toastify({
-                        text: "Message Archived",
-                        duration: 3000,
-                        gravity: 'top',
-                        position: 'center',
-                        style:{
-                            background: '#135846'
-                        }
-                    }).showToast();
-                }
-            }).catch(error => console.log(error))
-    }
 }
 
 export default updateStatusfetchMessage

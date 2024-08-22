@@ -5,47 +5,24 @@ import { SwiperSlide,Swiper } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import next from '../assets/imgs/arrow.svg'
 import back from '../assets/imgs/arrow.svg'
-import rooms from '../data/room.json'
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { dbThunk } from "../features/db/dbThunk";
+import { useSelector } from "react-redux";
+import logo from '../assets/imgs/logo.svg'
 
-export default function ViewBooking({booking}){
-    console.log(booking)
-    /*const roomselected = (rooms.filter(room => {
-        return room.idRoom === booking.idRoom
-    }))[0]*/
-   // console.log(roomselected)
-    const dispatch = useDispatch()
-    const stateDbStatus = useSelector(state => state.db.status);
-    const selectorDbData = useSelector(state => state.db.data);
-    const selectorDbError = useSelector(state => state.db.error);
-    const [loading,setLoading] = useState(true);
-    const [roomselected,setRoomselected] = useState([])
-
-    useEffect(() => {
-        dispatch(resetStatus())
-        if(stateDbStatus === 'idle'){
-        setLoading(true)
-        dispatch(dbThunk('rooms'))
-        }else if(stateDbStatus === 'fulfilled'){
-            setRoomselected(selectorDbData.filter((room) => {
-                return room.id === booking.idRoom
-            }))
-        }else if(stateDbStatus === 'rejected'){
-            console.log(selectorDbError)
-        }
-    },[])
-
-    console.log(roomselected)
-    if(loading === false){
+export default function ViewBooking(booking){
+    booking = booking.booking
+    const dbRoom = useSelector(state => state.db.data.rooms)
+    console.log(dbRoom)
+    const roomselected = dbRoom.filter((room) => {
+        return room.id === booking.idRoom
+    })
+    console.log(roomselected[0].amenities)
         return <>
             <BookingView>
                 <div>
                     <div>
                         <div>
                             <div className="infobooking">
-                                <div className="imagenperfil"></div>
+                                <img src={logo} alt="Logo Booking" />
                                 <div>
                                     <span>{booking.guest}</span>
                                     <span>ID {booking.id}</span>
@@ -76,7 +53,7 @@ export default function ViewBooking({booking}){
                         </div>
                         <div>
                             <span>Price</span>
-                            <span>{roomselected.price} <span>/night</span></span>
+                            <span>{roomselected[0].price} <span>/night</span></span>
                         </div>
                     </div>
                     <p>
@@ -86,7 +63,7 @@ export default function ViewBooking({booking}){
                     <div className="facilitiesbooking">
                         <span>Facilities</span>
                         {
-                            roomselected.amenities.split(',').map((amenitie) => {
+                            roomselected[0].amenities.split(',').map((amenitie) => {
                                     return <>
                                         <div>{amenitie}</div>
                                     </> 
@@ -106,14 +83,15 @@ export default function ViewBooking({booking}){
                         className="ReviewCustomersContent"
                     >
                         {
-                            roomselected.photo.map((img) => {
+                            roomselected[0].photo.map((img) => {
                                 return <>
                                     <SwiperSlide>
                                             <div style={{backgroundImage:`url('${img}')`}} className="imagebookingRight" alt="Room of the Booking"></div>
                                             <div className="contentninfoRoomBooking">
-                                                <h2 className="titroom">{roomselected.typeRoom}</h2>
-                                                <p className="descriptionroom">{roomselected.description}</p>
+                                                <h2 className="titroom">{roomselected[0].typeRoom}</h2>
+                                                <p className="descriptionroom">{roomselected[0].description}</p>
                                             </div>
+                                            {roomselected[0].status === 'Available' ? <div className="statusBooking statusBooking--available">{roomselected[0].status}</div> : <div className="statusBooking statusBooking--booked">{roomselected[0].status}</div>}
                                     </SwiperSlide>
                                 </> 
                             })
@@ -126,5 +104,4 @@ export default function ViewBooking({booking}){
                 </div>
             </BookingView>
         </>
-    }
 }

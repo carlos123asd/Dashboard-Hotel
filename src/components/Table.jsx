@@ -5,26 +5,17 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { useEffect, useState } from "react";
 
-import phonecontact from '../assets/imgs/phone.svg'
+
 import { useLocation } from "react-router-dom";
-import { Modal } from "@mui/material";
-import { ModalNewNotes } from "../styles/table/ModalNotes";
-import { ModalNewRoom } from "../styles/table/ModalNewRoom";
-import ViewBooking from "./ViewBooking";
-import { useSelector } from "react-redux";
-import handleValidateFormEditRoom from "../features/forms/validationformEditRoom";
-import deleteRoom from "../features/db/fecths/deleteRoom";
-import deleteBooking from "../features/db/fecths/deleteBooking";
+import restart from '../assets/imgs/restart.svg'
+import updateStatusfetchMessage from "../features/db/fecths/updateStatusfetchMessage";
+import RowTable from "./RowTable";
 
 export default function Table({columns,data}){
     console.log(data)
     const [nextdate,setNextdate] = useState(10);
     const [actualdate,setActualdate] = useState(0);
     const locationname = useLocation().pathname;
-    const [open, setOpen] = useState(false); 
-    const [note, setNote] = useState('');
-    const [bookingvisible, setBookingvisible] = useState(false);
-    const [databooking, setDatabooking] = useState({});
     const [desc,setDesc] = useState(false);
     const [descletter,setDescletter] = useState(false);
     const [rotate,setRotate] = useState({});
@@ -32,22 +23,7 @@ export default function Table({columns,data}){
         return info
     }))
     const [lengthdate,setLengthdate] = useState(Math.trunc(datastate.length / 10));
-    const [edit,setEdit] = useState(false) //evaluar de bool a id
-    const [showbtngroup2,setShowbtngroup2] = useState({
-        display: 'none'
-    })
-    const [showbtngroup3,setShowbtngroup3] = useState({
-        display: 'none'
-    })
-    const [hideedit,setHideedit] = useState({
-        display: 'inline-block'
-    })
-    const [typeroomedit,setTyperoomedit] = useState("")
-    const [numroomedit,setNumroomedit] = useState("")
-    const [facilitiesedit,setFacilitiesedit] = useState("")
-    const [priceedit,setPriceedit] = useState("")
-    const [discountedit,setDiscountedit] = useState("")
-    const [statusedit,setStatusedit] = useState("")
+    const [columnsedit,setColumnsedit] = useState(columns)
 
     useEffect(() => {
         setDatastate(data.map((info) => {
@@ -55,11 +31,6 @@ export default function Table({columns,data}){
         }))
     },[data])
 
-    const handleOpen = (note) => {
-        setNote(note)
-        setOpen(true)
-    };
-    const handleClose = () => setOpen(false);
     let i = 0
     const nextPaginationData = () => {
         if(nextdate <= data.length){
@@ -78,22 +49,10 @@ export default function Table({columns,data}){
         setNextdate(num * 10);
     }
 
-    const otherState = (state) => {
-        if(state === 'In Progress'){
-            return <div className="status statusinprogress">In Progress</div>
-        }else if(state === 'Check Out'){
-            return <div className="status statusbooked">Check Out</div>
-        }
-    }
     const othercolumns = (column) => {
+        console.log(column)
         if(column === 'Room Type'){
             return <span style={rotate} onClick={handleOrderByLetter} className="filtercolumn"></span>
-        }else if(column === 'Check in'){
-            return <span style={rotate} onClick={() => handleOrderByDate('checkin')} className="filtercolumn"></span>
-        }else if(column === 'Check out'){
-            return <span style={rotate} onClick={() => handleOrderByDate('checkout')} className="filtercolumn"></span>
-        }else if(column === 'Order Date'){
-            return <span style={rotate} onClick={() => handleOrderByDate('checkdate')} className="filtercolumn"></span>
         }
     }
     const othercolumnsBooking = (column) => {
@@ -105,17 +64,28 @@ export default function Table({columns,data}){
             return <span style={rotate} onClick={() => handleOrderByDate('checkdate')} className="filtercolumn"></span>
         }
     }
-    const otherStatusMessage = (status) => {
-        if(status === 'published'){
-            return <span className="controlsmessage">Published</span>
-        }else if(status === 'archived'){
-            return <span className="controlsmessage controlsmessage--borderbottomred" style={{color:'#E23428'}}>Archived</span>
+    const otherStatusMessage = (message) => {
+        if(message.status === 'published'){
+            return <>
+                <span className="controlsmessage controlsmessage--bordernone">Published</span>
+                <img onClick={() => handlerestart(message)} src={restart} alt="Unpublish" />
+            </>
+        }else if(message.status === 'archived'){
+            return <>
+                <span className="controlsmessage controlsmessage--bordernone" style={{color:'#E23428'}}>Archived</span>
+                <img onClick={() => handlerestart(message)} src={restart} alt="Unarchive" />
+            </> 
         }
     }
-
-    const viewbooking = (booking) => {
-        setBookingvisible(true);
-        setDatabooking(booking)
+     
+    const handlepublish = (message) => {
+        updateStatusfetchMessage(message,'publish','Message Published')
+    }
+    const handlearchive = (message) => {
+        updateStatusfetchMessage(message,'archive','Message Archived')
+    }
+    const handlerestart = (message) => {
+        updateStatusfetchMessage(message,'none','Message Restored')
     }
 
     const rotateiconOrderBy = (order) =>{
@@ -201,95 +171,7 @@ export default function Table({columns,data}){
         }
     }
 
-    const handleClickFunctionEdit = () => {
-        if(edit === false){
-            setEdit(true)
-            setShowbtngroup2({
-                display: 'inline-block'
-            })
-            setHideedit({
-                display: 'none'
-            })
-        }else{
-            setEdit(false)
-            setShowbtngroup2({
-                display: 'none'
-            })
-            setHideedit({
-                display: 'inline-block'
-            })
-        }
-        
-    }
-    const handleClickFunctionDelete = () => {
-            setShowbtngroup3({
-                display: 'inline-block'
-            })
-            setHideedit({
-                display: 'none'
-            })
-    }
-    const handleClickFunctionCancelDelete = () => {
-        setShowbtngroup3({
-            display: 'none'
-        })
-        setHideedit({
-            display: 'inline-block'
-        })
-    }
-
-    const handleClickSave = (id,cancellation,description,photo) => {
-        if(parseInt(discountedit) > 0){
-            handleValidateFormEditRoom({
-                id: id,
-                photo: photo,
-                typeRoom: typeroomedit,
-                roomNumber: numroomedit,
-                amenities: facilitiesedit,
-                price: `$${priceedit}`,
-                offer: true,
-                discount: discountedit,
-                status: statusedit,
-                cancellation: cancellation,
-                description: description
-            })
-        }else{
-            handleValidateFormEditRoom({
-                id: id,
-                photo: photo,
-                typeRoom: typeroomedit,
-                roomNumber: numroomedit,
-                amenities: facilitiesedit,
-                price: `$${priceedit}`,
-                offer: false,
-                discount: discountedit,
-                status: statusedit,
-                cancellation: cancellation,
-                description: description
-            })
-        }
-        handleClickFunctionEdit()
-    }
-
-    const handledeleteRoom = (id) => {
-        deleteRoom(id)
-        setDatastate(data.filter((room) => {
-            return room.id !== id
-        }))
-        handleClickFunctionCancelDelete()
-    }
-    const handledeleteBooking = (id) => {
-        console.log(id)
-        deleteBooking(id.toString())
-        setDatastate(data.filter((booking) => {
-            return booking.id !== id
-        }))
-        handleClickFunctionCancelDelete()
-    }
-
-    const handlechangeTypeRoom = (typeroom) => {
-        setTyperoomedit(typeroom)
-    }
+    console.log(columnsedit)
     
     if(locationname === '/bookings'){
         return <>
@@ -307,108 +189,16 @@ export default function Table({columns,data}){
                     </TrMainTable>
                     
                     {
-                        datastate.slice(actualdate,nextdate).map(register => {
-                            console.log(register)
-                           return (edit === true) ? <>  
-                                <TrMainTable>
-                                    <div>
-                                        <td onClick={() => viewbooking(register)}>
-                                            <img className="imgroomnameColum" width={150} height={77} src={''} alt="Image Room" />
-                                            <div className="roomnameColumn">
-                                                <span className="deluxenum numtit--black"><input type="text" placeholder={register.guest} /></span>
-                                                <span className="numtit">
-                                                <select className="inputSelect" id="contentRoomNewRoom__roomtype">
-                                                    <option value={'Single Bed'}>Single Bed</option>
-                                                    <option value={'Double Bed'}>Double Bed</option>
-                                                    <option value={'Double Superior'}>Double Superior</option>
-                                                    <option value={'Suite'}>Suite</option>
-                                                </select>-{'12341'}
-                                                </span>
-                                            </div>
-                                        </td>
-                                    </div>
-                                    <td>{register.orderDate} {register.ordertime}</td>
-                                    <td>{register.checkin}<br/>{register.timein}</td>
-                                    <td>{register.checkout}<br/>{register.timeout}</td>
-                                    <td onClick={() => handleOpen(register.specialRequest)} notes='true'>View Notes</td>
-                                    <td>{register.roomType}</td>
-                                    <td>{register.status === 'Check In' ? <div className="status">Check In</div> : otherState(register.status)}</td>
-                                        <div style={hideedit}>
-                                            <div className="status editdelete" onClick={handleClickFunctionEdit}>Edit</div>
-                                            <div className="status statusbooked editdelete" onClick={handleClickFunctionDelete}>Delete</div>
-                                        </div>
-                                        <div style={showbtngroup2}>
-                                            <div className="status editdelete">Save</div>
-                                            <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
-                                        </div>
-                                        <div style={showbtngroup3}>
-                                            <div className="status editdelete">Confirm</div>
-                                            <div className="status statusbooked editdelete" onClick={handleClickFunctionCancelDelete}>Cancel</div>
-                                        </div>
-                                </TrMainTable>
-                            </> :
-                            <>
-                                <TrMainTable>
-                                    <div>
-                                        <td onClick={() => viewbooking(register)}>
-                                            <img className="imgroomnameColum" width={150} height={77} src={''} alt="Image Room" />
-                                            <div className="roomnameColumn">
-                                                <span className="deluxenum numtit--black namebooking">{`${register.guest}`}</span>
-                                                <span className="numtit">{`${'Double Room'}-${'12341'}`}</span>
-                                            </div>
-                                        </td>
-                                    </div>
-                                    <td>{register.orderDate} {register.ordertime}</td>
-                                    <td><span className="namebooking">{register.checkin}</span><br/><span className="timeinbooking">{register.timein}</span></td>
-                                    <td><span className="namebooking">{register.checkout}</span><br/><span className="timeinbooking">{register.timeout}</span></td>
-                                    <td onClick={() => handleOpen(register.specialRequest)} notes='true'>View Notes</td>
-                                    <td className="namebooking">{register.roomType}</td>
-                                    <td>{register.status === 'Check In' ? <div className="status">Check In</div> : otherState(register.status)}</td>
-                                        <div style={hideedit}>
-                                            <div className="status editdelete" onClick={handleClickFunctionEdit}>Edit</div>
-                                            <div className="status statusbooked editdelete" onClick={handleClickFunctionDelete}>Delete</div>
-                                        </div>
-                                        <div style={showbtngroup2}>
-                                            <div className="status editdelete">Save</div>
-                                            <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
-                                        </div>
-                                        <div style={showbtngroup3}>
-                                            <div className="status editdelete" onClick={() => handledeleteBooking(register.id)}>Confirm</div>
-                                            <div className="status statusbooked editdelete" onClick={handleClickFunctionCancelDelete}>Cancel</div>
-                                        </div>
-                                </TrMainTable>
-                            </>
+                        datastate.slice(actualdate,nextdate).map((booking) => {
+                        return <>
+                                <RowTable data={booking} />
+                        </>
                         })
                     }
                 </TableObj>
             }
         </ContentTable>
 
-        <Modal
-        open={bookingvisible}
-        onClose={() => setBookingvisible(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        style={{alignContent: 'center'}}
-        >
-            <ModalNewRoom>
-                <ViewBooking booking={databooking}></ViewBooking>
-            </ModalNewRoom>
-        </Modal>
-
-        <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        style={{alignContent: 'center'}}
-        >
-            <ModalNewNotes>
-                <div className="contentRoomNewRoom">
-                    <h2>{note}</h2>
-                </div>
-            </ModalNewNotes>
-        </Modal>
         <PaginationTable>
             <div onClick={backPaginationData}>Prev</div>
             {
@@ -438,81 +228,12 @@ export default function Table({columns,data}){
                     </TrMainTable>
                     
                     {
-                    datastate.slice(actualdate,nextdate).map((room,index) => {
-                        return (edit === true) ? <>
-                            <TrMainTable key={index}>
-                                <div>
-                                    <td>
-                                        <img className="imgroomnameColum" width={150} height={77} src={room.photo[0]} alt="Image Room" />
-                                        <div className="roomnameColumn">
-                                            <span className="numtit">{`#000${room.id}`}</span>
-                                            <span className="deluxenum">{`${room.typeRoom}-`}<input onChange={(e) => setNumroomedit(e.target.value)} name="roomNumberEditable" className="inputText" type="text" placeholder={room.roomNumber}/></span>
-                                        </div>
-                                    </td>
-                                </div>
-                                <td>
-                                    <span className="deluxenum">
-                                        <select name="typeroomEditable" className="inputSelect" onChange={(e) => handlechangeTypeRoom(e.target.value)} id="contentRoomNewRoom__roomtype">
-                                            <option value='Single Bed'>Single Bed</option>
-                                            <option value='Double Bed'>Double Bed</option>
-                                            <option value='Double Superior'>Double Superior</option>
-                                            <option value='Suite'>Suite</option>
-                                        </select>
-                                    </span>
-                                </td>
-                                <td><textarea onChange={(e) => setFacilitiesedit(e.target.value)} name="amenitiesEditable" className="textareainputroomeditable" placeholder={room.amenities}></textarea></td>
-                                <td><input onChange={(e) => setPriceedit(e.target.value)} name="priceEditable" className="inputText inputText--size" type="text" placeholder={room.price}/><span className="nightroom"> /night</span></td>
-                                <td>{`$${(parseInt(room.price.slice(1))-((parseInt(room.price.slice(1))*room.discount)/100)).toFixed(2)}`}<input onChange={(e) => setDiscountedit(e.target.value)} name="discountEditable" className="inputText" placeholder={`${room.discount}%`}></input></td>
-                                <td>{room.status === 'Available' ? <div className="status"><select onChange={(e) => setStatusedit(e.target.value)} name="statusEditable" className="inputSelect inputSelect--statusAvaible"><option value="Available">Available</option><option value="Booked">Booked</option></select></div> : <div className="status statusbooked"><select onChange={(e) => setStatusedit(e.target.value)} name="statusEditable" className="inputSelect inputSelect--statusBooked"><option value="Available">Available</option><option value="Booked">Booked</option></select></div>}</td>
-                                <td style={{position:'relative'}}>
-                                    <div style={hideedit}>
-                                        <div className="status editdelete" onClick={handleClickFunctionEdit}>Edit</div>
-                                        <div className="status statusbooked editdelete" onClick={handleClickFunctionDelete}>Delete</div>
-                                    </div>
-                                    <div style={showbtngroup2}>
-                                        <div className="status editdelete" onClick={() => handleClickSave(room.id,room.cancellation,room.description,room.photo)}>Save</div>
-                                        <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
-                                    </div>
-                                    <div style={showbtngroup3}>
-                                        <div className="status editdelete" onClick={() => handledeleteRoom(room.id)}>Confirm</div>
-                                        <div className="status statusbooked editdelete" onClick={handleClickFunctionCancelDelete}>Cancel</div>
-                                    </div>
-                                </td>
-                            </TrMainTable>
-                        </> :
-                        <>
-                            <TrMainTable key={index}>
-                                <div>
-                                    <td>
-                                        <img className="imgroomnameColum" width={150} height={77} src={room.photo[0]} alt="Image Room" />
-                                        <div className="roomnameColumn">
-                                            <span className="numtit">{`#000${room.id}`}</span>
-                                            <span className="deluxenum mediumletter">{`${room.typeRoom}-${room.roomNumber}`}</span>
-                                        </div>
-                                    </td>
-                                </div>
-                                <td className="mediumletter">{room.typeRoom}</td>
-                                <td className="mediumletter">{room.amenities}</td>
-                                <td><span className="priceRoom">{room.price}</span><span className="nightroom"> /night</span></td>
-                                <td>{`$${(parseInt(room.price.slice(1))-((parseInt(room.price.slice(1))*room.discount)/100)).toFixed(2)}(${room.discount}%)`}</td>
-                                <td>{room.status === 'Available' ? <div className="status">Available</div> : <div className="status statusbooked">Booked</div>}</td>
-                                <td style={{position:'relative'}}>
-                                    <div style={hideedit}>
-                                        <div className="status editdelete" onClick={handleClickFunctionEdit}>Edit</div>
-                                        <div className="status statusbooked editdelete" onClick={handleClickFunctionDelete}>Delete</div>
-                                    </div>
-                                    <div style={showbtngroup2}>
-                                        <div className="status editdelete" >Save</div>
-                                        <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
-                                    </div>
-                                    <div style={showbtngroup3}>
-                                    <div className="status editdelete" onClick={() => handledeleteRoom(room.id)}>Confirm</div>
-                                        <div className="status statusbooked editdelete" onClick={handleClickFunctionCancelDelete}>Cancel</div>
-                                    </div>
-                                </td>
-                            </TrMainTable>
+                        datastate.slice(actualdate,nextdate).map((room) => {
+                        return <>
+                                <RowTable data={room} />
                         </>
-                    })}
+                        })
+                    }
                 </TableObj>
             }
         </ContentTable>
@@ -545,7 +266,7 @@ export default function Table({columns,data}){
                         
                         {
                         
-                        data.slice(actualdate,nextdate).map(register => {
+                        datastate.slice(actualdate,nextdate).map(register => {
                             return <>  
                                 <TrMainTable>
                                     <div>
@@ -554,7 +275,7 @@ export default function Table({columns,data}){
                                     <td>{register.date}</td>
                                     <td>{register.customer}</td>
                                     <td>{register.comment}</td>
-                                    <td>{register.status === 'none' ? <div><span className="controlsmessage">Publish</span><span className="controlsmessage">Archive</span></div> : otherStatusMessage(register.status)}</td>
+                                    <td>{register.status === 'none' ? <div><span className="controlsmessage controlsmessage--cursor" onClick={() => handlepublish(register)}>Publish</span><span onClick={() => handlearchive(register)} className="controlsmessage controlsmessage--cursor">Archive</span></div> : otherStatusMessage(register)}</td>
                                 </TrMainTable>
                             </>
                         })}
@@ -590,36 +311,12 @@ export default function Table({columns,data}){
                         </TrMainTable>
                         
                         {
-                        datastate.slice(actualdate,nextdate).map(employee => {
-                            return <>  
-                                <TrMainTable>
-                                    <div>
-                                        <td>
-                                            <img className="imgroomnameColum" width={150} height={77} src={employee.photo} alt="Image Employee" />
-                                            <div className="roomnameColumn">
-                                                <span className="nameemployee">{employee.name}</span>
-                                                <span className="deluxenum">#{employee.id}<br/>Joined on {employee.startdate}</span>
-                                            </div>
-                                        </td>
-                                    </div>
-                                    <td className="descriptionemployee">{employee.description}</td>
-                                    <td className="contactemployee"><span><img src={phonecontact} alt="Contact Employee" />{employee.phone}</span><br /><span>{employee.email}</span></td>
-                                    {employee.status === 'active' ? <td className="statusemployee statusemployee--active">{employee.status}</td> : <td className="statusemployee statusemployee--inactive">{employee.status}</td>}
-                                        <div style={hideedit}>
-                                            <div className="status editdelete" onClick={handleClickFunctionEdit}>Edit</div>
-                                            <div className="status statusbooked editdelete" onClick={handleClickFunctionDelete}>Delete</div>
-                                        </div>
-                                        <div style={showbtngroup2}>
-                                            <div className="status editdelete">Save</div>
-                                            <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
-                                        </div>
-                                        <div style={showbtngroup3}>
-                                            <div className="status editdelete" onClick={() => handledeleteBooking(register.id)}>Confirm</div>
-                                            <div className="status statusbooked editdelete" onClick={handleClickFunctionCancelDelete}>Cancel</div>
-                                        </div>
-                                </TrMainTable>
+                            datastate.slice(actualdate,nextdate).map((employee) => {
+                            return <>
+                                    <RowTable data={employee} />
                             </>
-                        })}
+                            })
+                        }
                     </TableObj>
                 }
             </ContentTable>

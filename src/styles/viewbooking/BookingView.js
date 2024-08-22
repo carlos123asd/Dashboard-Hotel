@@ -28,6 +28,9 @@ export const BookingView = styled.div`
                 margin-top: .613em;
             }
         }
+        & img{
+            margin-right: 2.438em;
+        }
         & .imagenperfil{
             display: inline-block;
             width: 9.75em;
@@ -49,6 +52,10 @@ export const BookingView = styled.div`
         vertical-align: middle;
         padding: 1.219em;
         cursor: pointer;
+        transition: scale 1s;
+        &:hover{
+            scale: 1.1;
+        }
     }
     & .bookingmessage{
         width: 13.063em;
@@ -65,6 +72,10 @@ export const BookingView = styled.div`
         border-radius: 0.75em;
         position: relative;
         cursor: pointer;
+        transition: scale .6s;
+        &:hover{
+            scale: 1.1;
+        }
         & img{
             position: absolute;
             left: 0;
@@ -205,6 +216,23 @@ export const BookingView = styled.div`
             z-index: 1000;
             bottom: 4em;
             padding: 0 3em;
+        }
+        & .statusBooking{
+            position: absolute;
+            z-index: 1000;
+            top: .5em;
+            right: -5em;
+            padding: 1em 6em;
+            font-family: 'poppinssemibold';
+            font-size: 1.25rem;
+            color: #fff;
+            transform: rotate(30deg);
+            &--available{
+                background-color: #135846;
+            }
+            &--booked{
+                background-color: #E23428;
+            }
         }
         & .btnnextBooking,.btnbackBooking{
             width: 3em;

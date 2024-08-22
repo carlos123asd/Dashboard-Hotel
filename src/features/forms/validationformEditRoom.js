@@ -1,8 +1,7 @@
 import Toastify from 'toastify-js'
 import editRoom from '../db/fecths/editRoom';
-import { update } from '../db/dbSlice';
 
-const handleValidateFormEditRoom = (room) => {
+const handleValidateFormEditRoom = (values,room) => {
     if(room.roomNumber === '' || room.amenities === '' ||
         room.price.slice(1) === '' || room.discount === '' ||
         /^[0-9]*$/.test(room.roomNumber) === false || /^[0-9]*$/.test(room.price.slice(1)) === false)
@@ -79,8 +78,9 @@ const handleValidateFormEditRoom = (room) => {
                     }
                 }).showToast();
         }
+        console.log('entra')
     }else{
-        editRoom(room)
+        editRoom(values,room)
     }
 }
 
