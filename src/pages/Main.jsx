@@ -5,12 +5,16 @@ import Calendar from "../components/Calendar"
 import { Contentcalendargrafics } from "../styles/dashboard/Contentcalendargrafics"
 import Graphic from "../components/Graphic"
 import { useSelector } from "react-redux"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function Main(){
 
-    const selectorDbData = useSelector(state => state.db.data.comment);
-    const [datamessage,setDatamessage] = useState(selectorDbData)
+    const selectorDbData = useSelector(state => state.db.data);
+    const [datadashboard,setDatadashboard] = useState(selectorDbData)
+
+    useEffect(() => {
+        setDatadashboard(selectorDbData)
+    },[selectorDbData])
 
     return <>
         <ContentPageMain>
@@ -22,7 +26,7 @@ export default function Main(){
                         </svg>
                     </div>
                     <div className='kpicontent__values'>
-                        <span className='kpicontent__values__tit'>8,461</span>
+                        <span className='kpicontent__values__tit'>{datadashboard.bookings.length}</span>
                         <span className='kpicontent__values__sub'>New Booking</span>
                     </div>
                 </div>
@@ -33,8 +37,8 @@ export default function Main(){
                         </svg>
                     </div>
                     <div className='kpicontent__values'>
-                        <span className='kpicontent__values__tit'>963</span>
-                        <span className='kpicontent__values__sub'>Scheduled Room</span>
+                        <span className='kpicontent__values__tit'>{(datadashboard.rooms.filter(room => room.status === 'Booked')).length}</span>
+                        <span className='kpicontent__values__sub'>Bookeds Rooms</span>
                     </div>
                 </div>
                 <div className='kpicontent'>
@@ -45,7 +49,7 @@ export default function Main(){
                         </svg>
                     </div>
                     <div className='kpicontent__values'>
-                        <span className='kpicontent__values__tit'>753</span>
+                        <span className='kpicontent__values__tit'>{(datadashboard.bookings.filter(booking => booking.status === 'Check In')).length}</span>
                         <span className='kpicontent__values__sub'>Check In</span>
                     </div>
                 </div>
@@ -57,7 +61,7 @@ export default function Main(){
                         </svg>
                     </div>
                     <div className='kpicontent__values'>
-                        <span className='kpicontent__values__tit'>516</span>
+                        <span className='kpicontent__values__tit'>{(datadashboard.bookings.filter(booking => booking.status === 'Check Out')).length}</span>
                         <span className='kpicontent__values__sub'>Check Out</span>
                     </div>
                 </div>
@@ -66,7 +70,7 @@ export default function Main(){
                 <Calendar />
                 <Graphic />
             </Contentcalendargrafics>
-            <Review data={datamessage} />
+            <Review data={datadashboard.comment} />
         </ContentPageMain>
     </>
 }

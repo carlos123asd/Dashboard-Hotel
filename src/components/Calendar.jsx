@@ -3,6 +3,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import { useSelector } from 'react-redux'
 import interactionPlugin from '@fullcalendar/interaction';
 import { Tooltip } from "bootstrap";
+import editBooking from '../features/db/fecths/editBooking';
 
 export default function Calendar(){
 
@@ -35,7 +36,8 @@ export default function Calendar(){
             timein: `${booking.timein}`,
             checkout: `${booking.checkout}`,
             timeout: `${booking.timeout}`,
-            status: `${booking.status}`
+            status: `${booking.status}`,
+            ident: `${booking.id}`
         }
     });
 
@@ -55,6 +57,20 @@ export default function Calendar(){
             container: 'body',
             customClass: info.event.extendedProps.status === 'Check Out' ? 'tooltipcheckout' : otherStatusStyle(info.event.extendedProps.status),
           });
+    }
+
+    const formatDateDroped = (date) => {
+        const dateparts = (date.toString()).split(' ')
+        return `${dateparts[2]} ${dateparts[1]} ${dateparts[3]}`
+    }
+
+    const handleDrop = (info) => {
+        const bookingDroped = selectorDataBookings.filter((booking) => {
+            return booking.id === info.event.extendedProps.ident
+        })
+        const actualRangeEndBooking = formatDateDroped(tooltipInstance._element.fcSeg.eventRange.instance.range.end)
+//"30 Jul 2024",
+        editBooking(bookingDroped[0],{checkout:actualRangeEndBooking})
     }
 
     return <>
@@ -83,6 +99,7 @@ export default function Calendar(){
         eventResizableFromStart={true}
         displayEventTime={true}
         eventDidMount={handleMouseEnter}
+        eventDrop={handleDrop}
         />
     </>
 }

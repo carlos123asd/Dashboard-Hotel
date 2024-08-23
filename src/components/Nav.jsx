@@ -117,7 +117,7 @@ export default function Nav(){
                         <img width={26} height={35} src={iconmessage} alt="Messages" />
                         <div className='contennotification__num'>{Messagewaiting}</div>
                     </NotificationTooltip>
-                    <div style={{left: 0,position: 'absolute'}}>
+                    <div style={{left: 0,position: 'absolute',zIndex: "1000"}}>
                         <ListMessage />
                     </div>
                 </ContentNavImg>
@@ -127,7 +127,7 @@ export default function Nav(){
                         <img width={26} height={35} src={iconnotification} alt="Notifications" />
                         <div className='contennotification__num'>{filterbymonthActualNum}</div>
                     </NotificationTooltip>
-                    <div style={{left: 0,position: 'absolute'}}>
+                    <div style={{left: 0,position: 'absolute',zIndex: "1000"}}>
                         <ListBookings />
                     </div>
                 </ContentNavImg>

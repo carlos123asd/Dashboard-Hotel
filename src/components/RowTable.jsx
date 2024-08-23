@@ -9,6 +9,7 @@ import { Modal } from "@mui/material";
 import { ModalNewNotes } from "../styles/table/ModalNotes";
 import phonecontact from '../assets/imgs/phone.svg'
 import { ModalNewRoom } from "../styles/table/ModalNewRoom";
+import { useSelector } from "react-redux";
 
 export default function RowTable({data=data.data}){
     const locationname = useLocation().pathname;
@@ -122,9 +123,13 @@ export default function RowTable({data=data.data}){
         deleteBooking(id.toString())
         handleClickFunctionCancelDelete()
     }
-    const handleClose = () => setOpen(false);
 
     const handleOpenViewBooking = () => setBookingvisible(true)
+
+    const dbRoom = useSelector(state => state.db.data.rooms)
+    const roomselectBooking = dbRoom.filter((booking) => {
+        return booking.id === (data.idRoom).toString()
+    })//roomselectBooking.photo[0] da error porque no hay relacion en mokeado (no hay un foreign key)
 
     if(locationname === '/room'){
         return (edit === true) ? <>
