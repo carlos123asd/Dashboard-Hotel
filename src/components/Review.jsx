@@ -22,11 +22,11 @@ export default function Review({data}){
 
     const handlePublish = (message) => {
         updateDataMessage(message.id)
-        updateStatusfetchMessage(message,'publish')
+        updateStatusfetchMessage(message,'publish','Message published')
     }
     const handleArchive = (message) => {
         updateDataMessage(message.id)
-        updateStatusfetchMessage(message,'archive')
+        updateStatusfetchMessage(message,'archive','Message archived')
     }
 
     return <>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TrMainTable } from "../styles/table/table";
 import handleValidateFormEditRoom from "../features/forms/validationformEditRoom";
 import deleteRoom from "../features/db/fecths/deleteRoom";
@@ -12,7 +12,7 @@ import { ModalNewRoom } from "../styles/table/ModalNewRoom";
 import { useSelector } from "react-redux";
 
 export default function RowTable({data=data.data}){
-    const locationname = useLocation().pathname;
+    const [locationname,setlocationname] = useState(useLocation().pathname);
     const [typeroomedit,setTyperoomedit] = useState("")
     const [numroomedit,setNumroomedit] = useState("")
     const [facilitiesedit,setFacilitiesedit] = useState("")
@@ -33,10 +33,31 @@ export default function RowTable({data=data.data}){
     })
     const [open, setOpen] = useState(false); 
     const [bookingvisible, setBookingvisible] = useState(false);
+    const dbRoom = useSelector(state => state.db.data.rooms)
+    const [roomselectbooking,setRoomselectbooking] = useState([])
+
+    console.log(data.idRoom)
+    if(locationname.slice(1) === 'bookings'){
+        console.log('w')
+        const a = data.filter((booking) => {
+            console.log(booking)
+            return (booking.idRoom).toString() 
+        })
+        console.log(a)
+        const rooms = dbRoom.filter((room) => {
+            return room.id === a
+        })
+        
+        console.log(rooms)
+    }
+
+    console.log(roomselectbooking)
+
 
     const handlechangeTypeRoom = (typeroom) => {
         setTyperoomedit(typeroom)
     }
+    
     const handleClickFunctionEdit = () => {
         if(edit === false){
             setEdit(true)
@@ -126,11 +147,6 @@ export default function RowTable({data=data.data}){
 
     const handleOpenViewBooking = () => setBookingvisible(true)
 
-    const dbRoom = useSelector(state => state.db.data.rooms)
-    const roomselectBooking = dbRoom.filter((booking) => {
-        return booking.id === (data.idRoom).toString()
-    })//roomselectBooking.photo[0] da error porque no hay relacion en mokeado (no hay un foreign key)
-
     if(locationname === '/room'){
         return (edit === true) ? <>
                 <TrMainTable>
@@ -218,14 +234,7 @@ export default function RowTable({data=data.data}){
                             <img className="imgroomnameColum" width={150} height={77} src={''} alt="Image Room" />
                             <div className="roomnameColumn">
                                 <span className="deluxenum numtit--black"><input type="text" placeholder={data.guest} /></span>
-                                <span className="numtit">
-                                <select className="inputSelect" id="contentRoomNewRoom__roomtype">
-                                    <option value={'Single Bed'}>Single Bed</option>
-                                    <option value={'Double Bed'}>Double Bed</option>
-                                    <option value={'Double Superior'}>Double Superior</option>
-                                    <option value={'Suite'}>Suite</option>
-                                </select>-{'12341'}
-                                </span>
+                                <span className="numtit">{`${roomselectbooking[0].typeRoom}-${roomselectbooking[0].roomNumber}`}</span>
                             </div>
                         </td>
                     </div>
@@ -261,13 +270,27 @@ export default function RowTable({data=data.data}){
                         <ViewBooking booking={data}></ViewBooking>
                     </ModalNewRoom>
                 </Modal>
+
+                <Modal
+                open={open}
+                onClose={() => setOpen(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                style={{alignContent: 'center'}}
+                >
+                    <ModalNewNotes>
+                        <div className="contentRoomNewRoom">
+                            <h2>{data.specialRequest}</h2>
+                        </div>
+                    </ModalNewNotes>
+                </Modal>
                 <TrMainTable>
                     <div>
                         <td onClick={() => setBookingvisible(true)}>
                             <img className="imgroomnameColum" width={150} height={77} src={''} alt="Image Room" />
                             <div className="roomnameColumn">
                                 <span className="deluxenum numtit--black namebooking">{`${data.guest}`}</span>
-                                <span className="numtit">{`${'Double Room'}-${'12341'}`}</span>
+                                <span className="numtit">{`${roomselectbooking[0].typeRoom}-${roomselectbooking[0].roomNumber}`}</span>
                             </div>
                         </td>
                     </div>
