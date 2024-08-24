@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TrMainTable } from "../styles/table/table";
 import handleValidateFormEditRoom from "../features/forms/validationformEditRoom";
 import deleteRoom from "../features/db/fecths/deleteRoom";
@@ -10,9 +10,13 @@ import { ModalNewNotes } from "../styles/table/ModalNotes";
 import phonecontact from '../assets/imgs/phone.svg'
 import { ModalNewRoom } from "../styles/table/ModalNewRoom";
 import { useSelector } from "react-redux";
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 export default function RowTable({data=data.data}){
-    const locationname = useLocation().pathname;
+    const [locationname,setLocationname] = useState(useLocation().pathname);
     const [typeroomedit,setTyperoomedit] = useState("")
     const [numroomedit,setNumroomedit] = useState("")
     const [facilitiesedit,setFacilitiesedit] = useState("")
@@ -33,6 +37,14 @@ export default function RowTable({data=data.data}){
     })
     const [open, setOpen] = useState(false); 
     const [bookingvisible, setBookingvisible] = useState(false);
+    const dbRoom = useSelector(state => state.db.data.rooms)
+    useEffect(()=>{
+        if(locationname === 'bookings'){
+            const roomselectBooking = dbRoom.filter((booking) => {
+                return booking.id === (data.idRoom).toString()
+            })//roomselectBooking.photo[0] da error porque no hay relacion en mokeado (no hay un foreign key)
+        }
+    },[locationname])
 
     const handlechangeTypeRoom = (typeroom) => {
         setTyperoomedit(typeroom)
@@ -115,6 +127,13 @@ export default function RowTable({data=data.data}){
             return <div className="status statusbooked">Check Out</div>
         }
     }
+    const otherStateEdit = (state) => {
+        if(state === 'In Progress'){
+            return <select value={data.status} className="status statusinprogress"><option value="Check In">Check In</option><option value="Check Out">Check Out</option><option statusinprogress value="In Progress">In Progress</option></select>
+        }else if(state === 'Check Out'){
+            return <select value={data.status} className="status statusbooked"><option value="Check In">Check In</option><option value="Check Out">Check Out</option><option value="In Progress">In Progress</option></select>
+        }
+    }
     const handleOpen = () => {
         setOpen(true)
     };
@@ -125,11 +144,6 @@ export default function RowTable({data=data.data}){
     }
 
     const handleOpenViewBooking = () => setBookingvisible(true)
-
-    const dbRoom = useSelector(state => state.db.data.rooms)
-    const roomselectBooking = dbRoom.filter((booking) => {
-        return booking.id === (data.idRoom).toString()
-    })//roomselectBooking.photo[0] da error porque no hay relacion en mokeado (no hay un foreign key)
 
     if(locationname === '/room'){
         return (edit === true) ? <>
@@ -219,22 +233,44 @@ export default function RowTable({data=data.data}){
                             <div className="roomnameColumn">
                                 <span className="deluxenum numtit--black"><input type="text" placeholder={data.guest} /></span>
                                 <span className="numtit">
-                                <select className="inputSelect" id="contentRoomNewRoom__roomtype">
-                                    <option value={'Single Bed'}>Single Bed</option>
-                                    <option value={'Double Bed'}>Double Bed</option>
-                                    <option value={'Double Superior'}>Double Superior</option>
-                                    <option value={'Suite'}>Suite</option>
-                                </select>-{'12341'}
+                                <span className="numtit">{`${'Double Room'}-${'12341'}`}</span>
                                 </span>
                             </div>
                         </td>
                     </div>
-                    <td>{data.orderDate} {data.ordertime}</td>
-                    <td>{data.checkin}<br/>{data.timein}</td>
-                    <td>{data.checkout}<br/>{data.timeout}</td>
+                    <td>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
+                        <DatePicker
+                        label={'"year", "month" and "day"'}
+                        views={['year', 'month', 'day']}
+                        />
+                    </DemoContainer>
+                    </LocalizationProvider>
+                    </td>
+                    <td>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
+                            <DatePicker
+                            label={'"year", "month" and "day"'}
+                            views={['year', 'month', 'day']}
+                            />
+                        </DemoContainer>
+                        </LocalizationProvider>
+                    </td>
+                    <td>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
+                            <DatePicker
+                            label={'"year", "month" and "day"'}
+                            views={['year', 'month', 'day']}
+                            />
+                        </DemoContainer>
+                        </LocalizationProvider>
+                    </td>
                     <td notes='true'>View Notes</td>
                     <td>{data.roomType}</td>
-                    <td>{data.status === 'Check In' ? <div className="status">Check In</div> : otherState(data.status)}</td>
+                    <td>{data.status === 'Check In' ? <select value={data.status} className="status"><option value="Check In">Check In</option><option value="Check Out">Check Out</option><option value="In Progress">In Progress</option></select> : otherStateEdit(data.status)}</td>
                         <div style={hideedit}>
                             <div className="status editdelete" onClick={handleClickFunctionEdit}>Edit</div>
                             <div className="status statusbooked editdelete" onClick={handleClickFunctionDelete}>Delete</div>
@@ -267,7 +303,7 @@ export default function RowTable({data=data.data}){
                             <img className="imgroomnameColum" width={150} height={77} src={''} alt="Image Room" />
                             <div className="roomnameColumn">
                                 <span className="deluxenum numtit--black namebooking">{`${data.guest}`}</span>
-                                <span className="numtit">{`${'Double Room'}-${'12341'}`}</span>
+                                <span className="numtit">{`${data.roomType}-${'12341'}`}</span>
                             </div>
                         </td>
                     </div>
