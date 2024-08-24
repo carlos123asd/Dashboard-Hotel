@@ -14,6 +14,8 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import 'dayjs/locale/en-gb';
+import editRoomBooking from '../assets/imgs/edit.svg'
 
 export default function RowTable({data=data.data}){
     const [locationname,setLocationname] = useState(useLocation().pathname);
@@ -38,6 +40,9 @@ export default function RowTable({data=data.data}){
     const [open, setOpen] = useState(false); 
     const [bookingvisible, setBookingvisible] = useState(false);
     const dbRoom = useSelector(state => state.db.data.rooms)
+    const [specialrequestedit,setSpecialrequestedit] = useState("")
+    const [openeditroombooking,setOpeneditroombooking] = useState(false)
+    const [typeroombooking,setTyperoombooking] = useState("")
     
     useEffect(()=>{
         if(locationname === 'bookings'){
@@ -228,49 +233,104 @@ export default function RowTable({data=data.data}){
             </>
     }else if(locationname === '/bookings'){
         return (edit === true) ? <>
+                <Modal
+                open={open}
+                onClose={() => setOpen(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                style={{alignContent: 'center'}}
+                >
+                    <ModalNewNotes>
+                        <div className="contentRoomNewRoom">
+                            <textarea onChange={(e) => setSpecialrequestedit(e.target.value)} name="cancelationedit" className="textareainputbookingeditable" placeholder={data.specialRequest}></textarea>
+                        </div>
+                    </ModalNewNotes>
+                </Modal>
+
+                <Modal
+                open={openeditroombooking}
+                onClose={() => setOpeneditroombooking(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                style={{alignContent: 'center'}}
+                >
+                    <ModalNewRoom className="modalbooking">
+                        <h1>Select New Room</h1>
+                        <div className="contentRoomNewRoom">
+                            <h2>Rooms Available</h2>
+                            <div className="contentRoomNewRoom__firstblock sectionformbooking">
+                                    <label htmlFor="roomtype">Room Type</label>
+                                    <select name="selectroomtype" value={data.roomType} onChange={event => setTyperoombooking(event.target.value)} id="contentRoomNewRoom__roomtype">
+                                        <option value={'Single Bed'}>Single Bed</option>
+                                        <option value={'Double Bed'}>Double Bed</option>
+                                        <option value={'Double Superior'}>Double Superior</option>
+                                        <option value={'Suite'}>Suite</option>
+                                    </select>
+                            </div>
+                            
+                            <div className="contentRoomInfo contentbooking">
+                                <div>
+                                    <ul>
+                                        {
+                                            dbRoom.map(room => {
+                                                if(room.status === "Available" && room.typeRoom === typeroombooking){
+                                                    return <>
+                                                        <li><input id="roomselected" name="roomselected" type="checkbox" value={`${room.typeRoom}-${room.roomNumber}`}/>{room.typeRoom}-{room.roomNumber}</li>
+                                                    </>
+                                                }
+                                                
+                                            })
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </ModalNewRoom>
+                </Modal>
                 <TrMainTable>
                     <div>
                         <td onClick={() => handleOpenViewBooking(data)}>
                             <img className="imgroomnameColum" width={150} height={77} src={''} alt="Image Room" />
                             <div className="roomnameColumn">
-                                <span className="deluxenum numtit--black"><input type="text" placeholder={data.guest} /></span>
-                                <span className="numtit">
-                                <span className="numtit">{`${data.roomType}-${'12341'}`}</span>
-                                </span>
+                                <span className="deluxenum numtit--black"><input className="inputEditBookingGuest" type="text" placeholder={data.guest} /></span>
+                                <span className="numtit">{`${data.roomType}-${'12341'}`}<img onClick={() => setOpeneditroombooking(true)} src={editRoomBooking} alt="Edit Reservation Room"></img></span>
                             </div>
                         </td>
                     </div>
                     <td>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
-                        <DatePicker
-                        label={'"year", "month" and "day"'}
-                        views={['year', 'month', 'day']}
-                        />
-                    </DemoContainer>
-                    </LocalizationProvider>
-                    </td>
-                    <td>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
                         <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
                             <DatePicker
-                            label={'"year", "month" and "day"'}
-                            views={['year', 'month', 'day']}
+                            label={'Day,Month,Year'}
+                            views={['day','month','year']}
+                            className="inputDataEditBooking"
                             />
                         </DemoContainer>
                         </LocalizationProvider>
                     </td>
                     <td>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
                         <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
                             <DatePicker
-                            label={'"year", "month" and "day"'}
-                            views={['year', 'month', 'day']}
+                            label={'Day,Month,Year'}
+                            views={['day','month','year']}
+                            className="inputDataEditBooking"
                             />
                         </DemoContainer>
                         </LocalizationProvider>
                     </td>
-                    <td notes='true'>View Notes</td>
+                    <td>
+                        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
+                        <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
+                            <DatePicker
+                            label={'Day,Month,Year'}
+                            views={['day','month','year']}
+                            className="inputDataEditBooking"
+                            />
+                        </DemoContainer>
+                        </LocalizationProvider>
+                    </td>
+                    <td onClick={handleOpen} notes='true'>Edit View Notes</td>
                     <td>{data.roomType}</td>
                     <td>{data.status === 'Check In' ? <select value={data.status} className="status"><option value="Check In">Check In</option><option value="Check Out">Check Out</option><option value="In Progress">In Progress</option></select> : otherStateEdit(data.status)}</td>
                         <div style={hideedit}>
