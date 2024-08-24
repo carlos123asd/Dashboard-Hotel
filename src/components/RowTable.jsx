@@ -38,6 +38,7 @@ export default function RowTable({data=data.data}){
     const [open, setOpen] = useState(false); 
     const [bookingvisible, setBookingvisible] = useState(false);
     const dbRoom = useSelector(state => state.db.data.rooms)
+    
     useEffect(()=>{
         if(locationname === 'bookings'){
             const roomselectBooking = dbRoom.filter((booking) => {
@@ -49,6 +50,7 @@ export default function RowTable({data=data.data}){
     const handlechangeTypeRoom = (typeroom) => {
         setTyperoomedit(typeroom)
     }
+    
     const handleClickFunctionEdit = () => {
         if(edit === false){
             setEdit(true)
@@ -233,7 +235,7 @@ export default function RowTable({data=data.data}){
                             <div className="roomnameColumn">
                                 <span className="deluxenum numtit--black"><input type="text" placeholder={data.guest} /></span>
                                 <span className="numtit">
-                                <span className="numtit">{`${'Double Room'}-${'12341'}`}</span>
+                                <span className="numtit">{`${data.roomType}-${'12341'}`}</span>
                                 </span>
                             </div>
                         </td>
@@ -296,6 +298,20 @@ export default function RowTable({data=data.data}){
                     <ModalNewRoom>
                         <ViewBooking booking={data}></ViewBooking>
                     </ModalNewRoom>
+                </Modal>
+
+                <Modal
+                open={open}
+                onClose={() => setOpen(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                style={{alignContent: 'center'}}
+                >
+                    <ModalNewNotes>
+                        <div className="contentRoomNewRoom">
+                            <h2>{data.specialRequest}</h2>
+                        </div>
+                    </ModalNewNotes>
                 </Modal>
                 <TrMainTable>
                     <div>

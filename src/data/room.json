@@ -1615,20 +1615,6 @@
       "idRoom": 87
     },
     {
-      "id": "25",
-      "guest": "Alfred Hilpert",
-      "orderDate": "7 Aug 2024",
-      "checkin": "19 Apr 2024",
-      "timein": "03:07 pm",
-      "checkout": "7 Aug 2024",
-      "timeout": "11:23 am",
-      "ordertime": "02:25 am",
-      "specialRequest": "est ipsum incididunt cillum pariatur laboris irure esse quis",
-      "roomType": "Double Bed",
-      "status": "Check Out",
-      "idRoom": "3"
-    },
-    {
       "id": "26",
       "guest": "Corey Dickinson",
       "orderDate": "23 Feb 2024",
@@ -2424,7 +2410,7 @@
       "specialRequest": "esse ullamco aliqua culpa laborum esse ullamco ea ea minim",
       "roomType": "Double Superior",
       "status": "Check Out",
-      "idRoom": 286
+      "idRoom": "3"
     },
     {
       "id": "83",
@@ -3216,7 +3202,7 @@
       "phone": "590-220-9381",
       "reason": "labore Lorem adipisicing sunt mollit minim quis",
       "comment": "quis proident sint",
-      "status": "none"
+      "status": "publish"
     },
     {
       "id": "34",
@@ -3293,7 +3279,7 @@
       "phone": "729-497-9614",
       "reason": "",
       "comment": "cupidatat excepteur qui cillum veniam cillum proident exercitation consequat officia aliquip consectetur eiusmod laborum elit exercitation duis magna occaecat elit ipsum nostrud consectetur est tempor sit ea dolore aliquip officia enim cupidatat fugiat elit cillum irure labore",
-      "status": "none"
+      "status": "archive"
     },
     {
       "id": "41",
@@ -3513,7 +3499,7 @@
       "phone": "875-066-2843",
       "reason": "incididunt eiusmod Lorem ea ea voluptate cupidatat Lorem",
       "comment": "adipisicing quis ex pariatur proident enim sit labore laborum et sit non cupidatat anim culpa tempor enim pariatur irure culpa ut cillum cillum eu quis nostrud et incididunt culpa voluptate officia exercitation esse dolor consequat eu proident",
-      "status": "none"
+      "status": "archive"
     },
     {
       "id": "61",
