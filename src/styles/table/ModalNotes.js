@@ -17,4 +17,14 @@ export const ModalNewNotes = styled.div`
             text-align: center;
         }
     }
+    & .textareainputbookingeditable{
+        width: 100%;
+        height: 10em;
+        resize: none;
+        padding: 1em;
+        overflow-y: auto;
+        display: block;
+        border-radius: 1rem;
+        font-family: "poppinssemibold";
+    }
 `

@@ -9,6 +9,17 @@ export const TrMainTable = styled.tr`
             border: 1px solid red;
             width: 6em;
         }*/
+        & .inputEditBookingGuest{
+            border-radius: 1em;
+            padding: 1em;
+            font-family: 'poppinsmedium';
+            outline: none;
+            border: 1px solid #393939;
+        }
+        & .inputDataEditBooking{
+            width: 6em;
+            align-self: center;
+        }
         & .mediumletter{
             font-family: 'poppinsmedium';
         }
@@ -154,6 +165,15 @@ export const TrMainTable = styled.tr`
             font-family: 'poppinsregular';
             color: #799283;
             line-height: 21px;
+            & img{
+                display: inline-block;
+                margin-left: .6em;
+                cursor: pointer;
+                transition: scale .6s;
+                &:hover{
+                    scale: 1.1;
+                }
+            }
             &--black{
                 color: black;
             }
