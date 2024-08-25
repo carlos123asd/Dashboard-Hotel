@@ -1,6 +1,9 @@
 import Toastify from 'toastify-js'
 
-const editBooking = (booking,values) => {
+const editBooking = (booking,values,message) => {
+    console.log(booking)
+    console.log(values)
+    console.log(message)
     /*
     if(values.typeRoom === '' && values.status === ''){
         values = {
@@ -23,7 +26,7 @@ const editBooking = (booking,values) => {
     method: 'PUT',
     body: JSON.stringify({
         ...booking,
-        checkout: values.checkout
+        ...values
     }), //Objeto -> JSON
     headers: {
         'Content-type': 'application/json; charset=UTF-8'
@@ -32,7 +35,7 @@ const editBooking = (booking,values) => {
         if(response.ok){
             console.log(response.json())
             Toastify({
-                text: "Booking: Check Out edited",
+                text: message,//"Booking: Check Out edited",
                 duration: 3000,
                 gravity: 'top',
                 position: 'center',

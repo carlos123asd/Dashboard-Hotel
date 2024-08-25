@@ -16,9 +16,12 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import 'dayjs/locale/en-gb';
 import editRoomBooking from '../assets/imgs/edit.svg'
+import editBooking from '../features/db/fecths/editBooking'
+import { ModalSelectNewRoomEdit } from '../styles/table/ModalSelectNewRoomEdit'
 
 export default function RowTable({data=data.data}){
     const [locationname,setLocationname] = useState(useLocation().pathname);
+
     const [typeroomedit,setTyperoomedit] = useState("")
     const [numroomedit,setNumroomedit] = useState("")
     const [facilitiesedit,setFacilitiesedit] = useState("")
@@ -27,6 +30,7 @@ export default function RowTable({data=data.data}){
     const [priceedit,setPriceedit] = useState("")
     const [discountedit,setDiscountedit] = useState("")
     const [statusedit,setStatusedit] = useState("")
+
     const [edit,setEdit] = useState(false) //evaluar de bool a id
     const [showbtngroup2,setShowbtngroup2] = useState({
         display: 'none'
@@ -40,9 +44,16 @@ export default function RowTable({data=data.data}){
     const [open, setOpen] = useState(false); 
     const [bookingvisible, setBookingvisible] = useState(false);
     const dbRoom = useSelector(state => state.db.data.rooms)
-    const [specialrequestedit,setSpecialrequestedit] = useState("")
     const [openeditroombooking,setOpeneditroombooking] = useState(false)
     const [typeroombooking,setTyperoombooking] = useState("")
+
+    const [roomselectedit,setRoomselectedit] = useState("")
+    const [namebookingedit,setNamebookingedit] = useState("")
+    const [orderdatebookingedit,setOrderdatebookingedit] = useState("")
+    const [checkinbookingedit,setCheckinbookingedit] = useState("")
+    const [checkoutbookingedit,setCheckoutbookingedit] = useState("")
+    const [specialrequestedit,setSpecialrequestedit] = useState("")
+    const [statusbookingedit,setStatusbookingedit] = useState("")
     
     useEffect(()=>{
         if(locationname === 'bookings'){
@@ -136,9 +147,9 @@ export default function RowTable({data=data.data}){
     }
     const otherStateEdit = (state) => {
         if(state === 'In Progress'){
-            return <select value={data.status} className="status statusinprogress"><option value="Check In">Check In</option><option value="Check Out">Check Out</option><option statusinprogress value="In Progress">In Progress</option></select>
+            return <select className="status statusinprogress"><option value="Check In">Check In</option><option value="Check Out">Check Out</option><option statusinprogress value="In Progress">In Progress</option></select>
         }else if(state === 'Check Out'){
-            return <select value={data.status} className="status statusbooked"><option value="Check In">Check In</option><option value="Check Out">Check Out</option><option value="In Progress">In Progress</option></select>
+            return <select className="status statusbooked"><option value="Check In">Check In</option><option value="Check Out">Check Out</option><option value="In Progress">In Progress</option></select>
         }
     }
     const handleOpen = () => {
@@ -152,6 +163,21 @@ export default function RowTable({data=data.data}){
 
     const handleOpenViewBooking = () => setBookingvisible(true)
 
+    const handleSaveBooking = (booking) => {
+        const dataBookingEdit = {
+            idRoom: roomselectedit.split('-')[1],
+            roomType: roomselectedit.split('-')[0],
+            guest: namebookingedit,
+            orderDate: orderdatebookingedit,
+            checkin: checkinbookingedit,
+            checkout: checkoutbookingedit,
+            specialRequest: specialrequestedit,
+            status: statusbookingedit
+        }
+        editBooking(booking,dataBookingEdit,'Booking edited successfully')
+        handleClickFunctionEdit()
+    }
+    
     if(locationname === '/room'){
         return (edit === true) ? <>
                 <TrMainTable>
@@ -254,35 +280,40 @@ export default function RowTable({data=data.data}){
                 aria-describedby="modal-modal-description"
                 style={{alignContent: 'center'}}
                 >
-                    <ModalNewRoom className="modalbooking">
-                        <h1>Select New Room</h1>
-                        <div className="contentRoomNewRoom">
-                            <h2>Rooms Available</h2>
-                            <div className="contentRoomNewRoom__firstblock sectionformbooking">
-                                    <label htmlFor="roomtype">Room Type</label>
-                                    <select name="selectroomtype" value={data.roomType} onChange={event => setTyperoombooking(event.target.value)} id="contentRoomNewRoom__roomtype">
-                                        <option value={'Single Bed'}>Single Bed</option>
-                                        <option value={'Double Bed'}>Double Bed</option>
-                                        <option value={'Double Superior'}>Double Superior</option>
-                                        <option value={'Suite'}>Suite</option>
-                                    </select>
+                    <ModalNewRoom style={{width:'50%'}}>
+                        <div className="contentRoomNewRoom contentRoomNewRoom--editRoomBooking">
+                            <div>
+                                <h2>Rooms Available</h2>
+                                <div className="contentRoomNewRoom__firstblock sectionformbooking">
+                                        <label htmlFor="roomtype">Room Type</label>
+                                        <select name="selectroomtype" value={data.roomType} onChange={event => setTyperoombooking(event.target.value)} id="contentRoomNewRoom__roomtype">
+                                            <option value={'Single Bed'}>Single Bed</option>
+                                            <option value={'Double Bed'}>Double Bed</option>
+                                            <option value={'Double Superior'}>Double Superior</option>
+                                            <option value={'Suite'}>Suite</option>
+                                        </select>
+                                </div>
+                                <h2>Reserve room</h2>
+                                <span className="RoomEditBooking">{data.roomType} #{data.idRoom}</span>
                             </div>
                             
-                            <div className="contentRoomInfo contentbooking">
-                                <div>
+                            <div className="contentbookingedit">
+                                    <h2>List of available rooms</h2>
                                     <ul>
                                         {
                                             dbRoom.map(room => {
                                                 if(room.status === "Available" && room.typeRoom === typeroombooking){
                                                     return <>
-                                                        <li><input id="roomselected" name="roomselected" type="checkbox" value={`${room.typeRoom}-${room.roomNumber}`}/>{room.typeRoom}-{room.roomNumber}</li>
+                                                        <li>
+                                                            <input id="roomselected" name="roomselected" type="radio" onClick={() => setRoomselectedit(`${room.typeRoom}-${room.id}`)} value={`${room.typeRoom}-${room.id}`}/>
+                                                            <span style={{marginLeft:'1em'}}>{room.typeRoom}-{room.roomNumber}</span>
+                                                        </li>
                                                     </>
                                                 }
                                                 
                                             })
                                         }
                                     </ul>
-                                </div>
                             </div>
                         </div>
                     </ModalNewRoom>
@@ -292,7 +323,7 @@ export default function RowTable({data=data.data}){
                         <td onClick={() => handleOpenViewBooking(data)}>
                             <img className="imgroomnameColum" width={150} height={77} src={''} alt="Image Room" />
                             <div className="roomnameColumn">
-                                <span className="deluxenum numtit--black"><input className="inputEditBookingGuest" type="text" placeholder={data.guest} /></span>
+                                <span className="deluxenum numtit--black"><input className="inputEditBookingGuest" onChange={(e) => setNamebookingedit(e.target.value)} type="text" placeholder={data.guest} /></span>
                                 <span className="numtit">{`${data.roomType}-${'12341'}`}<img onClick={() => setOpeneditroombooking(true)} src={editRoomBooking} alt="Edit Reservation Room"></img></span>
                             </div>
                         </td>
@@ -304,6 +335,7 @@ export default function RowTable({data=data.data}){
                             label={'Day,Month,Year'}
                             views={['day','month','year']}
                             className="inputDataEditBooking"
+                            onChange={(e) => setOrderdatebookingedit(`${e.clone().$D} ${((e.clone()).toString()).split(' ')[2]} ${((e.clone()).toString()).split(' ')[3]}`)}
                             />
                         </DemoContainer>
                         </LocalizationProvider>
@@ -315,6 +347,7 @@ export default function RowTable({data=data.data}){
                             label={'Day,Month,Year'}
                             views={['day','month','year']}
                             className="inputDataEditBooking"
+                            onChange={(e) => setCheckinbookingedit(`${e.clone().$D} ${((e.clone()).toString()).split(' ')[2]} ${((e.clone()).toString()).split(' ')[3]}`)}
                             />
                         </DemoContainer>
                         </LocalizationProvider>
@@ -326,19 +359,20 @@ export default function RowTable({data=data.data}){
                             label={'Day,Month,Year'}
                             views={['day','month','year']}
                             className="inputDataEditBooking"
+                            onChange={(e) => setCheckoutbookingedit(`${e.clone().$D} ${((e.clone()).toString()).split(' ')[2]} ${((e.clone()).toString()).split(' ')[3]}`)}
                             />
                         </DemoContainer>
                         </LocalizationProvider>
                     </td>
                     <td onClick={handleOpen} notes='true'>Edit View Notes</td>
                     <td>{data.roomType}</td>
-                    <td>{data.status === 'Check In' ? <select value={data.status} className="status"><option value="Check In">Check In</option><option value="Check Out">Check Out</option><option value="In Progress">In Progress</option></select> : otherStateEdit(data.status)}</td>
+                    <td>{data.status === 'Check In' ? <select onChange={(e) => setStatusbookingedit(e.target.value)} className="status"><option value="Check In">Check In</option><option value="Check Out">Check Out</option><option value="In Progress">In Progress</option></select> : otherStateEdit(data.status)}</td>
                         <div style={hideedit}>
                             <div className="status editdelete" onClick={handleClickFunctionEdit}>Edit</div>
                             <div className="status statusbooked editdelete" onClick={handleClickFunctionDelete}>Delete</div>
                         </div>
                         <div style={showbtngroup2}>
-                            <div className="status editdelete">Save</div>
+                            <div className="status editdelete" onClick={() => handleSaveBooking(data)}>Save</div>
                             <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
                         </div>
                         <div style={showbtngroup3}>

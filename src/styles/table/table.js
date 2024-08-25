@@ -193,13 +193,16 @@ export const TrMainTable = styled.tr`
             text-align: center;
             border-radius: 0.75em;
             padding: 0.7em 0;
+            outline: none;
         }
         & .statusbooked{
             background-color: #E23428;
+            outline: none;
         }
 
         & .statusinprogress{
             background-color: #FF9C3A;
+            outline: none;
         }
 
         & .nightroom{
