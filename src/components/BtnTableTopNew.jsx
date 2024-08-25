@@ -7,6 +7,13 @@ import "toastify-js/src/toastify.css"
 import { useLocation } from "react-router-dom";
 import handlesubmitnewRoom from "../features/forms/validationformRoom";
 
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import 'dayjs/locale/en-gb';
+import MuiPhoneNumber from 'mui-phone-number';
+
 export default function BtnTableTopNew({title,databooking}){
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -21,6 +28,7 @@ export default function BtnTableTopNew({title,databooking}){
     const [image2,setImage2] = useState(imagestandar);
     const [image3,setImage3] = useState(imagestandar);
     const [Typeroombooking,setTyperoombooking] = useState('Single Bed');
+    const [setOpenmodalnewemployee,openmodalnewemployee] = useState(false)
     
    const location = useLocation().pathname;
     
@@ -306,11 +314,71 @@ export default function BtnTableTopNew({title,databooking}){
         </>
     }else if(location === '/users'){
         return <>
-            <BtnTopNew>
-                <div onClick={handleOpen} className="contentBtn">
+        <BtnTopNew>
+                <div onClick={() => setOpenmodalnewemployee(true)} className="contentBtn">
                     + {title}
                 </div>
-            </BtnTopNew>
+        </BtnTopNew>
+
+        <Modal
+        open={openmodalnewemployee}
+        onClose={() => setOpenmodalnewemployee(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        style={{alignContent: 'center'}}
+        >
+            <ModalNewRoom style={{padding:'2.5em'}}>
+                <h1>{title}</h1>
+                <div className="contentRoomNewRoom">
+                    <form action="">
+                        <h2>Employee Details</h2>
+                        <div className="sectionformbooking sectionformbooking--inputdetailemployee">
+                            <div className="contentRoomNewRoom__firstblock">
+                                <label htmlFor="nameguest">Name</label>
+                                <input className="inputroom" id="nameguest" name="nameguest" type="text" placeholder="Carlos Alexander Medina Salas"></input>
+                            </div>
+                            <div className="contentRoomNewRoom__firstblock">
+                                <label htmlFor="nameguest">Email</label>
+                                <input className="inputroom" id="nameguest" name="nameguest" type="text" placeholder="carlos-medin@hotmail.com"></input>
+                            </div>
+                        </div>
+
+                        <h2>Start Date</h2>
+                        <div className="datestartemployee">
+                            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
+                                    <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
+                                        <DatePicker
+                                        label={'Day,Month,Year'}
+                                        views={['day','month','year']}
+                                        className="datestartemployee--max"
+                                        //onChange={(e) => setOrderdatebookingedit(`${e.clone().$D} ${((e.clone()).toString()).split(' ')[2]} ${((e.clone()).toString()).split(' ')[3]}`)}
+                                        />
+                                    </DemoContainer>
+                            </LocalizationProvider>
+                        </div>
+                            
+                        <div style={{marginTop:'1em'}} className="contentRoomNewRoom__priceblock sectionformbooking">
+                            <label htmlFor="specialrequest">Description of the employee</label>
+                            <textarea name="specialrequest" id="specialrequest" placeholder="Description..."></textarea>
+                        </div>
+
+                        <h2>Contact</h2>
+                        <div className="sectionformbooking">
+                            <label htmlFor="specialrequest">Phone</label>
+                            <MuiPhoneNumber style={{display:'block'}} defaultCountry={'es'} onChange={''}/>
+                        </div>
+
+                        <div className="contentRoomNewRoom__firstblock sectionformbooking">
+                                <label style={{display:'inline-block',marginRight:'1em'}} htmlFor="roomtype">Status</label>
+                                <select style={{display:'inline-block'}} name="selectroomtype" onChange={''}>
+                                    <option value={'Single Bed'}>Active</option>
+                                    <option value={'Double Bed'}>Inactive</option>
+                                </select>
+                        </div>
+                    </form>
+                </div>
+            </ModalNewRoom>
+            </Modal>
         </>
     }
 }

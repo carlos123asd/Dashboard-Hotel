@@ -10,6 +10,23 @@ export const ModalNewRoom = styled.div`
     border-radius: 1rem;
     background: #f8f8f8;
     outline: none;
+    & .datestartemployee{
+        width: 40%;
+        display: block;
+        &--max{
+            width: 100%;
+            height: 100%;
+        }
+    }
+    & .contentbookingedit{
+        background: #fff;
+        padding: 1em;
+        box-shadow: 0px 16px 30px #00000014;
+        overflow-y: auto;
+    }
+    & .RoomEditBooking{
+        font-family: 'poppinsregular';
+    }
     & .contentbooking{
         width: 20em !important;
         height: 60% !important;
@@ -106,6 +123,12 @@ export const ModalNewRoom = styled.div`
     & .contentRoomNewRoom{
         width: 100%;
         position: relative;
+        &--editRoomBooking{
+            display: flex;
+            width: 100%;
+            height: 100%;
+            justify-content: space-around;
+        }
         &__firstblock{
             display: inline-block;
         }

@@ -10,6 +10,7 @@ import logo from '../assets/imgs/logo.svg'
 
 export default function ViewBooking(booking){
     booking = booking.booking
+    console.log(booking)
     const dbRoom = useSelector(state => state.db.data.rooms)
     console.log(dbRoom)
     const roomselected = dbRoom.filter((room) => {
