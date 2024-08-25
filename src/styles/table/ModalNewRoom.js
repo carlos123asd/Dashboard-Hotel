@@ -10,14 +10,6 @@ export const ModalNewRoom = styled.div`
     border-radius: 1rem;
     background: #f8f8f8;
     outline: none;
-    & .datestartemployee{
-        width: 40%;
-        display: block;
-        &--max{
-            width: 100%;
-            height: 100%;
-        }
-    }
     & .contentbookingedit{
         background: #fff;
         padding: 1em;
@@ -123,6 +115,9 @@ export const ModalNewRoom = styled.div`
     & .contentRoomNewRoom{
         width: 100%;
         position: relative;
+        &--margin{
+            margin-bottom: 1em;
+        }
         &--editRoomBooking{
             display: flex;
             width: 100%;
