@@ -1684,20 +1684,6 @@
       "idRoom": 105
     },
     {
-      "id": "31",
-      "guest": "Carole Berge",
-      "orderDate": "23 Apr 2024",
-      "checkin": "7 Aug 2024",
-      "timein": "12:22 am",
-      "checkout": "9 Dec 2023",
-      "timeout": "12:07 am",
-      "ordertime": "05:44 am",
-      "specialRequest": "ad ipsum irure do aliquip pariatur duis",
-      "roomType": "Suite",
-      "status": "In Progress",
-      "idRoom": 109
-    },
-    {
       "id": "32",
       "guest": "Courtney Sawayn",
       "orderDate": "4 Nov 2023",
@@ -2826,6 +2812,18 @@
       "description": "aliqua sit",
       "phone": "212-808-6808",
       "status": "active"
+    },
+    {
+      "id": "31",
+      "photo": [
+        "https://static.vecteezy.com/system/resources/previews/011/186/876/original/male-profile-picture-symbol-vector.jpg"
+      ],
+      "name": "carlos medina",
+      "email": "carlos-medin@hotmail.com",
+      "startdate": "25 Aug 2024",
+      "description": "new employee",
+      "phone": "+34 616 348 947",
+      "status": "Inactive"
     }
   ],
   "comment": [

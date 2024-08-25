@@ -13,6 +13,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import 'dayjs/locale/en-gb';
 import MuiPhoneNumber from 'mui-phone-number';
+import { useSelector } from "react-redux";
+import validationNewuser from '../features/forms/validationformNewUser'
 
 export default function BtnTableTopNew({title,databooking}){
     const [open, setOpen] = useState(false);
@@ -28,8 +30,9 @@ export default function BtnTableTopNew({title,databooking}){
     const [image2,setImage2] = useState(imagestandar);
     const [image3,setImage3] = useState(imagestandar);
     const [Typeroombooking,setTyperoombooking] = useState('Single Bed');
-    const [setOpenmodalnewemployee,openmodalnewemployee] = useState(false)
-    
+    const [startdateuser,setStartdateuser] = useState("")
+    const [numberphonestate,setNumberphonestate] = useState("")
+    const dataUser = useSelector(state => state.db.data.employee)
    const location = useLocation().pathname;
     
     useEffect(() => {
@@ -119,6 +122,29 @@ export default function BtnTableTopNew({title,databooking}){
     const validFormRoom = (e) => {
         handlesubmitnewRoom(e)
         handleClose()
+    }
+
+    const validFormUser = (e) => {
+        e.preventDefault()
+        const lengthuser = (dataUser.length).toString()
+        const newuser = {
+            id: lengthuser,
+            photo: [
+                "https://static.vecteezy.com/system/resources/previews/011/186/876/original/male-profile-picture-symbol-vector.jpg"
+            ],
+            name: `${e.target.nameuser.value}`,
+            email: `${e.target.emailuser.value}`,
+            startdate: `${startdateuser}`,
+            description: `${e.target.descriptionuser.value}`,
+            phone: `${numberphonestate}`,
+            status: `${e.target.statususer.value}`
+        }
+        validationNewuser(newuser)
+        handleClose()
+    }
+
+    const handleclosemodalnewemployee = () => {
+        setOpenmodalnewemployee(false)
     }
 
 
@@ -315,43 +341,42 @@ export default function BtnTableTopNew({title,databooking}){
     }else if(location === '/users'){
         return <>
         <BtnTopNew>
-                <div onClick={() => setOpenmodalnewemployee(true)} className="contentBtn">
+                <div onClick={handleOpen} className="contentBtn">
                     + {title}
                 </div>
         </BtnTopNew>
 
         <Modal
-        open={openmodalnewemployee}
-        onClose={() => setOpenmodalnewemployee(false)}
+        open={open}
+        onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         style={{alignContent: 'center'}}
         >
-            <ModalNewRoom style={{padding:'2.5em'}}>
+            <ModalNewRoom style={{padding:'2.5em',width:'50%'}}>
                 <h1>{title}</h1>
                 <div className="contentRoomNewRoom">
-                    <form action="">
+                    <form onSubmit={e => validFormUser(e)} action="">
                         <h2>Employee Details</h2>
                         <div className="sectionformbooking sectionformbooking--inputdetailemployee">
-                            <div className="contentRoomNewRoom__firstblock">
+                            <div className="contentRoomNewRoom__firstblock contentRoomNewRoom--margin">
                                 <label htmlFor="nameguest">Name</label>
-                                <input className="inputroom" id="nameguest" name="nameguest" type="text" placeholder="Carlos Alexander Medina Salas"></input>
+                                <input className="inputroom" id="nameuser" name="nameuser" type="text" placeholder="Carlos Alexander Medina Salas"></input>
                             </div>
                             <div className="contentRoomNewRoom__firstblock">
                                 <label htmlFor="nameguest">Email</label>
-                                <input className="inputroom" id="nameguest" name="nameguest" type="text" placeholder="carlos-medin@hotmail.com"></input>
+                                <input className="inputroom" id="emailuser" name="emailuser" type="text" placeholder="carlos-medin@hotmail.com"></input>
                             </div>
                         </div>
 
                         <h2>Start Date</h2>
-                        <div className="datestartemployee">
+                        <div>
                             <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
                                     <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
                                         <DatePicker
                                         label={'Day,Month,Year'}
                                         views={['day','month','year']}
-                                        className="datestartemployee--max"
-                                        //onChange={(e) => setOrderdatebookingedit(`${e.clone().$D} ${((e.clone()).toString()).split(' ')[2]} ${((e.clone()).toString()).split(' ')[3]}`)}
+                                        onChange={(e) => setStartdateuser(`${e.clone().$D} ${((e.clone()).toString()).split(' ')[2]} ${((e.clone()).toString()).split(' ')[3]}`)}
                                         />
                                     </DemoContainer>
                             </LocalizationProvider>
@@ -359,26 +384,30 @@ export default function BtnTableTopNew({title,databooking}){
                             
                         <div style={{marginTop:'1em'}} className="contentRoomNewRoom__priceblock sectionformbooking">
                             <label htmlFor="specialrequest">Description of the employee</label>
-                            <textarea name="specialrequest" id="specialrequest" placeholder="Description..."></textarea>
+                            <textarea name="descriptionuser" id="specialrequest" placeholder="Description..."></textarea>
                         </div>
 
                         <h2>Contact</h2>
                         <div className="sectionformbooking">
                             <label htmlFor="specialrequest">Phone</label>
-                            <MuiPhoneNumber style={{display:'block'}} defaultCountry={'es'} onChange={''}/>
+                            <MuiPhoneNumber style={{display:'block'}} defaultCountry={'es'} onChange={(e) => setNumberphonestate(e)}/>
                         </div>
 
                         <div className="contentRoomNewRoom__firstblock sectionformbooking">
                                 <label style={{display:'inline-block',marginRight:'1em'}} htmlFor="roomtype">Status</label>
-                                <select style={{display:'inline-block'}} name="selectroomtype" onChange={''}>
-                                    <option value={'Single Bed'}>Active</option>
-                                    <option value={'Double Bed'}>Inactive</option>
+                                <select style={{display:'inline-block'}} name="statususer">
+                                    <option value={'Active'}>Active</option>
+                                    <option value={'Inactive'}>Inactive</option>
                                 </select>
+                        </div>
+
+                        <div style={{textAlign:'right'}}>
+                             <input type="submit" value="Save"/>
                         </div>
                     </form>
                 </div>
             </ModalNewRoom>
-            </Modal>
+        </Modal>
         </>
     }
 }
