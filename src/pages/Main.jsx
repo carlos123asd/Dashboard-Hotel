@@ -20,11 +20,7 @@ export default function Main(){
         setDatadashboard(selectorDbData)
     },[selectorDbData])
 
-    console.log('AUTH',state.auth)
 
-    if(state.auth === false){
-        navigate('/login')
-    }else{
         return <>
             <ContentPageMain>
                 <KpiDashboard>
@@ -82,5 +78,4 @@ export default function Main(){
                 <Review data={datadashboard.comment} />
             </ContentPageMain>
         </>
-    }
 }

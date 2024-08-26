@@ -9,7 +9,7 @@ import {
     ContentNavTit
 } from '../styles/nav/nav'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Toastify from 'toastify-js'
 import "toastify-js/src/toastify.css"
@@ -20,9 +20,10 @@ import { hidemessage, hidenotBookings, shownotificationBooking, shownotification
 import { styled } from '@mui/material/styles';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import ListMessage from './ListMessage'
+import { showMenu } from '../features/db/menu/menuSlice'
 
-export default function Nav(){
-    const [vertical,setVertical] = useState(false);
+export default function Nav({stylenav}){
+    const [vertical,setVertical] = useState(true);
     const [style,setStyle] = useState({'padding-left': '5%'});
     const [styleleft,setStyleleft] = useState({'left': '-5%'});
     const navigate = useNavigate();
@@ -38,7 +39,6 @@ export default function Nav(){
         return message.status === 'none'
     })).length
 
-
     const NotificationTooltip = styled(({ className, ...props }) => (
         <Tooltip {...props} classes={{ popper: className }} />
       ))(({ theme }) => ({
@@ -51,28 +51,8 @@ export default function Nav(){
         },
       }));
 
-
     const showNavVertical = () => {
-        if(vertical === false){
-            setStyle({
-                'padding-left': '5%'
-            })
-            setStyleleft({
-                'left': '-5%'
-            })
-            setVertical(true)
-        }
-        else if(vertical === true){
-            setStyle(
-                {
-                    'padding-left': '25%'
-                }
-            )
-            setStyleleft({
-                'left': '0%'
-            })
-            setVertical(false)
-        }
+        dispatchNav(showMenu())
     }
 
     const logout = () => {
@@ -105,13 +85,13 @@ export default function Nav(){
     }
 
     return <>
-        <ContentNavMain>
-            <div style={style}>
+        <ContentNavMain style={stylenav}>
+            <div>
                 <img onClick={showNavVertical} src={iconmenu} alt="Menu" />
                 <ContentNavTit>{path.pathname === '/' ? 'Dashboard' : (path.pathname.split('/')[1])[0].toUpperCase()+(path.pathname.split('/')[1]).slice(1)}</ContentNavTit>
             </div>
             
-            <div className='pos-relative' style={styleleft}>
+            <div className='pos-relative'>
                 <ContentNavImg>
                     <NotificationTooltip title="Latest Review by Customers" onClick={handleShowListMessage} className='contennotification'>
                         <img width={26} height={35} src={iconmessage} alt="Messages" />
