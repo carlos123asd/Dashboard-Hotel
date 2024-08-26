@@ -60,19 +60,29 @@ export const TrMainTable = styled.tr`
             }
         }
         & .textareainputroomeditable{
-            width: 100%;
+            width: 90%;
             height: 7em;
             resize: none;
-            border: none;
             padding: 1em;
             outline: none;
             font-family: 'poppinsmedium';
+            border: 1px solid #393939;
+            border-radius: 1em;
         }
         & .inputSelect{
             width: 60%;
             height: 100%;
             border-radius: 1em;
             border: none;
+            &--statusemployee{
+                padding: .5em;
+                background-color: #135846;
+                color: #fff;
+                font-family: 'poppinsmedium';
+                font-size: 1rem;
+                line-height: 25px;
+                outline: none;
+            }
             &--statusAvaible{
                 width: 70%;
                 border: none;

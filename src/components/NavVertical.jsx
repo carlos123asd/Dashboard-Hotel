@@ -13,10 +13,90 @@ import { ContentNavVertical,
 import iconLogo from '../assets/imgs/logo.svg'
 import imgprofile from '../assets/imgs/menu/lateral/perfil.jpg'
 import { useNavigate } from 'react-router-dom'
+import { Modal } from "@mui/material";
+import { ModalNewRoom } from "../styles/table/ModalNewRoom";
+import { useState } from "react";
+import { useContextAuth } from "../features/context/AuthContext";
+import MuiPhoneNumber from "mui-phone-number";
+import validationEdituser from "../features/forms/validationformEditUser";
+import { useSelector } from "react-redux";
 
 export default function NavVertical(){
+    const [open, setOpen] = useState(false);
+    const handleClose = () => setOpen(false);
+    const handleOpen = () => setOpen(true);
     const navigate = useNavigate();
+    const {state} = useContextAuth()
+    const [numberphonestate,setNumberphonestate] = useState("")
+    const users = useSelector(state => state.db.data.employee)
+    const userEdit = users.filter((user) => {
+        console.log(state.username)
+        return user.email === state.email && user.name === state.username
+    })
+    const handlevalidation = (e) => {
+        const user = {
+            name: `${e.target.nameuser.value}`,
+            email: `${e.target.emailuser.value}`,
+            description: `${e.target.descriptionuser.value}`,
+            phone: `${numberphonestate}`,
+            status: `${e.target.statususer.value}`
+        }
+        validationEdituser(userEdit[0],user)
+        handleClose()
+    }
+
     return <>
+            <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            style={{alignContent: 'center'}}
+            >
+                <ModalNewRoom style={{width:'50%'}}>
+                    <div className="contentRoomNewRoom">
+                    <div className="contentRoomNewRoom">
+                    <form onSubmit={(e) => handlevalidation(e)} action="">
+                        <h2>User Details</h2>
+                        <div className="sectionformbooking sectionformbooking--inputdetailemployee">
+                            <div className="contentRoomNewRoom__firstblock contentRoomNewRoom--margin">
+                                <label htmlFor="nameguest">Name</label>
+                                <input className="inputroom" id="nameuser" name="nameuser" type="text" placeholder={state.username}></input>
+                            </div>
+                            <div className="contentRoomNewRoom__firstblock">
+                                <label htmlFor="nameguest">Email</label>
+                                <input className="inputroom" id="emailuser" name="emailuser" type="text" placeholder={state.email}></input>
+                            </div>
+                        </div>
+                            
+                        <div style={{marginTop:'1em'}} className="contentRoomNewRoom__priceblock sectionformbooking">
+                            <label htmlFor="specialrequest">Description of the user</label>
+                            <textarea name="descriptionuser" id="specialrequest" placeholder={userEdit[0].description}></textarea>
+                        </div>
+
+                        <h2>Contact</h2>
+                        <div className="sectionformbooking">
+                            <label htmlFor="specialrequest">Phone</label>
+                            <MuiPhoneNumber placeholder={userEdit[0].phone} style={{display:'block'}} defaultCountry={'es'} onChange={(e) => setNumberphonestate(e)}/>
+                        </div>
+
+                        <div className="contentRoomNewRoom__firstblock sectionformbooking">
+                                <label style={{display:'inline-block',marginRight:'1em'}} htmlFor="roomtype">Status</label>
+                                <select style={{display:'inline-block'}} name="statususer">
+                                    <option value={'Active'}>Active</option>
+                                    <option value={'Inactive'}>Inactive</option>
+                                </select>
+                        </div>
+
+                        <div style={{textAlign:'right'}}>
+                             <input type="submit" value="Save"/>
+                        </div>
+                    </form>
+                </div>
+                    </div>
+                </ModalNewRoom>
+            </Modal>
+
          <ContentNavVertical>
                 <ContentHeaderNavVertical>
                     <ImagenHeaderNavVertical src={iconLogo} alt="logo" />
@@ -70,14 +150,14 @@ export default function NavVertical(){
                     <ImageProfileHeaderNavVertical>
                         <img width='100%' height='100%' src={imgprofile} alt="Image Profile" />
                     </ImageProfileHeaderNavVertical>
-                    <span className='titprofile'>William Johanson</span>
-                    <span className='subtitprofile'>williamjhon@mail.com</span>
-                    <div className='btnContactUs'>Edit Profile</div>
+                    <span className='titprofile'>{state.username}</span>
+                    <span className='subtitprofile'>{state.email}</span>
+                    <div onClick={handleOpen} className='btnContactUs'>Edit Profile</div>
                 </ContentContactNavVertical>
                 <ContentCopyNavVertical>
                     <span className='titcopy'>Travl Hotel Admin Dashboard</span>
-                    <span className='subtitcopy'>© 2020 All Rights Reserved</span>
-                    <span className='madecopy'>Made with ♥ by Peterdraw</span>
+                    <span className='subtitcopy'>© 2024 All Rights Reserved</span>
+                    <span className='madecopy'>Made with ♥ by AlexDev</span>
                 </ContentCopyNavVertical>
         </ContentNavVertical>
     </>

@@ -18,6 +18,9 @@ import 'dayjs/locale/en-gb';
 import editRoomBooking from '../assets/imgs/edit.svg'
 import editBooking from '../features/db/fecths/editBooking'
 import { ModalSelectNewRoomEdit } from '../styles/table/ModalSelectNewRoomEdit'
+import MuiPhoneNumber from "mui-phone-number";
+import editUser from "../features/db/fecths/editUser";
+import deleteUser from "../features/db/fecths/deleteUser";
 
 export default function RowTable({data=data.data}){
     const [locationname,setLocationname] = useState(useLocation().pathname);
@@ -55,6 +58,14 @@ export default function RowTable({data=data.data}){
     const [specialrequestedit,setSpecialrequestedit] = useState("")
     const [statusbookingedit,setStatusbookingedit] = useState("")
     
+    const [numberphonestate,setNumberphonestate] = useState("")
+    const [nameedituser,setNameedituser] = useState("")
+    const [emailedituser,setEmailedituser] = useState("")
+    const [descriptionedituser,setDescriptionedituser] = useState("")
+    const [statusedituser,setStatusedituser] = useState("")
+    
+
+
     useEffect(()=>{
         if(locationname === 'bookings'){
             const roomselectBooking = dbRoom.filter((booking) => {
@@ -147,7 +158,7 @@ export default function RowTable({data=data.data}){
     }
     const otherStateEdit = (state) => {
         if(state === 'In Progress'){
-            return <select className="status statusinprogress"><option value="Check In">Check In</option><option value="Check Out">Check Out</option><option statusinprogress value="In Progress">In Progress</option></select>
+            return <select className="status statusinprogress"><option value="Check In">Check In</option><option value="Check Out">Check Out</option><option value="In Progress">In Progress</option></select>
         }else if(state === 'Check Out'){
             return <select className="status statusbooked"><option value="Check In">Check In</option><option value="Check Out">Check Out</option><option value="In Progress">In Progress</option></select>
         }
@@ -176,6 +187,22 @@ export default function RowTable({data=data.data}){
         }
         editBooking(booking,dataBookingEdit,'Booking edited successfully')
         handleClickFunctionEdit()
+    }
+    const handleSaveEditUser = (user) => {
+        const dataUserEdit = {
+            name: `${nameedituser}`,
+            email: `${emailedituser}`,
+            description: `${descriptionedituser}`,
+            phone: `${numberphonestate}`,
+            status: `${statusedituser}`
+        }
+        editUser(user,dataUserEdit,'User edited successfully')
+        handleClickFunctionEdit()
+    }
+
+    const handleDeleteUser = (id) => {
+        deleteUser(id.toString())
+        handleClickFunctionCancelDelete()
     }
     
     if(locationname === '/room'){
@@ -444,26 +471,37 @@ export default function RowTable({data=data.data}){
                     <td>
                         <img className="imgroomnameColum" width={150} height={77} src={data.photo} alt="Image Employee" />
                         <div className="roomnameColumn">
-                            <span className="nameemployee">{data.name}</span>
+                            <input onChange={(e) => setNameedituser(e.target.value)} className="inputEditBookingGuest" style={{height:'3em'}} type="text" name="nameuseredit" placeholder={data.name} />
                             <span className="deluxenum">#{data.id}<br/>Joined on {data.startdate}</span>
                         </div>
                     </td>
                 </div>
-                <td className="descriptionemployee">{data.description}</td>
-                <td className="contactemployee"><span><img src={phonecontact} alt="Contact Employee" />{data.phone}</span><br /><span>{data.email}</span></td>
-                {data.status === 'active' ? <td className="statusemployee statusemployee--active">{data.status}</td> : <td className="statusemployee statusemployee--inactive">{data.status}</td>}
+                <td className="descriptionemployee textareainputbookingeditable"><textarea onChange={(e) => setDescriptionedituser(e.target.value)} className="textareainputroomeditable" placeholder={data.description} name="descriptionuseredit"></textarea></td>
+                <td style={{alignContent: 'stretch'}} className="contactemployee">
+                    <MuiPhoneNumber style={{display:'block'}} defaultCountry={'es'} onChange={(e) => setNumberphonestate(e)}/>
+                    <br />
+                    <input onChange={(e) => setEmailedituser(e.target.value)} className="inputEditBookingGuest" style={{height:'3em',width:'100%'}} type="text" placeholder={data.email} />
+                </td>
+                <td style={{alignContent: 'center'}} className="statusemployee statusemployee--inactive">
+                    <select onChange={(e) => setStatusedituser(e.target.value)} style={{width:'20%'}} className="inputSelect inputSelect--statusemployee" name="statususeredit">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </td>
+                <td style={{alignContent: 'center'}}>
                     <div style={hideedit}>
                         <div className="status editdelete" onClick={handleClickFunctionEdit}>Edit</div>
                         <div className="status statusbooked editdelete" onClick={handleClickFunctionDelete}>Delete</div>
                     </div>
                     <div style={showbtngroup2}>
-                        <div className="status editdelete">Save</div>
+                        <div onClick={() => handleSaveEditUser(data)} className="status editdelete">Save</div>
                         <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
                     </div>
                     <div style={showbtngroup3}>
-                        <div className="status editdelete" onClick={() => handledeleteBooking(data.id)}>Confirm</div>
+                        <div className="status editdelete">Confirm</div>
                         <div className="status statusbooked editdelete" onClick={handleClickFunctionCancelDelete}>Cancel</div>
                     </div>
+                </td>
             </TrMainTable>
         </>
         :
@@ -481,6 +519,7 @@ export default function RowTable({data=data.data}){
                 <td className="descriptionemployee">{data.description}</td>
                 <td className="contactemployee"><span><img src={phonecontact} alt="Contact Employee" />{data.phone}</span><br /><span>{data.email}</span></td>
                 {data.status === 'active' ? <td className="statusemployee statusemployee--active">{data.status}</td> : <td className="statusemployee statusemployee--inactive">{data.status}</td>}
+                <td>
                     <div style={hideedit}>
                         <div className="status editdelete" onClick={handleClickFunctionEdit}>Edit</div>
                         <div className="status statusbooked editdelete" onClick={handleClickFunctionDelete}>Delete</div>
@@ -490,9 +529,10 @@ export default function RowTable({data=data.data}){
                         <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
                     </div>
                     <div style={showbtngroup3}>
-                        <div className="status editdelete" onClick={() => handledeleteBooking(data.id)}>Confirm</div>
+                        <div className="status editdelete" onClick={() => handleDeleteUser(data.id)}>Confirm</div>
                         <div className="status statusbooked editdelete" onClick={handleClickFunctionCancelDelete}>Cancel</div>
                     </div>
+                </td>
             </TrMainTable>
         </>
     }

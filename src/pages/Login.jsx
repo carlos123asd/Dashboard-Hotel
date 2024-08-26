@@ -4,48 +4,74 @@ import {LoginImg,LoginTit,LoginSub,LoginLabel,LoginContentInline,LoginInput,Logi
 import Toastify from 'toastify-js'
 import "toastify-js/src/toastify.css"
 import { useContextAuth } from '../features/context/AuthContext';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { dbThunkUser } from '../features/db/login/loginThunk';
+import { useDispatch } from 'react-redux';
 
 export default function Login(){
     sessionStorage.setItem('auth',true);
     const navigate = useNavigate(); 
     const {dispatch} = useContextAuth()
-    const [inputName,setInputName] = useState("")
-    const [email,setEmail] = useState("carlos-medin@hotmail.com")
-
+    const [email,setEmail] = useState("")
+    const [users,setUsers] = useState({})
+    const dispatchdb = useDispatch()
     console.log(useContextAuth())
-    
+
+    useEffect(() => {
+        dispatchdb(dbThunkUser()).then(response => setUsers(response.payload.users))
+    },[])
+
     const validateAuth = (event) => {
         event.preventDefault();
-        if(sessionStorage.getItem('auth') === 'true'){
-            dispatch({
-                type: 'LOGIN',
-                payload: {
-                    name: inputName,
-                    email: email
-                }
-            })
-            Toastify({
-                text: "🏠 Bienvenido!!",
-                duration: 2000,
-                gravity: 'top',
-                position: 'center',
-                style:{
-                    background: '#135846'
-                }
-                }).showToast();
+        if(sessionStorage.getItem('auth') === 'true' && email !== ''){
+           const userFound = users.filter((user) => {
+                return user.email === email
+           })
+           console.log('user',userFound)
+           if(userFound.length !== 0){
+                dispatch({
+                    type: 'LOGIN',
+                    payload: {
+                        name: userFound[0].name,
+                        email: userFound[0].email
+                    }
+                })
+                Toastify({
+                    text: "🏠 Bienvenido!!",
+                    duration: 2000,
+                    gravity: 'top',
+                    position: 'center',
+                    style:{
+                        background: '#135846'
+                    }
+                    }).showToast();
 
-            setTimeout(() => {
-                navigate('/')
-            }, 2000)
+                setTimeout(() => {
+                    navigate('/')
+                }, 2000)
+            }else{
+                Toastify({
+                    text: "❔ User not found!!",
+                    duration: 2000,
+                    gravity: 'top',
+                    position: 'center',
+                    style:{
+                        fontFamily: 'poppinssemibold',
+                        borderRadius: '1em',
+                        background: '#E23428'
+                    }
+                    }).showToast();
+            }
         }
         else{
         Toastify({
-            text: "Usuario no encontrado",
+            text: "Email and Password necesary",
             duration: 3000,
             gravity: 'top',
             position: 'center',
             style:{
+                fontFamily: 'poppinssemibold',
+                borderRadius: '1em',
                 background: '#E23428'
             }
             }).showToast();
@@ -62,7 +88,7 @@ export default function Login(){
             <LoginForm onSubmit={validateAuth} action="">
                 <LoginContentInline>
                     <LoginLabel htmlFor="username">Username:</LoginLabel>
-                    <LoginInput onChange={(e) => setInputName(e.target.value)} id='username' type="text" placeholder='Enter username' />
+                    <LoginInput onChange={(e) => setEmail(e.target.value)} id='username' type="text" placeholder='Enter username' />
                 </LoginContentInline>
                 <LoginContentInline>
                     <LoginLabel htmlFor="password">Password:</LoginLabel>

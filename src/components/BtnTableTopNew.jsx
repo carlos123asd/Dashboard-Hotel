@@ -143,10 +143,6 @@ export default function BtnTableTopNew({title,databooking}){
         handleClose()
     }
 
-    const handleclosemodalnewemployee = () => {
-        setOpenmodalnewemployee(false)
-    }
-
 
     if(location === '/room'){
         return <>
