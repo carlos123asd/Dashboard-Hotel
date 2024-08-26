@@ -15,7 +15,6 @@ export default function Login(){
     const [email,setEmail] = useState("")
     const [users,setUsers] = useState({})
     const dispatchdb = useDispatch()
-    console.log(useContextAuth())
 
     useEffect(() => {
         dispatchdb(dbThunkUser()).then(response => setUsers(response.payload.users))
@@ -27,7 +26,6 @@ export default function Login(){
            const userFound = users.filter((user) => {
                 return user.email === email
            })
-           console.log('user',userFound)
            if(userFound.length !== 0){
                 dispatch({
                     type: 'LOGIN',

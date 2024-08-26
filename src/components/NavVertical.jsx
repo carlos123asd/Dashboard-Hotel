@@ -15,13 +15,13 @@ import imgprofile from '../assets/imgs/menu/lateral/perfil.jpg'
 import { useNavigate } from 'react-router-dom'
 import { Modal } from "@mui/material";
 import { ModalNewRoom } from "../styles/table/ModalNewRoom";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useContextAuth } from "../features/context/AuthContext";
 import MuiPhoneNumber from "mui-phone-number";
 import validationEdituser from "../features/forms/validationformEditUser";
 import { useSelector } from "react-redux";
 
-export default function NavVertical(){
+export default function NavVertical({stylenavvertical}){
     const [open, setOpen] = useState(false);
     const handleClose = () => setOpen(false);
     const handleOpen = () => setOpen(true);
@@ -97,7 +97,7 @@ export default function NavVertical(){
                 </ModalNewRoom>
             </Modal>
 
-         <ContentNavVertical>
+         <ContentNavVertical style={stylenavvertical}>
                 <ContentHeaderNavVertical>
                     <ImagenHeaderNavVertical src={iconLogo} alt="logo" />
                     <div>

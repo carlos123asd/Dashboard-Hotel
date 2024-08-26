@@ -22,7 +22,7 @@ export default function Graphic(){
     ];
 
     return <>
-        <Chart height={400} padding="auto" data={data} autoFit>
+        <Chart width={518} height={400} data={data} autoFit>
             <Interval
                 adjust={[
                 {
