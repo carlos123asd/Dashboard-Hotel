@@ -147,7 +147,7 @@ export default function BtnTableTopNew({title,databooking}){
     if(location === '/room'){
         return <>
         <BtnTopNew>
-            <div onClick={handleOpen} className="contentBtn">
+            <div data-testid="element-new" onClick={handleOpen} className="contentBtn">
                 + {title}
             </div>
         </BtnTopNew>

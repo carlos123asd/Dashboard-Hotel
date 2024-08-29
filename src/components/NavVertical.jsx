@@ -12,14 +12,14 @@ import { ContentNavVertical,
 
 import iconLogo from '../assets/imgs/logo.svg'
 import imgprofile from '../assets/imgs/menu/lateral/perfil.jpg'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Modal } from "@mui/material";
 import { ModalNewRoom } from "../styles/table/ModalNewRoom";
 import { useState,useEffect } from "react";
 import { useContextAuth } from "../features/context/AuthContext";
 import MuiPhoneNumber from "mui-phone-number";
 import validationEdituser from "../features/forms/validationformEditUser";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function NavVertical({stylenavvertical}){
     const [open, setOpen] = useState(false);
@@ -28,11 +28,13 @@ export default function NavVertical({stylenavvertical}){
     const navigate = useNavigate();
     const {state} = useContextAuth()
     const [numberphonestate,setNumberphonestate] = useState("")
+    const locationname = useLocation().pathname;
     const users = useSelector(state => state.db.data.employee)
     const userEdit = users.filter((user) => {
-        console.log(state.username)
         return user.email === state.email && user.name === state.username
     })
+
+
     const handlevalidation = (e) => {
         const user = {
             name: `${e.target.nameuser.value}`,
@@ -45,7 +47,8 @@ export default function NavVertical({stylenavvertical}){
         handleClose()
     }
 
-    return <>
+    if(locationname === '/' || locationname === '/room'|| locationname === '/bookings'|| locationname === '/users'|| locationname === '/contact'){
+        return <>
             <Modal
             open={open}
             onClose={handleClose}
@@ -151,7 +154,7 @@ export default function NavVertical({stylenavvertical}){
                         <img width='100%' height='100%' src={imgprofile} alt="Image Profile" />
                     </ImageProfileHeaderNavVertical>
                     <span className='titprofile'>{state.username}</span>
-                    <span className='subtitprofile'>{state.email}</span>
+                    <span id="emailprofile" className='subtitprofile'>{state.email}</span>
                     <div onClick={handleOpen} className='btnContactUs'>Edit Profile</div>
                 </ContentContactNavVertical>
                 <ContentCopyNavVertical>
@@ -161,4 +164,5 @@ export default function NavVertical({stylenavvertical}){
                 </ContentCopyNavVertical>
         </ContentNavVertical>
     </>
+    }
 }

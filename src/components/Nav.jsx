@@ -68,10 +68,7 @@ export default function Nav({stylenav}){
                 background: '#135846'
             }
             }).showToast();
-
-        setTimeout(() => {
             navigate('/login')
-        },1000)
     }
 
     const handleShowListBookings = () => {
@@ -112,7 +109,7 @@ export default function Nav({stylenav}){
                     </div>
                 </ContentNavImg>
 
-                <ContentNavImg onClick={logout} className='margin-2'>
+                <ContentNavImg id='logoutt' onClick={logout} className='margin-2'>
                     <NotificationTooltip title="Log Out">
                         <img width={22} height={31} src={iconlogout} alt="Log Out" />
                     </NotificationTooltip>

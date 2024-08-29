@@ -92,7 +92,7 @@ export default function Login(){
                     <LoginLabel htmlFor="password">Password:</LoginLabel>
                     <LoginInput id='password' type="password" placeholder='Enter password' />
                 </LoginContentInline>
-                <LoginBtn type='submit' value="Log In" />
+                <LoginBtn id='login' type='submit' value="Log In" />
             </LoginForm>
         </LoginContentMain>
     </>
