@@ -7,9 +7,11 @@ import { useEffect, useState } from "react";
 
 
 import { useLocation } from "react-router-dom";
-import restart from '../assets/imgs/restart.svg'
-import updateStatusfetchMessage from "../features/db/fecths/updateStatusfetchMessage";
 import RowTable from "./RowTable";
+import Room from "../class/Room";
+import Booking from "../class/Booking";
+import Message from "../class/Message";
+import Employee from "../class/Employee";
 
 export default function Table({columns,data}){
     console.log(data)
@@ -63,29 +65,6 @@ export default function Table({columns,data}){
         }else if(column === 'Order Date'){
             return <span style={rotate} onClick={() => handleOrderByDate('checkdate')} className="filtercolumn"></span>
         }
-    }
-    const otherStatusMessage = (message) => {
-        if(message.status === 'published'){
-            return <>
-                <span className="controlsmessage controlsmessage--bordernone">Published</span>
-                <img onClick={() => handlerestart(message)} src={restart} alt="Unpublish" />
-            </>
-        }else if(message.status === 'archived'){
-            return <>
-                <span className="controlsmessage controlsmessage--bordernone" style={{color:'#E23428'}}>Archived</span>
-                <img onClick={() => handlerestart(message)} src={restart} alt="Unarchive" />
-            </> 
-        }
-    }
-     
-    const handlepublish = (message) => {
-        updateStatusfetchMessage(message,'publish','Message Published')
-    }
-    const handlearchive = (message) => {
-        updateStatusfetchMessage(message,'archive','Message Archived')
-    }
-    const handlerestart = (message) => {
-        updateStatusfetchMessage(message,'none','Message Restored')
     }
 
     const rotateiconOrderBy = (order) =>{
@@ -190,8 +169,22 @@ export default function Table({columns,data}){
                     
                     {
                         datastate.slice(actualdate,nextdate).map((booking) => {
+                            const objectBooking = new Booking(
+                                booking.id,
+                                booking.guest,
+                                booking.orderDate,
+                                booking.checkin,
+                                booking.timein,
+                                booking.checkout,
+                                booking.timeout,
+                                booking.ordertime,
+                                booking.specialRequest,
+                                booking.roomType,
+                                booking.status,
+                                booking.idRoom,
+                            )
                         return <>
-                                <RowTable data={booking} />
+                                <RowTable data={objectBooking} />
                         </>
                         })
                     }
@@ -229,8 +222,21 @@ export default function Table({columns,data}){
                     
                     {
                         datastate.slice(actualdate,nextdate).map((room) => {
+                            const objectRoom = new Room(
+                                room.id,
+                                room.roomNumber,
+                                room.photo,
+                                room.typeRoom,
+                                room.description,
+                                room.offer,
+                                room.price,
+                                room.discount,
+                                room.cancellation,
+                                room.status,
+                                room.amenities,
+                            )
                         return <>
-                                <RowTable data={room} />
+                                <RowTable data={objectRoom} />
                         </>
                         })
                     }
@@ -265,20 +271,23 @@ export default function Table({columns,data}){
                         </TrMainTable>
                         
                         {
-                        
-                        datastate.slice(actualdate,nextdate).map(register => {
-                            return <>  
-                                <TrMainTable>
-                                    <div>
-                                        <td>#{register.idmessage}</td>
-                                    </div>
-                                    <td>{register.date}</td>
-                                    <td>{register.customer}</td>
-                                    <td>{register.comment}</td>
-                                    <td>{register.status === 'none' ? <div><span className="controlsmessage controlsmessage--cursor" onClick={() => handlepublish(register)}>Publish</span><span onClick={() => handlearchive(register)} className="controlsmessage controlsmessage--cursor">Archive</span></div> : otherStatusMessage(register)}</td>
-                                </TrMainTable>
-                            </>
-                        })}
+                            datastate.slice(actualdate,nextdate).map(register => {
+                                const objectMessage = new Message(
+                                    register.id,
+                                    register.date,
+                                    register.idmessage,
+                                    register.customer,
+                                    register.email,
+                                    register.phone,
+                                    register.reason,
+                                    register.comment,
+                                    register.status,
+                                )
+                                return <>  
+                                    <RowTable data={objectMessage} />
+                                </>
+                            })
+                        }
                     </TableObj>
                 }
             </ContentTable>
@@ -312,9 +321,19 @@ export default function Table({columns,data}){
                         
                         {
                             datastate.slice(actualdate,nextdate).map((employee) => {
-                            return <>
-                                    <RowTable data={employee} />
-                            </>
+                                const objectEmployee = new Employee(
+                                    employee.id,
+                                    employee.photo,
+                                    employee.name,
+                                    employee.email,
+                                    employee.startdate,
+                                    employee.description,
+                                    employee.phone,
+                                    employee.status,
+                                )
+                                return <>
+                                        <RowTable data={objectEmployee} />
+                                </>
                             })
                         }
                     </TableObj>

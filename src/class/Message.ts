@@ -1,13 +1,13 @@
 class Message{
-    id?:string
-    date?:string
-    idmessage?:number
-    customer?:string
-    email?:string
-    phone?:string
-    reason?:string
-    comment?:string
-    status?:string
+    id:string
+    date:string
+    idmessage:number
+    customer:string
+    email:string
+    phone:string
+    reason:string
+    comment:string
+    status:string
     constructor(id:string,date:string,idmessage:number,
         customer:string,email:string,phone:string,
         reason:string,comment:string,status:string){
@@ -21,4 +21,9 @@ class Message{
             this.comment = comment
             this.status = status
     }
+    setStatus(status:string){
+        this.status = status
+    }
 }
+
+export default Message

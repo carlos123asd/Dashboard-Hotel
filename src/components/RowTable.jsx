@@ -17,10 +17,11 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import 'dayjs/locale/en-gb';
 import editRoomBooking from '../assets/imgs/edit.svg'
 import editBooking from '../features/db/fecths/editBooking'
-import { ModalSelectNewRoomEdit } from '../styles/table/ModalSelectNewRoomEdit'
 import MuiPhoneNumber from "mui-phone-number";
 import editUser from "../features/db/fecths/editUser";
 import deleteUser from "../features/db/fecths/deleteUser";
+import restart from '../assets/imgs/restart.svg'
+import updateStatusfetchMessage from "../features/db/fecths/updateStatusfetchMessage";
 
 export default function RowTable({data=data.data}){
     const [locationname,setLocationname] = useState(useLocation().pathname);
@@ -115,7 +116,6 @@ export default function RowTable({data=data.data}){
     }
 
     const handleClickSave = (room) => {
-        console.log(typeroomedit)
         if(parseInt(discountedit) > 0){
             handleValidateFormEditRoom(room,{
                 typeRoom: typeroomedit,
@@ -167,7 +167,6 @@ export default function RowTable({data=data.data}){
         setOpen(true)
     };
     const handledeleteBooking = (id) => {
-        console.log(id)
         deleteBooking(id.toString())
         handleClickFunctionCancelDelete()
     }
@@ -203,6 +202,35 @@ export default function RowTable({data=data.data}){
     const handleDeleteUser = (id) => {
         deleteUser(id.toString())
         handleClickFunctionCancelDelete()
+    }
+
+    //Message
+    const otherStatusMessage = () => {
+        console.log(data.status)
+        if(data.status === 'publish'){
+            return <>
+                <span className="controlsmessage controlsmessage--bordernone">Published</span>
+                <img onClick={() => handlerestart()} src={restart} alt="Unpublish" />
+            </>
+        }else if(data.status === 'archive'){
+            return <>
+                <span className="controlsmessage controlsmessage--bordernone" style={{color:'#E23428'}}>Archived</span>
+                <img onClick={() => handlerestart()} src={restart} alt="Unarchive" />
+            </> 
+        }
+    }
+     
+    const handlepublish = () => {
+        updateStatusfetchMessage(data,'publish','Message Published')
+        data.setStatus('publish')
+    }
+    const handlearchive = () => {
+        updateStatusfetchMessage(data,'archive','Message Archived')
+        data.setStatus('archive')
+    }
+    const handlerestart = () => {
+        updateStatusfetchMessage(data,'none','Message Restored')
+        data.setStatus('none')
     }
     
     if(locationname === '/room'){
@@ -535,5 +563,29 @@ export default function RowTable({data=data.data}){
                 </td>
             </TrMainTable>
         </>
+    }else if(locationname === '/contact'){
+        return (edit === false) ? <>
+            <TrMainTable>
+                <div>
+                    <td>#{data.idmessage}</td>
+                </div>
+                <td>{data.date}</td>
+                <td>{data.customer}</td>
+                <td>{data.comment}</td>
+                <td>
+                    {data.status === 'none' ? 
+                        <div>
+                            <span className="controlsmessage controlsmessage--cursor" onClick={() => handlepublish()}>
+                                Publish
+                            </span>
+                            <span onClick={() => handlearchive()} className="controlsmessage controlsmessage--cursor">
+                                Archive
+                            </span>
+                        </div> :
+                             otherStatusMessage()
+                    }
+                </td>
+            </TrMainTable>
+        </>: <></>
     }
 }
