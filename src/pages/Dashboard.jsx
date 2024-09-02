@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { dbThunk } from '../features/db/dbThunk';
 import { useContextAuth } from '../features/context/AuthContext';
-import { width } from '@mui/system';
 
 export default function Dashboard(){
 
@@ -18,6 +17,7 @@ export default function Dashboard(){
     const {state} = useContextAuth()
     const selectorMenuDisplay = useSelector(state => state.menuSlice.show)
     const [stylegrid,setStylegrid] = useState({})
+    const selectordb = useSelector(state => state.db.data)
 
     useEffect(() =>{
         if(state.auth === true){
@@ -25,6 +25,7 @@ export default function Dashboard(){
                 dispatch(dbThunk());
             }else if(stateDbStatus === 'fulfilled'){
                 setLoading(false);
+                console.log('DATOS', selectordb)
             }else if(stateDbStatus === 'rejected'){
                 console.log(selectorDbError)
             }

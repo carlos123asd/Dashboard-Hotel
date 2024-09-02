@@ -8,6 +8,7 @@ it('invalid', () => {
   cy.get('#login').click()
   cy.get('.toastify-center').should('be.visible')
   cy.get('.toastify-center').should('have.text','❔ User not found!!')
+  cy.wait(3000)
   cy.url().should('eq', 'http://localhost:5173/login')
 })
 

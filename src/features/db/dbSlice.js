@@ -1,7 +1,6 @@
-import { createSlice} from '@reduxjs/toolkit'
-import { dbThunk } from './dbThunk';
-
-const dbSlice = createSlice({
+import { createSlice } from "@reduxjs/toolkit";
+import {dbThunk} from "./dbThunk";
+const dbSlice = (0, createSlice)({
     name: 'db',
     initialState: {
         status: 'idle',
@@ -9,18 +8,18 @@ const dbSlice = createSlice({
         error: null,
         update: false
     },
-    reducers:{
-        setOrderData(state,action){
-             state.data = action.payload.sort((a, b) => parseInt(b.roomNumber) - parseInt(a.roomNumber))
+    reducers: {
+        setOrderData(state, action) {
+            state.data = action.payload.sort((a, b) => Number(b.roomNumber) - Number(a.roomNumber));
         },
-        updateDataRoom(state,action){
-            state.data.rooms = action.payload
+        updateDataRoom(state, action) {
+            state.data.rooms = action.payload;
         },
-        updateDataBooking(state,action){
-            state.data.bookings = action.payload
+        updateDataBooking(state, action) {
+            state.data.bookings = action.payload;
         },
-        update(state){
-            state.update = true
+        update(state) {
+            state.update = true;
         }
     },
     extraReducers: (builder) => {
@@ -39,5 +38,4 @@ const dbSlice = createSlice({
 });
 
 export default dbSlice.reducer;
-
-export const { setOrderData,updateDataRoom,updateDataBooking,update } = dbSlice.actions
+export const {setOrderData,updateDataRoom,updateDataBooking,update} = dbSlice.actions

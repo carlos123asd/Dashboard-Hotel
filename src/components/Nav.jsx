@@ -23,9 +23,6 @@ import ListMessage from './ListMessage'
 import { showMenu } from '../features/db/menu/menuSlice'
 
 export default function Nav({stylenav}){
-    const [vertical,setVertical] = useState(true);
-    const [style,setStyle] = useState({'padding-left': '5%'});
-    const [styleleft,setStyleleft] = useState({'left': '-5%'});
     const navigate = useNavigate();
     const path = useLocation();
     const dispatchNav = useDispatch();
