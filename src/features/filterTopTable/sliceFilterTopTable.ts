@@ -1,10 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+interface interfaceInit {
+    orderby: string
+}
+const initialState:interfaceInit = {
+     orderby: 'all'
+}
+
 const sliceFilterTopTable = createSlice({
     name: 'filterToptable',
-    initialState: {
-        orderby: 'all'
-    },
+    initialState,
     reducers: {
         setorderby(state,action){
             state.orderby = action.payload;

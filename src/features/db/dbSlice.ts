@@ -1,17 +1,26 @@
 import { createSlice} from '@reduxjs/toolkit'
 import { dbThunk } from './dbThunk';
 
+interface interfaceState {
+    status: 'idle' | 'fulfilled' | 'rejected' | 'pending',
+    data: any[],
+    error: string | null,
+    update: boolean
+}
+
+const initialState:interfaceState = {
+    status: 'idle',
+    data: [],
+    error: null,
+    update: false
+}
+
 const dbSlice = createSlice({
     name: 'db',
-    initialState: {
-        status: 'idle',
-        data: [],
-        error: null,
-        update: false
-    },
+    initialState,
     reducers:{
         setOrderData(state:any,action){
-             state.data = action.payload.sort((a:any, b:any) => Number(b.roomNumber) - Number(a.roomNumber))
+            state.data = action.payload.sort((a:any, b:any) => Number(b.roomNumber) - Number(a.roomNumber))
         },
         updateDataRoom(state:any,action){
             state.data.rooms = action.payload

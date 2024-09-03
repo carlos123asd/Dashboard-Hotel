@@ -22,7 +22,7 @@ export default function Dashboard(){
     useEffect(() =>{
         if(state.auth === true){
             if(stateDbStatus === 'idle'){
-                dispatch(dbThunk());
+                dispatch(dbThunk(""));
             }else if(stateDbStatus === 'fulfilled'){
                 setLoading(false);
                 console.log('DATOS', selectordb)

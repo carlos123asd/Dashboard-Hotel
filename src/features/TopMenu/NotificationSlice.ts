@@ -1,11 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+interface initState {
+    show: boolean,
+    showListMessage: boolean
+}
+
+const initialState:initState = {
+    show: false,
+    showListMessage: false
+}
+
 const NotificationSlice = createSlice({
     name: 'notification',
-    initialState:{
-        show: false,
-        showListMessage: false
-    },
+    initialState,
     reducers:{
         shownotificationBooking(state){
             if(state.show === false){

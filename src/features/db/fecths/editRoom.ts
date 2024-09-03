@@ -1,7 +1,8 @@
 import Toastify from 'toastify-js'
+import Room from '../../../class/Room';
 
-const editRoom = (room,values) => {
-    if(values.typeRoom === '' && values.status === ''){
+const editRoom = (room:Room,values:any) => {
+   /* if(values.typeRoom === '' && values.status === ''){
         values = {
             ...values,
             status: room.status,
@@ -17,21 +18,12 @@ const editRoom = (room,values) => {
             ...values,
             status: room.status
         }
-    }
-    console.log(values)
+    }*/
     fetch(`http://localhost:3004/rooms/${room.id}`,{
     method: 'PUT',
     body: JSON.stringify({
         ...room,
-        typeRoom: values.typeRoom,
-        roomNumber: values.roomNumber,
-        amenities: values.amenities,
-        price: values.price,
-        offer: values.offer,
-        discount: values.discount,
-        status: values.status,
-        description: values.description,
-        cancellation: values.cancellation
+        ...values
     }), //Objeto -> JSON
     headers: {
         'Content-type': 'application/json; charset=UTF-8'

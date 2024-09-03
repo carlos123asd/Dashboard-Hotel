@@ -1,4 +1,4 @@
-class Message{
+export default class Message{
     id:string
     date:string
     idmessage:number
@@ -25,5 +25,3 @@ class Message{
         this.status = status
     }
 }
-
-export default Message

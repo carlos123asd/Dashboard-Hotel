@@ -32,8 +32,9 @@ export default function BtnTableTopNew({title,databooking}){
     const [Typeroombooking,setTyperoombooking] = useState('Single Bed');
     const [startdateuser,setStartdateuser] = useState("")
     const [numberphonestate,setNumberphonestate] = useState("")
+    const dataRooms = useSelector(state => state.db.data.rooms)
     const dataUser = useSelector(state => state.db.data.employee)
-   const location = useLocation().pathname;
+    const location = useLocation().pathname;
     
     useEffect(() => {
         if(open){
@@ -120,7 +121,11 @@ export default function BtnTableTopNew({title,databooking}){
     }
 
     const validFormRoom = (e) => {
-        handlesubmitnewRoom(e)
+        let lastObjectRoom = dataRooms.map((room) => {
+            return room
+        }).sort((a,b) => a.id - b.id)
+        let idnew = ((lastObjectRoom[lastObjectRoom.length - 1]).id) + 1
+        handlesubmitnewRoom(e,idnew)
         handleClose()
     }
 
@@ -187,10 +192,10 @@ export default function BtnTableTopNew({title,databooking}){
                         <div className="contentRoomNewRoom__priceblock">
                             <label htmlFor="offer">Offer</label>
                             <div>
-                                <input onChange={event => handleOffer(event.target.value)} id="offer" name="offers" type="radio" value="yes" />Yes
+                                <input onChange={event => handleOffer(event.target.value)} id="offer" name="offers" type="radio" value="true" />Yes
                             </div>
                             <div>
-                                <input onChange={event => handleOffer(event.target.value)} id="offer" name="offers" type="radio" value="no" />No
+                                <input onChange={event => handleOffer(event.target.value)} id="offer" name="offers" type="radio" value="false" />No
                             </div>
                         </div>
                         <div style={display} className="contentRoomNewRoom__pricesecondblock">
@@ -212,16 +217,16 @@ export default function BtnTableTopNew({title,databooking}){
                         <label htmlFor="roomcancellation">Facilities</label>
                         <ul>
                             <div>
-                                <li><input id="roomcancellation" name="facilities1" type="checkbox" value='AC'/>AC</li>
-                                <li><input id="roomcancellation" name="facilities2" type="checkbox" value='Shower'/>Shower</li>
-                                <li><input id="roomcancellation" name="facilities3" type="checkbox" value='Towel'/>Towel</li>
-                                <li><input id="roomcancellation" name="facilities4" type="checkbox" value='Bathup'/>Bathup</li>
+                                <li><input name="facilities1" type="checkbox" value='AC'/>AC</li>
+                                <li><input name="facilities2" type="checkbox" value='Shower'/>Shower</li>
+                                <li><input name="facilities3" type="checkbox" value='Towel'/>Towel</li>
+                                <li><input name="facilities4" type="checkbox" value='Bathup'/>Bathup</li>
                             </div>
                             <div>
-                                <li><input id="roomcancellation" name="facilities5" type="checkbox" value='Coffee Set'/>Coffee Set</li>
-                                <li><input id="roomcancellation" name="facilities6" type="checkbox" value='LED TV'/>LED TV</li>
-                                <li><input id="roomcancellation" name="facilities7" type="checkbox" value='Wifi'/>Wifi</li>
-                                <li><input id="roomcancellation" name="facilities8" type="checkbox" value='Room Service'/>Room Service</li>
+                                <li><input name="facilities5" type="checkbox" value='Coffee Set'/>Coffee Set</li>
+                                <li><input name="facilities6" type="checkbox" value='LED TV'/>LED TV</li>
+                                <li><input name="facilities7" type="checkbox" value='Wifi'/>Wifi</li>
+                                <li><input name="facilities8" type="checkbox" value='Room Service'/>Room Service</li>
                             </div>
                         </ul>
                         

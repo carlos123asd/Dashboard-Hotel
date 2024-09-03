@@ -25,7 +25,7 @@ import updateStatusfetchMessage from "../features/db/fecths/updateStatusfetchMes
 
 export default function RowTable({data=data.data}){
     const [locationname,setLocationname] = useState(useLocation().pathname);
-
+    
     const [typeroomedit,setTyperoomedit] = useState("")
     const [numroomedit,setNumroomedit] = useState("")
     const [facilitiesedit,setFacilitiesedit] = useState("")
@@ -115,9 +115,9 @@ export default function RowTable({data=data.data}){
         })
     }
 
-    const handleClickSave = (room) => {
+    const handleClickSave = () => {
         if(parseInt(discountedit) > 0){
-            handleValidateFormEditRoom(room,{
+            handleValidateFormEditRoom(data,{
                 typeRoom: typeroomedit,
                 roomNumber: numroomedit,
                 amenities: facilitiesedit,
@@ -247,8 +247,7 @@ export default function RowTable({data=data.data}){
                     </div>
                     <td>
                         <span className="deluxenum">
-                            <select name="typeroomEditable" value={data.typeRoom} className="inputSelect" onChange={(e) => handlechangeTypeRoom(e.target.value)} id="contentRoomNewRoom__roomtype">
-                                <option value='Single Bed'>Pick a Type Room</option>
+                            <select name="typeroomEditable" className="inputSelect" onChange={(e) => handlechangeTypeRoom(e.target.value)} id="contentRoomNewRoom__roomtype">
                                 <option value='Single Bed'>Single Bed</option>
                                 <option value='Double Bed'>Double Bed</option>
                                 <option value='Double Superior'>Double Superior</option>
@@ -268,7 +267,7 @@ export default function RowTable({data=data.data}){
                             <div className="status statusbooked editdelete" onClick={handleClickFunctionDelete}>Delete</div>
                         </div>
                         <div style={showbtngroup2}>
-                            <div className="status editdelete" onClick={() => handleClickSave(data)}>Save</div>
+                            <div className="status editdelete" onClick={() => handleClickSave()}>Save</div>
                             <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
                         </div>
                         <div style={showbtngroup3}>

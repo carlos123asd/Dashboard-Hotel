@@ -1,15 +1,15 @@
-class Room{
-    id?:string
-    roomNumber?:number
-    photo?:string[]
-    typeRoom?:string
-    description?:string
-    offer?:boolean
-    price?:string
-    discount?:number
-    cancellation?:string
-    status?:string
-    amenities?:string
+export default class Room{
+    id:string
+    roomNumber:number
+    photo:string[]
+    typeRoom:string
+    description:string
+    offer:boolean
+    price:string
+    discount:number
+    cancellation:string
+    status:string
+    amenities:string
     constructor(id:string,roomNumber:number,photo:string[],
         typeRoom:string,description:string,offer:boolean,
         price:string,discount:number,cancellation:string,

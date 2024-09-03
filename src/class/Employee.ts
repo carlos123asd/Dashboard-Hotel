@@ -1,4 +1,4 @@
-class Employee{
+export default class Employee{
     id?:string
     photo?:string[]
     name?:string

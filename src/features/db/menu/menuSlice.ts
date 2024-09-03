@@ -1,10 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+interface initState {
+    show: boolean
+}
+
+const initialState:initState = {
+    show: false,
+}
+
 const menuSlice = createSlice({
     name: 'menuSlice',
-    initialState: {
-        show: false,
-    },
+    initialState,
     reducers: {
         showMenu(state){
             if(state.show === true){
