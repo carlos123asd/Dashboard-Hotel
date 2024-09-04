@@ -8,6 +8,11 @@ import { useEffect, useState } from "react";
 export default function Room(){
     const columns = ['Room Name','Room Type','Facilities','Price','Offer Price','Cancellation','Description','Status',' ']
     const filterstop = ['All Rooms','Avaible Room','Inactive Room']
+    //const [filterstop,setfilterstop] = useState('All Rooms')
+    /*const handlesortby = () => {
+        setfilterstop()
+    }*/
+   //De hijo a padre handlesortby -> pasar por props a FilterTableTop
     const filtername = useSelector(state => state.filterToptable.orderby)
     const selectorDbData = useSelector(state => state.db.data);
     const [dataroom,setDataroom] = useState([])

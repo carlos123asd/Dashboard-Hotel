@@ -1,24 +1,8 @@
 import Toastify from 'toastify-js'
 import Room from '../../../class/Room';
+import { valuesEdit } from '../../forms/validationformEditRoom';
 
-const editRoom = (room:Room,values:any) => {
-   /* if(values.typeRoom === '' && values.status === ''){
-        values = {
-            ...values,
-            status: room.status,
-            typeRoom: room.typeRoom
-        }
-    }else if(values.typeRoom === ''){
-        values = {
-            ...values,
-            typeRoom: room.typeRoom
-        }
-    }else if(values.status === ''){
-        values = {
-            ...values,
-            status: room.status
-        }
-    }*/
+const editRoom = (room:Room,values:valuesEdit) => {
     fetch(`http://localhost:3004/rooms/${room.id}`,{
     method: 'PUT',
     body: JSON.stringify({

@@ -1,6 +1,6 @@
 import Toastify from 'toastify-js'
 
-const deleteRoom = (room) => {
+const deleteRoom = (room:string) => {
     fetch(`http://localhost:3004/rooms/${room}`,{
         method: 'DELETE'
     }).then(response => {

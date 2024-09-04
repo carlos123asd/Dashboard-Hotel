@@ -1,33 +1,14 @@
 import Toastify from 'toastify-js'
+import Booking from '../../../class/Booking';
+import { valuesEditBooking } from '../../forms/validationformEditBooking';
 
-const editBooking = (booking,values,message) => {
-    console.log(booking)
-    console.log(values)
-    console.log(message)
-    /*
-    if(values.typeRoom === '' && values.status === ''){
-        values = {
-            ...values,
-            status: room.status,
-            typeRoom: room.typeRoom
-        }
-    }else if(values.typeRoom === ''){
-        values = {
-            ...values,
-            typeRoom: room.typeRoom
-        }
-    }else if(values.status === ''){
-        values = {
-            ...values,
-            status: room.status
-        }
-    }*/
+const editBooking = (booking:Booking,values:valuesEditBooking) => {
     fetch(`http://localhost:3004/bookings/${booking.id}`,{
     method: 'PUT',
     body: JSON.stringify({
         ...booking,
         ...values
-    }), //Objeto -> JSON
+    }),
     headers: {
         'Content-type': 'application/json; charset=UTF-8'
     }
@@ -35,7 +16,7 @@ const editBooking = (booking,values,message) => {
         if(response.ok){
             console.log(response.json())
             Toastify({
-                text: message,//"Booking: Check Out edited",
+                text: "Booking edited correctly",
                 duration: 3000,
                 gravity: 'top',
                 position: 'center',

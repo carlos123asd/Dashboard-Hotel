@@ -112,23 +112,20 @@
     },
     {
       "id": "6",
-      "roomNumber": 9152,
+      "roomNumber": "1111",
       "photo": [
         "https://images.unsplash.com/photo-1572177215152-32f247303126?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2Mjk0NzV8MHwxfHNlYXJjaHwxNnx8cm9vbSUyMGhvdGVsfGVufDB8fHx8MTcyMjU0NDk5MHww&ixlib=rb-4.0.3&q=80&w=1080",
         "https://images.unsplash.com/photo-1568495248636-6432b97bd949?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2Mjk0NzV8MHwxfHNlYXJjaHw5fHxyb29tJTIwaG90ZWx8ZW58MHx8fHwxNzIyNTQ0OTkwfDA&ixlib=rb-4.0.3&q=80&w=1080",
         "https://images.unsplash.com/photo-1596194815712-2975c42363a9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2Mjk0NzV8MHwxfHNlYXJjaHw2MHx8cm9vbSUyMGhvdGVsfGVufDB8fHx8MTcyMjU0NTEyOHww&ixlib=rb-4.0.3&q=80&w=1080"
       ],
-      "typeRoom": "Single Bed",
-      "description": "ullamco id adipisicing aliquip occaecat aliqua proident consequat id ad laborum ullamco est officia id mollit sunt non incididunt",
-      "offer": false,
-      "price": "$196.68",
-      "discount": 41,
-      "cancellation": "aliqua et exercitation duis ex commodo cupidatat in labore",
+      "typeRoom": "Double Bed",
+      "description": "test",
+      "offer": true,
+      "price": "$350",
+      "discount": "5",
+      "cancellation": "4343",
       "status": "Available",
-      "amenities": [
-        "AC",
-        "Shower"
-      ]
+      "amenities": "test"
     },
     {
       "id": "7",
@@ -350,23 +347,6 @@
       "amenities": [
         "AC"
       ]
-    },
-    {
-      "id": "17",
-      "roomNumber": "0000",
-      "photo": [
-        "https://images.unsplash.com/photo-1572177215152-32f247303126?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2Mjk0NzV8MHwxfHNlYXJjaHwxNnx8cm9vbSUyMGhvdGVsfGVufDB8fHx8MTcyMjU0NDk5MHww&ixlib=rb-4.0.3&q=80&w=1080",
-        "https://images.unsplash.com/photo-1568495248636-6432b97bd949?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2Mjk0NzV8MHwxfHNlYXJjaHw5fHxyb29tJTIwaG90ZWx8ZW58MHx8fHwxNzIyNTQ0OTkwfDA&ixlib=rb-4.0.3&q=80&w=1080",
-        "https://images.unsplash.com/photo-1596194815712-2975c42363a9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2Mjk0NzV8MHwxfHNlYXJjaHw2MHx8cm9vbSUyMGhvdGVsfGVufDB8fHx8MTcyMjU0NTEyOHww&ixlib=rb-4.0.3&q=80&w=1080"
-      ],
-      "typeRoom": "Single Bed",
-      "description": "EDIT",
-      "offer": true,
-      "price": "$300",
-      "discount": "20",
-      "cancellation": "EDIT",
-      "status": "Booked",
-      "amenities": "EDIT"
     },
     {
       "id": "18",
@@ -1010,20 +990,6 @@
       "idRoom": "4"
     },
     {
-      "id": "44",
-      "guest": "Dexter Wiegand",
-      "orderDate": "12 Mar 2024",
-      "checkin": "6 Jun 2024",
-      "timein": "03:54 am",
-      "checkout": "5 Jul 2024",
-      "timeout": "02:09 am",
-      "ordertime": "05:54 pm",
-      "specialRequest": "magna consectetur elit Lorem magna ut eiusmod consectetur mollit et deserunt Lorem proident adipisicing minim",
-      "roomType": "Single Bed N.A.",
-      "status": "In Progress",
-      "idRoom": 157
-    },
-    {
       "id": "45",
       "guest": "Brandy Purdy",
       "orderDate": "8 Nov 2023",
@@ -1596,6 +1562,48 @@
       "roomType": "Double Superior",
       "status": "In Progress",
       "idRoom": 297
+    },
+    {
+      "id": "851",
+      "guest": "Test1",
+      "orderDate": "4",
+      "checkin": "2024-09-06T19:30",
+      "timein": "2024-09-06T19:30",
+      "checkout": "2024-09-08T19:30",
+      "timeout": "2024-09-08T19:30",
+      "ordertime": "1725471053093",
+      "specialRequest": "none",
+      "roomType": "Single Bed",
+      "status": "Check In",
+      "idRoom": 5
+    },
+    {
+      "id": "851",
+      "guest": "Test1",
+      "orderDate": "4",
+      "checkin": "2024-09-06T19:30",
+      "timein": "2024-09-06T19:30",
+      "checkout": "2024-09-08T19:30",
+      "timeout": "2024-09-08T19:30",
+      "ordertime": "1725471218743",
+      "specialRequest": "none",
+      "roomType": "Single Bed",
+      "status": "Check In",
+      "idRoom": 5
+    },
+    {
+      "id": "851",
+      "guest": "Test1",
+      "orderDate": "4",
+      "checkin": "2024-09-06T19:30",
+      "timein": "2024-09-06T19:30",
+      "checkout": "2024-09-08T19:30",
+      "timeout": "2024-09-08T19:30",
+      "ordertime": "1725471236532",
+      "specialRequest": "none",
+      "roomType": "Single Bed",
+      "status": "Check In",
+      "idRoom": 5
     }
   ],
   "employee": [

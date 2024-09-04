@@ -14,7 +14,6 @@ import Message from "../class/Message";
 import Employee from "../class/Employee";
 
 export default function Table({columns,data}){
-    console.log(data)
     const [nextdate,setNextdate] = useState(10);
     const [actualdate,setActualdate] = useState(0);
     const locationname = useLocation().pathname;
@@ -52,7 +51,6 @@ export default function Table({columns,data}){
     }
 
     const othercolumns = (column) => {
-        console.log(column)
         if(column === 'Room Type'){
             return <span style={rotate} onClick={handleOrderByLetter} className="filtercolumn"></span>
         }
@@ -126,7 +124,6 @@ export default function Table({columns,data}){
         }
     }
     const handleOrderByDate = (typedate) => {
-        console.log(datastate.sort((a, b) => new Date(a.orderDate) - new Date(b.orderDate)))
         if(descletter === false){
             setDescletter(true)
             rotateiconOrderBy(false)
@@ -149,8 +146,6 @@ export default function Table({columns,data}){
             }
         }
     }
-
-    console.log(columnsedit)
     
     if(locationname === '/bookings'){
         return <>

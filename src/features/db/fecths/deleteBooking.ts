@@ -1,6 +1,6 @@
 import Toastify from 'toastify-js'
 
-const deleteBooking = (booking) => {
+const deleteBooking = (booking:string) => {
     fetch(`http://localhost:3004/bookings/${booking}`,{
         method: 'DELETE'
     }).then(response => {

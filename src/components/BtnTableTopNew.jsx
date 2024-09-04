@@ -5,8 +5,8 @@ import { ModalNewRoom } from "../styles/table/ModalNewRoom";
 import imagestandar from '../assets/imgs/logo.svg';
 import "toastify-js/src/toastify.css"
 import { useLocation } from "react-router-dom";
-import handlesubmitnewRoom from "../features/forms/validationformRoom";
-
+import handlesubmitnewRoom from "../features/forms/validationformNewRoom";
+import handlesubmitnewBooking from "../features/forms/validationformNewBooking";
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -33,8 +33,10 @@ export default function BtnTableTopNew({title,databooking}){
     const [startdateuser,setStartdateuser] = useState("")
     const [numberphonestate,setNumberphonestate] = useState("")
     const dataRooms = useSelector(state => state.db.data.rooms)
+    const dataBookings = useSelector(state => state.db.data.bookings)
     const dataUser = useSelector(state => state.db.data.employee)
     const location = useLocation().pathname;
+    const [roomid,setRoomid] = useState("")
     
     useEffect(() => {
         if(open){
@@ -127,6 +129,15 @@ export default function BtnTableTopNew({title,databooking}){
         let idnew = ((lastObjectRoom[lastObjectRoom.length - 1]).id) + 1
         handlesubmitnewRoom(e,idnew)
         handleClose()
+    }
+
+    const validFormBooking = (e) => {
+        let lastObjectBooking = dataBookings.map((booking) => {
+            return booking
+        }).sort((a,b) => a.id - b.id)
+        let idnew = ((lastObjectBooking[lastObjectBooking.length - 1]).id) + 1
+        const response = handlesubmitnewBooking(e,idnew,roomid)
+        response === true ? handleClose() : <></>
     }
 
     const validFormUser = (e) => {
@@ -279,16 +290,12 @@ export default function BtnTableTopNew({title,databooking}){
                 <ModalNewRoom className="modalbooking">
                     <h1>{title}</h1>
                     <div className="contentRoomNewRoom">
-                        <form action="">
+                        <form onSubmit={e => validFormBooking(e)} action="">
                             <h2>Booking Details</h2>
                             <div className="sectionformbooking">
                                 <div className="contentRoomNewRoom__firstblock">
                                     <label htmlFor="nameguest">Guest</label>
                                     <input className="inputroom" id="nameguest" name="nameguest" type="text" placeholder="Carlos Alexander Medina Salas"></input>
-                                </div>
-                                <div className="contentRoomNewRoom__firstblock">
-                                    <label htmlFor="orderdate">Order Date </label>
-                                    <input onChange={event => handleRoomNumber(event.target.value)} id="orderdate " name="orderdate" type="datetime-local" placeholder="30 Apr 2024 09:35 am"></input>
                                 </div>
                             </div>
 
@@ -317,16 +324,20 @@ export default function BtnTableTopNew({title,databooking}){
                                         <option value={'Suite'}>Suite</option>
                                     </select>
                             </div>
+
+                            <div style={{textAlign:"right"}}>
+                                <input type="submit" value={'SAVE'}/>   
+                            </div>
                         </form>
                         
                         <div className="contentRoomInfo contentbooking">
                             <div>
                                 <ul>
                                     {
-                                        databooking.map(room => {
+                                        dataRooms.map(room => {
                                             if(room.status === "Available" && room.typeRoom === Typeroombooking){
                                                 return <>
-                                                    <li><input id="roomselected" name="roomselected" type="checkbox" value={`${room.typeRoom}-${room.roomNumber}`}/>{room.typeRoom}-{room.roomNumber}</li>
+                                                    <li><input onChange={() => setRoomid(room.id)} type="checkbox" value={room.id}/>{room.typeRoom}-{room.roomNumber}</li>
                                                 </>
                                             }
                                             

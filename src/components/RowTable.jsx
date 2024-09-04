@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { TrMainTable } from "../styles/table/table";
 import handleValidateFormEditRoom from "../features/forms/validationformEditRoom";
+import handleValidateFormEditBooking from "../features/forms/validationformEditBooking"
 import deleteRoom from "../features/db/fecths/deleteRoom";
 import { useLocation } from "react-router-dom";
 import ViewBooking from "./ViewBooking";
@@ -22,6 +23,7 @@ import editUser from "../features/db/fecths/editUser";
 import deleteUser from "../features/db/fecths/deleteUser";
 import restart from '../assets/imgs/restart.svg'
 import updateStatusfetchMessage from "../features/db/fecths/updateStatusfetchMessage";
+
 
 export default function RowTable({data=data.data}){
     const [locationname,setLocationname] = useState(useLocation().pathname);
@@ -66,14 +68,14 @@ export default function RowTable({data=data.data}){
     const [statusedituser,setStatusedituser] = useState("")
     
 
-
+/*
     useEffect(()=>{
         if(locationname === 'bookings'){
             const roomselectBooking = dbRoom.filter((booking) => {
                 return booking.id === (data.idRoom).toString()
             })//roomselectBooking.photo[0] da error porque no hay relacion en mokeado (no hay un foreign key)
         }
-    },[locationname])
+    },[locationname])*/
 
     const handlechangeTypeRoom = (typeroom) => {
         setTyperoomedit(typeroom)
@@ -116,36 +118,41 @@ export default function RowTable({data=data.data}){
     }
 
     const handleClickSave = () => {
-        if(parseInt(discountedit) > 0){
-            handleValidateFormEditRoom(data,{
-                typeRoom: typeroomedit,
-                roomNumber: numroomedit,
-                amenities: facilitiesedit,
-                price: `$${priceedit}`,
-                offer: true,
-                discount: discountedit,
-                status: statusedit,
-                description: descriptionedit,
-                cancellation: cancelationedit
-            })
-        }else{
-            handleValidateFormEditRoom(room,{
-                typeRoom: typeroomedit,
-                roomNumber: numroomedit,
-                amenities: facilitiesedit,
-                price: `$${priceedit}`,
-                offer: false,
-                discount: discountedit,
-                status: statusedit,
-                description: descriptionedit,
-                cancellation: cancelationedit
-            })
+        let objetDataSaveRoom = {
+            typeRoom: (typeroomedit !== '') ? typeroomedit : data.typeRoom,
+            roomNumber: (numroomedit !== '') ? numroomedit : data.roomNumber,
+            amenities: (facilitiesedit !== '') ? facilitiesedit : data.amenities,
+            price: (priceedit !== '') ? `$${priceedit}` : data.price,
+            discount: (discountedit !== '') ? discountedit : data.discount,
+            status: (statusedit !== '') ? statusedit : data.status,
+            description: (descriptionedit !== '') ? descriptionedit : data.description,
+            cancellation: (cancelationedit !== '') ? cancelationedit : data.cancellation,
         }
-        handleClickFunctionEdit()
+
+        if(discountedit === ''){
+            objetDataSaveRoom = {
+                ...objetDataSaveRoom,
+                offer: data.offer
+            }
+        }else{
+            if(parseInt(discountedit) > 0){
+                objetDataSaveRoom = {
+                    ...objetDataSaveRoom,
+                    offer:true
+                }
+            }else{
+                objetDataSaveRoom = {
+                    ...objetDataSaveRoom,
+                    offer:false
+                }
+            }
+        }
+        const response = handleValidateFormEditRoom(data,objetDataSaveRoom)
+        response === true ? handleClickFunctionEdit() : <></>
     }
 
-    const handledeleteRoom = (id) => {
-        deleteRoom(id)
+    const handledeleteRoom = () => {
+        deleteRoom(data.id)
         handleClickFunctionCancelDelete()
     }
 
@@ -166,26 +173,26 @@ export default function RowTable({data=data.data}){
     const handleOpen = () => {
         setOpen(true)
     };
-    const handledeleteBooking = (id) => {
-        deleteBooking(id.toString())
+    const handledeleteBooking = () => {
+        deleteBooking(String(data.id))
         handleClickFunctionCancelDelete()
     }
 
     const handleOpenViewBooking = () => setBookingvisible(true)
 
-    const handleSaveBooking = (booking) => {
+    const handleSaveBooking = () => {
         const dataBookingEdit = {
-            idRoom: roomselectedit.split('-')[1],
-            roomType: roomselectedit.split('-')[0],
-            guest: namebookingedit,
-            orderDate: orderdatebookingedit,
-            checkin: checkinbookingedit,
-            checkout: checkoutbookingedit,
-            specialRequest: specialrequestedit,
-            status: statusbookingedit
+            guest: (namebookingedit !== '') ? namebookingedit : data.guest,
+            roomType: (roomselectedit !== '') ? roomselectedit.split('-')[0] : data.roomType,
+            orderDate: (orderdatebookingedit !== '') ? orderdatebookingedit : data.orderDate,
+            checkin: (checkinbookingedit !== '') ? checkinbookingedit : data.checkin,
+            checkout: (checkoutbookingedit !== '') ? checkoutbookingedit : data.checkout,
+            specialRequest: (specialrequestedit !== '') ? specialrequestedit : data.specialRequest,
+            status: (statusbookingedit !== '') ? statusbookingedit : data.status,
+            idRoom: (roomselectedit !== '') ? roomselectedit.split('-')[1] : data.idRoom,
         }
-        editBooking(booking,dataBookingEdit,'Booking edited successfully')
-        handleClickFunctionEdit()
+        const response = handleValidateFormEditBooking(data,dataBookingEdit)
+        response === true ? handleClickFunctionEdit() : <></>
     }
     const handleSaveEditUser = (user) => {
         const dataUserEdit = {
@@ -305,7 +312,7 @@ export default function RowTable({data=data.data}){
                             <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
                         </div>
                         <div style={showbtngroup3}>
-                        <div className="status editdelete" onClick={() => handledeleteRoom(data.id)}>Confirm</div>
+                        <div className="status editdelete" onClick={() => handledeleteRoom()}>Confirm</div>
                             <div className="status statusbooked editdelete" onClick={handleClickFunctionCancelDelete}>Cancel</div>
                         </div>
                     </td>
@@ -352,22 +359,22 @@ export default function RowTable({data=data.data}){
                             </div>
                             
                             <div className="contentbookingedit">
-                                    <h2>List of available rooms</h2>
-                                    <ul>
-                                        {
-                                            dbRoom.map(room => {
-                                                if(room.status === "Available" && room.typeRoom === typeroombooking){
-                                                    return <>
-                                                        <li>
-                                                            <input id="roomselected" name="roomselected" type="radio" onClick={() => setRoomselectedit(`${room.typeRoom}-${room.id}`)} value={`${room.typeRoom}-${room.id}`}/>
-                                                            <span style={{marginLeft:'1em'}}>{room.typeRoom}-{room.roomNumber}</span>
-                                                        </li>
-                                                    </>
-                                                }
-                                                
-                                            })
-                                        }
-                                    </ul>
+                                <h2>List of available rooms</h2>
+                                <ul>
+                                    {
+                                        dbRoom.map(room => {
+                                            if(room.status === "Available" && room.typeRoom === typeroombooking){
+                                                return <>
+                                                    <li>
+                                                        <input id="roomselected" name="roomselected" type="radio" onClick={() => setRoomselectedit(`${room.typeRoom}-${room.id}`)} value={`${room.typeRoom}-${room.id}`}/>
+                                                        <span style={{marginLeft:'1em'}}>{room.typeRoom}-{room.roomNumber}</span>
+                                                    </li>
+                                                </>
+                                            }
+                                            
+                                        })
+                                    }
+                                </ul>
                             </div>
                         </div>
                     </ModalNewRoom>
@@ -426,7 +433,7 @@ export default function RowTable({data=data.data}){
                             <div className="status statusbooked editdelete" onClick={handleClickFunctionDelete}>Delete</div>
                         </div>
                         <div style={showbtngroup2}>
-                            <div className="status editdelete" onClick={() => handleSaveBooking(data)}>Save</div>
+                            <div className="status editdelete" onClick={() => handleSaveBooking()}>Save</div>
                             <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
                         </div>
                         <div style={showbtngroup3}>
@@ -486,7 +493,7 @@ export default function RowTable({data=data.data}){
                             <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
                         </div>
                         <div style={showbtngroup3}>
-                            <div className="status editdelete" onClick={() => handledeleteBooking(data.id)}>Confirm</div>
+                            <div className="status editdelete" onClick={() => handledeleteBooking()}>Confirm</div>
                             <div className="status statusbooked editdelete" onClick={handleClickFunctionCancelDelete}>Cancel</div>
                         </div>
                 </TrMainTable>
