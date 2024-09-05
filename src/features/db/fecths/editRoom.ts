@@ -8,7 +8,7 @@ const editRoom = (room:Room,values:valuesEdit) => {
     body: JSON.stringify({
         ...room,
         ...values
-    }), //Objeto -> JSON
+    }),
     headers: {
         'Content-type': 'application/json; charset=UTF-8'
     }

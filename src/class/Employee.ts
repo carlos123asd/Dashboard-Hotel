@@ -1,12 +1,12 @@
 export default class Employee{
-    id?:string
-    photo?:string[]
-    name?:string
-    email?:string
-    startdate?:string
-    description?:string
-    phone?:string
-    status?:string
+    id:string
+    photo:string[]
+    name:string
+    email:string
+    startdate:string
+    description:string
+    phone:string
+    status:string
     constructor(id:string,photo:string[],name:string,
         email:string,startdate:string,description:string,
         phone:string,status:string){

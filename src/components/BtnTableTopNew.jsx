@@ -141,22 +141,12 @@ export default function BtnTableTopNew({title,databooking}){
     }
 
     const validFormUser = (e) => {
-        e.preventDefault()
-        const lengthuser = (dataUser.length).toString()
-        const newuser = {
-            id: lengthuser,
-            photo: [
-                "https://static.vecteezy.com/system/resources/previews/011/186/876/original/male-profile-picture-symbol-vector.jpg"
-            ],
-            name: `${e.target.nameuser.value}`,
-            email: `${e.target.emailuser.value}`,
-            startdate: `${startdateuser}`,
-            description: `${e.target.descriptionuser.value}`,
-            phone: `${numberphonestate}`,
-            status: `${e.target.statususer.value}`
-        }
-        validationNewuser(newuser)
-        handleClose()
+        let lastObjectUser = dataUser.map((user) => {
+            return user
+        }).sort((a,b) => a.id - b.id)
+        let idnew = ((lastObjectUser[lastObjectUser.length - 1]).id) + 1
+        const response = validationNewuser(e,idnew)
+        response === true ? handleClose() : <></>
     }
 
 
@@ -386,6 +376,7 @@ export default function BtnTableTopNew({title,databooking}){
                             <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
                                     <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
                                         <DatePicker
+                                        name="dateformnewuser"
                                         label={'Day,Month,Year'}
                                         views={['day','month','year']}
                                         onChange={(e) => setStartdateuser(`${e.clone().$D} ${((e.clone()).toString()).split(' ')[2]} ${((e.clone()).toString()).split(' ')[3]}`)}
@@ -402,7 +393,7 @@ export default function BtnTableTopNew({title,databooking}){
                         <h2>Contact</h2>
                         <div className="sectionformbooking">
                             <label htmlFor="specialrequest">Phone</label>
-                            <MuiPhoneNumber style={{display:'block'}} defaultCountry={'es'} onChange={(e) => setNumberphonestate(e)}/>
+                            <MuiPhoneNumber name="phonenewuser" style={{display:'block'}} defaultCountry={'es'} onChange={(e) => setNumberphonestate(e)}/>
                         </div>
 
                         <div className="contentRoomNewRoom__firstblock sectionformbooking">

@@ -9,7 +9,6 @@ import { useState } from "react";
 import updateStatusfetchMessage from "../features/db/fecths/updateStatusfetchMessage";
 
 export default function Review({data}){
-    console.log(data)
     const [datamessage,setDatamessage] = useState(data.filter((message) => {
         return message.status === 'none'
     }))
@@ -22,11 +21,11 @@ export default function Review({data}){
 
     const handlePublish = (message) => {
         updateDataMessage(message.id)
-        updateStatusfetchMessage(message,'publish','Message published')
+        updateStatusfetchMessage(message,'published','Message published')
     }
     const handleArchive = (message) => {
         updateDataMessage(message.id)
-        updateStatusfetchMessage(message,'archive','Message archived')
+        updateStatusfetchMessage(message,'archived','Message archived')
     }
 
     return <>

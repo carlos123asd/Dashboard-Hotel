@@ -23,6 +23,7 @@ import editUser from "../features/db/fecths/editUser";
 import deleteUser from "../features/db/fecths/deleteUser";
 import restart from '../assets/imgs/restart.svg'
 import updateStatusfetchMessage from "../features/db/fecths/updateStatusfetchMessage";
+import handleValidateFormEditUser from "../features/forms/validationformEditUser";
 
 
 export default function RowTable({data=data.data}){
@@ -194,46 +195,48 @@ export default function RowTable({data=data.data}){
         const response = handleValidateFormEditBooking(data,dataBookingEdit)
         response === true ? handleClickFunctionEdit() : <></>
     }
-    const handleSaveEditUser = (user) => {
+    const handleSaveEditUser = () => {
         const dataUserEdit = {
-            name: `${nameedituser}`,
-            email: `${emailedituser}`,
-            description: `${descriptionedituser}`,
-            phone: `${numberphonestate}`,
-            status: `${statusedituser}`
+            photo: [
+                "https://static.vecteezy.com/system/resources/previews/011/186/876/original/male-profile-picture-symbol-vector.jpg"
+            ],
+            name: (nameedituser !== '') ? nameedituser : data.name,
+            email: (emailedituser !== '') ? emailedituser : data.email,
+            description: (descriptionedituser !== '') ? descriptionedituser : data.description,
+            phone: (numberphonestate !== '') ? numberphonestate : data.phone,
+            status: (statusedituser !== '') ? statusedituser : data.status,
         }
-        editUser(user,dataUserEdit,'User edited successfully')
-        handleClickFunctionEdit()
+        const response = handleValidateFormEditUser(data,dataUserEdit)
+        response === true ? handleClickFunctionEdit() : <></>
     }
 
-    const handleDeleteUser = (id) => {
-        deleteUser(id.toString())
+    const handleDeleteUser = () => {
+        deleteUser(data.id)
         handleClickFunctionCancelDelete()
     }
 
     //Message
     const otherStatusMessage = () => {
         console.log(data.status)
-        if(data.status === 'publish'){
+        if(data.status === 'published'){
             return <>
                 <span className="controlsmessage controlsmessage--bordernone">Published</span>
                 <img onClick={() => handlerestart()} src={restart} alt="Unpublish" />
             </>
-        }else if(data.status === 'archive'){
+        }else if(data.status === 'archived'){
             return <>
                 <span className="controlsmessage controlsmessage--bordernone" style={{color:'#E23428'}}>Archived</span>
                 <img onClick={() => handlerestart()} src={restart} alt="Unarchive" />
             </> 
         }
     }
-     
     const handlepublish = () => {
-        updateStatusfetchMessage(data,'publish','Message Published')
-        data.setStatus('publish')
+        updateStatusfetchMessage(data,'published','Message Published')
+        data.setStatus('published')
     }
     const handlearchive = () => {
-        updateStatusfetchMessage(data,'archive','Message Archived')
-        data.setStatus('archive')
+        updateStatusfetchMessage(data,'archived','Message Archived')
+        data.setStatus('archived')
     }
     const handlerestart = () => {
         updateStatusfetchMessage(data,'none','Message Restored')
@@ -528,7 +531,7 @@ export default function RowTable({data=data.data}){
                         <div className="status statusbooked editdelete" onClick={handleClickFunctionDelete}>Delete</div>
                     </div>
                     <div style={showbtngroup2}>
-                        <div onClick={() => handleSaveEditUser(data)} className="status editdelete">Save</div>
+                        <div onClick={() => handleSaveEditUser()} className="status editdelete">Save</div>
                         <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
                     </div>
                     <div style={showbtngroup3}>
@@ -563,7 +566,7 @@ export default function RowTable({data=data.data}){
                         <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
                     </div>
                     <div style={showbtngroup3}>
-                        <div className="status editdelete" onClick={() => handleDeleteUser(data.id)}>Confirm</div>
+                        <div className="status editdelete" onClick={() => handleDeleteUser()}>Confirm</div>
                         <div className="status statusbooked editdelete" onClick={handleClickFunctionCancelDelete}>Cancel</div>
                     </div>
                 </td>

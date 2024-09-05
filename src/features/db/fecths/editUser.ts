@@ -1,20 +1,21 @@
 import Toastify from 'toastify-js'
+import Employee from '../../../class/Employee';
+import { valuesEditUser } from '../../forms/validationformEditUser';
 
-const editUser = (user,values,message) => {
+const editUser = (user:Employee,values:valuesEditUser) => {
     fetch(`http://localhost:3004/employee/${user.id}`,{
     method: 'PUT',
     body: JSON.stringify({
         ...user,
         ...values
-    }), //Objeto -> JSON
+    }),
     headers: {
         'Content-type': 'application/json; charset=UTF-8'
     }
     }).then(response => {
         if(response.ok){
-            console.log(response.json())
             Toastify({
-                text: message,
+                text:'User edited successfully',
                 duration: 3000,
                 gravity: 'top',
                 position: 'center',

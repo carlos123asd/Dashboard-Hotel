@@ -1608,18 +1608,6 @@
   ],
   "employee": [
     {
-      "id": "0",
-      "photo": [
-        "https://static.vecteezy.com/system/resources/previews/011/186/876/original/male-profile-picture-symbol-vector.jpg"
-      ],
-      "name": "Hilda Grimes",
-      "email": "Hilda_Grimes@gmail.com",
-      "startdate": "2024-07-19",
-      "description": "eiusmod irure labore et duis velit reprehenderit eu anim",
-      "phone": "680-272-3771",
-      "status": "inactive"
-    },
-    {
       "id": "1",
       "photo": [
         "https://static.vecteezy.com/system/resources/previews/011/186/876/original/male-profile-picture-symbol-vector.jpg"
@@ -2001,7 +1989,7 @@
       "phone": "185-161-8866",
       "reason": "velit sunt nulla veniam",
       "comment": "amet excepteur aliqua incididunt velit occaecat nisi non dolor quis ullamco ea veniam sunt dolore sunt irure ipsum mollit exercitation culpa id ullamco aute minim cillum laborum excepteur sint laborum proident ad quis ut laborum excepteur labore irure sunt",
-      "status": "archive"
+      "status": "none"
     },
     {
       "id": "2",
@@ -2012,7 +2000,7 @@
       "phone": "380-019-2933",
       "reason": "esse eiusmod dolore amet et officia",
       "comment": "consequat voluptate magna",
-      "status": "publish"
+      "status": "published"
     },
     {
       "id": "3",
@@ -2023,7 +2011,7 @@
       "phone": "265-802-1475",
       "reason": "occaecat nulla pariatur mollit dolor minim do esse",
       "comment": "aute laboris esse eiusmod dolore elit deserunt cupidatat duis sint est dolor ullamco ea magna do incididunt non consectetur minim id duis occaecat",
-      "status": "publish"
+      "status": "published"
     },
     {
       "id": "4",
@@ -2309,7 +2297,7 @@
       "phone": "979-965-4476",
       "reason": "ad deserunt in duis voluptate irure aute Lorem non commodo Lorem aliqua veniam",
       "comment": "pariatur exercitation aliqua fugiat ullamco non",
-      "status": "archived"
+      "status": "none"
     },
     {
       "id": "30",
@@ -2320,7 +2308,7 @@
       "phone": "406-052-6496",
       "reason": "exercitation",
       "comment": "eu magna nulla elit quis enim in aliqua anim ut in commodo enim nulla ad ex elit proident et",
-      "status": "archived"
+      "status": "none"
     },
     {
       "id": "31",
@@ -2353,7 +2341,7 @@
       "phone": "590-220-9381",
       "reason": "labore Lorem adipisicing sunt mollit minim quis",
       "comment": "quis proident sint",
-      "status": "publish"
+      "status": "published"
     },
     {
       "id": "34",
@@ -2364,7 +2352,7 @@
       "phone": "642-712-4623",
       "reason": "quis labore est Lorem cillum minim sint do eiusmod esse consequat",
       "comment": "quis mollit incididunt magna dolore laboris irure ad id do reprehenderit ut velit ullamco dolor labore labore aliquip quis dolore aute anim magna aliquip qui non veniam voluptate mollit proident ullamco esse irure consequat commodo amet est dolore sint",
-      "status": "published"
+      "status": "archived"
     },
     {
       "id": "35",
@@ -2386,7 +2374,7 @@
       "phone": "303-363-9599",
       "reason": "veniam incididunt in sunt ex",
       "comment": "officia dolor occaecat cillum id incididunt eu pariatur in",
-      "status": "published"
+      "status": "none"
     },
     {
       "id": "37",
@@ -2419,7 +2407,7 @@
       "phone": "552-211-6044",
       "reason": "ea sint culpa nisi aliqua est officia ad do fugiat voluptate",
       "comment": "pariatur ex proident exercitation proident veniam proident culpa duis consequat dolor dolor eu non incididunt veniam ullamco Lorem eu eu do eiusmod incididunt ullamco aliqua enim sint veniam",
-      "status": "archived"
+      "status": "none"
     },
     {
       "id": "40",
@@ -2430,7 +2418,7 @@
       "phone": "729-497-9614",
       "reason": "",
       "comment": "cupidatat excepteur qui cillum veniam cillum proident exercitation consequat officia aliquip consectetur eiusmod laborum elit exercitation duis magna occaecat elit ipsum nostrud consectetur est tempor sit ea dolore aliquip officia enim cupidatat fugiat elit cillum irure labore",
-      "status": "archive"
+      "status": "archived"
     },
     {
       "id": "41",
@@ -2518,7 +2506,7 @@
       "phone": "294-265-6751",
       "reason": "esse velit ad nostrud dolor irure adipisicing dolore reprehenderit",
       "comment": "occaecat exercitation laboris laborum Lorem nisi esse consectetur dolor irure id sint esse qui",
-      "status": "publish"
+      "status": "published"
     },
     {
       "id": "49",
@@ -2606,7 +2594,7 @@
       "phone": "967-703-5535",
       "reason": "elit cillum cillum reprehenderit cupidatat velit duis deserunt esse voluptate veniam sint aliqua anim ad",
       "comment": "ad aliquip magna ut ea enim officia qui exercitation excepteur irure aliquip ut excepteur ad proident elit enim deserunt dolor nulla eiusmod veniam culpa consectetur sint aliqua voluptate veniam",
-      "status": "none"
+      "status": "published"
     },
     {
       "id": "57",
@@ -2650,7 +2638,7 @@
       "phone": "875-066-2843",
       "reason": "incididunt eiusmod Lorem ea ea voluptate cupidatat Lorem",
       "comment": "adipisicing quis ex pariatur proident enim sit labore laborum et sit non cupidatat anim culpa tempor enim pariatur irure culpa ut cillum cillum eu quis nostrud et incididunt culpa voluptate officia exercitation esse dolor consequat eu proident",
-      "status": "archive"
+      "status": "archived"
     },
     {
       "id": "61",

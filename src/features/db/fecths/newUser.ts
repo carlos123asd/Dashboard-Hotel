@@ -1,16 +1,17 @@
 import Toastify from 'toastify-js'
+import { eventPropertiesUser } from '../../forms/validationformNewUser';
 
-const newEmployee = (employee) => {
+const fetchnewUser = (user:eventPropertiesUser) => {
     fetch('http://localhost:3004/employee',{
         method: 'POST',
-        body: JSON.stringify(employee), //Objeto -> JSON
+        body: JSON.stringify(user), //Objeto -> JSON
         headers: {
             'Content-type': 'application/json; charset=UTF-8'
         }
     }).then(response => {
         if(response.ok){
             Toastify({
-                text: "Employee Created Successfully",
+                text: "User Created Successfully",
                 duration: 3000,
                 gravity: 'top',
                 position: 'center',
@@ -22,4 +23,4 @@ const newEmployee = (employee) => {
     })
 }
 
-export default newEmployee
+export default fetchnewUser

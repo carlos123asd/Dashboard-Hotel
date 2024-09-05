@@ -1,6 +1,6 @@
 import Toastify from 'toastify-js'
 
-const deleteUser = (userid) => {
+const deleteUser = (userid:string) => {
     fetch(`http://localhost:3004/employee/${userid}`,{
         method: 'DELETE'
     }).then(response => {

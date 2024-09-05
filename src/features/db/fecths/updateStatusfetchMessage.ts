@@ -1,6 +1,7 @@
 import Toastify from 'toastify-js'
+import Message from '../../../class/Message'
 
-const updateStatusfetchMessage = (message,type,notification) => {
+const updateStatusfetchMessage = (message:Message,type:string,notification:string) => {
     console.log(notification)
         fetch(`http://localhost:3004/comment/${message.id}`,{
             method: 'PUT',
