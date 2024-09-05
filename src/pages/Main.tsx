@@ -4,20 +4,27 @@ import Review from "../components/Review"
 import Calendar from "../components/Calendar"
 import { Contentcalendargrafics } from "../styles/dashboard/Contentcalendargrafics"
 import Graphic from "../components/Graphic"
-import { useSelector } from "react-redux"
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { useContextAuth } from "../features/context/AuthContext"
+import { appSelector } from "../features/hooks/hooks"
+import Room from "../class/Room"
+import Booking from "../class/Booking"
+import Employee from "../class/Employee"
+import Message from "../class/Message"
+
+interface datageneral {
+    rooms:Room[],
+    bookings:Booking[],
+    employee:Employee[],
+    comment:Message[]
+}
 
 export default function Main(){
 
-    const selectorDbData = useSelector(state => state.db.data);
-    const [datadashboard,setDatadashboard] = useState(selectorDbData)
-    const {state} = useContextAuth()
-    const navigate = useNavigate()
+    const selectorDbData = appSelector(state => state.db.data);
+    const [datadashboard,setDatadashboard] = useState<datageneral>(selectorDbData as {rooms:Room[],bookings:Booking[],employee:Employee[],comment:Message[]})
 
     useEffect(() => {
-        setDatadashboard(selectorDbData)
+        setDatadashboard(selectorDbData as {rooms:Room[],bookings:Booking[],employee:Employee[],comment:Message[]})
     },[selectorDbData])
 
 

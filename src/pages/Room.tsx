@@ -2,8 +2,9 @@ import Table from "../components/Table";
 import { ContentPageMain } from "../styles/nav/nav";
 import BtnTableTopNew from "../components/BtnTableTopNew";
 import FilterTableTop from "../components/FilterTableTop";
-import { useSelector } from 'react-redux'
 import { useEffect, useState } from "react";
+import { appSelector } from "../features/hooks/hooks";
+
 
 export default function Room(){
     const columns = ['Room Name','Room Type','Facilities','Price','Offer Price','Cancellation','Description','Status',' ']
@@ -13,9 +14,9 @@ export default function Room(){
         setfilterstop()
     }*/
    //De hijo a padre handlesortby -> pasar por props a FilterTableTop
-    const filtername = useSelector(state => state.filterToptable.orderby)
-    const selectorDbData = useSelector(state => state.db.data);
-    const [dataroom,setDataroom] = useState([])
+    const filtername = appSelector(state => state.filterToptable.orderby)
+    const selectorDbData = appSelector(state => state.db.data);
+    const [dataroom,setDataroom] = useState(selectorDbData)
     
     useEffect(() => {
         setDataroom(selectorDbData.rooms)
