@@ -1,17 +1,7 @@
 import Toastify from 'toastify-js'
-import Employee from '../../class/Employee';
+import Employee from '../../class/CEmployee';
 import editUser from '../db/fecths/editUser';
-
-export interface valuesEditUser {
-    id:string
-    photo:string[]
-    name:string
-    email:string
-    startdate:string
-    description:string
-    phone:string
-    status:string
-}
+import { valuesEditUser } from '../../interfaces/InterfacePropsValidateFormEditUser';
 
 const handleValidateFormEditUser = (objedtEdit:Employee,valuesForEdit:valuesEditUser) => {
     if(/^[0-9]*$/.test(valuesForEdit.name) === true || 

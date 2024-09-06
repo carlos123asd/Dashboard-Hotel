@@ -1,4 +1,3 @@
 export interface InterfacePropsBtnTableTopNew {
-    title: string,
-    databooking: []
+    title: string
 }

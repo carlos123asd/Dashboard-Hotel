@@ -7,7 +7,7 @@ import { useContextAuth } from '../features/context/AuthContext';
 import { FormEventHandler, useEffect, useState } from 'react';
 import { dbThunkUser } from '../features/db/login/loginThunk';
 import { appDispatch } from '../features/hooks/hooks';
-import Employee from '../class/Employee';
+import Employee from '../class/CEmployee';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { form } from '../interfaces/InterfacesForms';
 

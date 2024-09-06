@@ -5,16 +5,17 @@ import { SwiperSlide,Swiper } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import next from '../assets/imgs/arrow.svg'
 import back from '../assets/imgs/arrow.svg'
-import { useSelector } from "react-redux";
 import logo from '../assets/imgs/logo.svg'
+import { appSelector } from "../features/hooks/hooks";
+import { InterfacePropsViewBooking } from "../interfaces/InterfacePropsViewBooking";
 
-export default function ViewBooking(booking){
-    booking = booking.booking
-    console.log(booking)
-    const dbRoom = useSelector(state => state.db.data.rooms)
-    console.log(dbRoom)
+
+
+export default function ViewBooking(props:InterfacePropsViewBooking){
+    const {booking} = props
+    const dbRoom = appSelector(state => state.db.data.rooms)
     const roomselected = dbRoom.filter((room) => {
-        return room.id === booking.idRoom
+        return room.id === String(booking.idRoom)
     })
     console.log(roomselected[0].amenities)
         return <>
@@ -87,7 +88,7 @@ export default function ViewBooking(booking){
                             roomselected[0].photo.map((img) => {
                                 return <>
                                     <SwiperSlide>
-                                            <div style={{backgroundImage:`url('${img}')`}} className="imagebookingRight" alt="Room of the Booking"></div>
+                                            <div style={{backgroundImage:`url('${img}')`}} className="imagebookingRight"></div>
                                             <div className="contentninfoRoomBooking">
                                                 <h2 className="titroom">{roomselected[0].typeRoom}</h2>
                                                 <p className="descriptionroom">{roomselected[0].description}</p>

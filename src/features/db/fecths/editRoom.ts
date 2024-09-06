@@ -1,5 +1,5 @@
 import Toastify from 'toastify-js'
-import Room from '../../../class/Room';
+import Room from '../../../class/CRoom';
 import { valuesEdit } from '../../forms/validationformEditRoom';
 
 const editRoom = (room:Room,values:valuesEdit) => {

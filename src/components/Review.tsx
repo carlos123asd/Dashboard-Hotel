@@ -8,7 +8,7 @@ import  profile from '../assets/imgs/menu/lateral/perfil.jpg'
 import { useState } from "react";
 import updateStatusfetchMessage from "../features/db/fecths/updateStatusfetchMessage";
 import { InterfacesPropsReview } from "../interfaces/InterfacesPropsReview";
-import Message from "../class/Message";
+import Message from "../class/CMessage";
 
 
 export default function Review(props:InterfacesPropsReview){

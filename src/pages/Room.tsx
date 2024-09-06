@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 import { appSelector } from "../features/hooks/hooks";
 
 export default function Room(){
-    const columns = ['Room Name','Room Type','Facilities','Price','Offer Price','Cancellation','Description','Status',' ']
-    const filterstop = ['All Rooms','Avaible Room','Inactive Room']
+    const columns:string[] = ['Room Name','Room Type','Facilities','Price','Offer Price','Cancellation','Description','Status',' ']
+    const filterstop:string[] = ['All Rooms','Avaible Room','Inactive Room']
     //const [filterstop,setfilterstop] = useState('All Rooms')
     /*const handlesortby = () => {
         setfilterstop()
@@ -15,12 +15,7 @@ export default function Room(){
    //De hijo a padre handlesortby -> pasar por props a FilterTableTop
     const filtername = appSelector(state => state.filterToptable.orderby)
     const selectorDbData = appSelector(state => state.db.data);
-    const [dataroom,setDataroom] = useState(selectorDbData.rooms)
-
-    /*
-    useEffect(() => {
-        setDataroom(selectorDbData.rooms)
-    },[])*/
+    const [dataroom,setDataroom] = useState<{}|[]>(selectorDbData.rooms)
      
     useEffect(() => {
         if(filtername === 'All Rooms'){

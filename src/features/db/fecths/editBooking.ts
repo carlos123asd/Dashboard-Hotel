@@ -1,5 +1,5 @@
 import Toastify from 'toastify-js'
-import Booking from '../../../class/Booking';
+import Booking from '../../../class/CBooking';
 import { valuesEditBooking } from '../../forms/validationformEditBooking';
 
 export const editBooking = (booking:Booking,values:valuesEditBooking) => {

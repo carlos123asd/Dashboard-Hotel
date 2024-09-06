@@ -8,23 +8,27 @@ import { useEffect, useState } from "react";
 
 import { useLocation } from "react-router-dom";
 import RowTable from "./RowTable";
-import Room from "../class/Room";
-import Booking from "../class/Booking";
-import Message from "../class/Message";
-import Employee from "../class/Employee";
+import CRoom from "../class/CRoom";
+import CBooking from "../class/CBooking";
+import CMessage from "../class/CMessage";
+import CEmployee from "../class/CEmployee";
+import { InterfacePropsTable } from "../interfaces/InterfacePropsTable";
 
-export default function Table({columns,data}){
-    const [nextdate,setNextdate] = useState(10);
-    const [actualdate,setActualdate] = useState(0);
+
+export default function Table(props:InterfacePropsTable){
+    const {columns,data} = props
+
+    const [nextdate,setNextdate] = useState<number>(10);
+    const [actualdate,setActualdate] = useState<number>(0);
     const locationname = useLocation().pathname;
-    const [desc,setDesc] = useState(false);
-    const [descletter,setDescletter] = useState(false);
-    const [rotate,setRotate] = useState({});
-    const [datastate,setDatastate] = useState(data.map((info) => {
+    const [desc,setDesc] = useState<boolean>(false);
+    const [descletter,setDescletter] = useState<boolean>(false);
+    const [rotate,setRotate] = useState<object>({});
+    const [datastate,setDatastate] = useState<CBooking[]|CEmployee[]|CMessage[]|CRoom[]>(data.map((info) => {
         return info
     }))
-    const [lengthdate,setLengthdate] = useState(Math.trunc(datastate.length / 10));
-    const [columnsedit,setColumnsedit] = useState(columns)
+    const [lengthdate,setLengthdate] = useState<number>(Math.trunc(datastate.length / 10));
+    const [columnsedit,setColumnsedit] = useState<string[]>(columns)
 
     useEffect(() => {
         setDatastate(data.map((info) => {
@@ -45,17 +49,17 @@ export default function Table({columns,data}){
             setNextdate(nextdate-10);
         }
     }
-    const numPickedPaginationData = (num) => {
+    const numPickedPaginationData = (num:number) => {
         setActualdate((num * 10) - 10);
         setNextdate(num * 10);
     }
 
-    const othercolumns = (column) => {
+    const othercolumns = (column:string) => {
         if(column === 'Room Type'){
             return <span style={rotate} onClick={handleOrderByLetter} className="filtercolumn"></span>
         }
     }
-    const othercolumnsBooking = (column) => {
+    const othercolumnsBooking = (column:string) => {
         if(column === 'Check in'){
             return <span style={rotate} onClick={() => handleOrderByDate('checkin')} className="filtercolumn"></span>
         }else if(column === 'Check out'){
@@ -65,7 +69,7 @@ export default function Table({columns,data}){
         }
     }
 
-    const rotateiconOrderBy = (order) =>{
+    const rotateiconOrderBy = (order:boolean) =>{
         if(order === true){
             setRotate({
                 transform: 'rotate(45deg)',
@@ -83,66 +87,66 @@ export default function Table({columns,data}){
         if(desc === false){
             setDesc(true)
             rotateiconOrderBy(false)
-            setDatastate(datastate.sort((a, b) => parseInt(a.price.split("$")[1])  - parseInt(b.price.split("$")[1])));
+            setDatastate(datastate.sort((a:any, b:any) => Number(a.price.split("$")[1])  -  Number(b.price.split("$")[1])));
         }else{
             setDesc(false)
             rotateiconOrderBy(true)
-            setDatastate(datastate.sort((a, b) => parseInt(b.price.split("$")[1])  - parseInt(a.price.split("$")[1])));
+            setDatastate(datastate.sort((a:any, b:any) => Number(b.price.split("$")[1])  - Number(a.price.split("$")[1])));
         }
     }
     const handleOrderByNameEmployee = () => {
         if(desc === false){
             setDesc(true)
             rotateiconOrderBy(false)
-            setDatastate(datastate.sort((a, b) => a.name.localeCompare(b.name))); 
+            setDatastate(datastate.sort((a:any, b:any) => a.name.localeCompare(b.name))); 
         }else{
             setDesc(false)
             rotateiconOrderBy(true)
-            setDatastate(datastate.sort((a, b) => b.name.localeCompare(a.name))); 
+            setDatastate(datastate.sort((a:any, b:any) => b.name.localeCompare(a.name))); 
         }
     }
     const handleOrderByLetter = () => {
         if(descletter === false){
             setDescletter(true)
             rotateiconOrderBy(false)
-            setDatastate(datastate.sort((a, b) => a.typeRoom.localeCompare(b.typeRoom))); 
+            setDatastate(datastate.sort((a:any, b:any) => a.typeRoom.localeCompare(b.typeRoom))); 
         }else{
             setDescletter(false)
             rotateiconOrderBy(true)
-            setDatastate(datastate.sort((a, b) => b.typeRoom.localeCompare(a.typeRoom))); 
+            setDatastate(datastate.sort((a:any, b:any) => b.typeRoom.localeCompare(a.typeRoom))); 
         }
     }
     const handleOrderByLetterBooking = () => {
         if(descletter === false){
             setDescletter(true)
             rotateiconOrderBy(false)
-            setDatastate(datastate.sort((a, b) => a.guest.localeCompare(b.guest))); 
+            setDatastate(datastate.sort((a:any, b:any) => a.guest.localeCompare(b.guest))); 
         }else{
             setDescletter(false)
             rotateiconOrderBy(true)
-            setDatastate(datastate.sort((a, b) => b.guest.localeCompare(a.guest))); 
+            setDatastate(datastate.sort((a:any, b:any) => b.guest.localeCompare(a.guest))); 
         }
     }
-    const handleOrderByDate = (typedate) => {
+    const handleOrderByDate = (typedate:string) => {
         if(descletter === false){
             setDescletter(true)
             rotateiconOrderBy(false)
             if(typedate === 'checkin'){
-                setDatastate(datastate.sort((a, b) => new Date(a.checkin) - new Date(b.checkin))); 
+                setDatastate(datastate.sort((a:any, b:any) => Number(new Date(a.checkin).getTime()) - Number(new Date(b.checkin).getTime()))); 
             }else if(typedate === 'checkout'){
-                setDatastate(datastate.sort((a, b) => new Date(a.checkout) - new Date(b.checkout))); 
+                setDatastate(datastate.sort((a:any, b:any) => Number(new Date(a.checkout).getTime()) - Number(new Date(b.checkout).getTime()))); 
             }else if(typedate === 'checkdate'){
-                setDatastate(datastate.sort((a, b) => new Date(a.orderDate) - new Date(b.orderDate))); 
+                setDatastate(datastate.sort((a:any, b:any) => Number(new Date(a.orderDate).getTime()) - Number(new Date(b.orderDate).getTime()))); 
             }
         }else{
             setDescletter(false)
             rotateiconOrderBy(true)
             if(typedate === 'checkin'){
-                setDatastate(datastate.sort((a, b) => new Date(b.checkin) - new Date(a.checkin))); 
+                setDatastate(datastate.sort((a:any, b:any) => Number(new Date(b.checkin).getTime()) - Number(new Date(a.checkin).getTime()))); 
             }else if(typedate === 'checkout'){
-                setDatastate(datastate.sort((a, b) => new Date(b.checkout) - new Date(a.checkout))); 
+                setDatastate(datastate.sort((a:any, b:any) => Number(new Date(b.checkout).getTime()) - Number(new Date(a.checkout).getTime()))); 
             }else if(typedate === 'checkdate'){
-                setDatastate(datastate.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate))); 
+                setDatastate(datastate.sort((a:any, b:any) => Number(new Date(b.orderDate).getTime()) - Number(new Date(a.orderDate).getTime()))); 
             }
         }
     }
@@ -163,8 +167,8 @@ export default function Table({columns,data}){
                     </TrMainTable>
                     
                     {
-                        datastate.slice(actualdate,nextdate).map((booking) => {
-                            const objectBooking = new Booking(
+                        datastate.slice(actualdate,nextdate).map((booking:any) => {
+                            const objectBooking = new CBooking(
                                 booking.id,
                                 booking.guest,
                                 booking.orderDate,
@@ -193,7 +197,7 @@ export default function Table({columns,data}){
                 data.slice(0,lengthdate).map(element => {
                     i++
                     return <>
-                        <div valuepagination={i} onClick={(event) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{i}</div>
+                        <div valuepagination={i} onClick={(event:any) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{i}</div>
                     </>
                 })
             }
@@ -216,8 +220,8 @@ export default function Table({columns,data}){
                     </TrMainTable>
                     
                     {
-                        datastate.slice(actualdate,nextdate).map((room) => {
-                            const objectRoom = new Room(
+                        datastate.slice(actualdate,nextdate).map((room:any) => {
+                            const objectRoom = new CRoom(
                                 room.id,
                                 room.roomNumber,
                                 room.photo,
@@ -243,7 +247,7 @@ export default function Table({columns,data}){
             {
                 datastate.slice(0,lengthdate).map((val,index) => {
                     return <>
-                        <div valuepagination={index} onClick={(event) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{index}</div>
+                        <div valuepagination={index} onClick={(event:any) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{index}</div>
                     </>
                 })
             }
@@ -266,8 +270,8 @@ export default function Table({columns,data}){
                         </TrMainTable>
                         
                         {
-                            datastate.slice(actualdate,nextdate).map(register => {
-                                const objectMessage = new Message(
+                            datastate.slice(actualdate,nextdate).map((register:any) => {
+                                const objectMessage = new CMessage(
                                     register.id,
                                     register.date,
                                     register.idmessage,
@@ -292,7 +296,7 @@ export default function Table({columns,data}){
                     data.slice(0,lengthdate).map(element => {
                         i++
                         return <>
-                            <div valuepagination={i} onClick={(event) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{i}</div>
+                            <div valuepagination={i} onClick={(event:any) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{i}</div>
                         </>
                     })
                 }
@@ -315,8 +319,8 @@ export default function Table({columns,data}){
                         </TrMainTable>
                         
                         {
-                            datastate.slice(actualdate,nextdate).map((employee) => {
-                                const objectEmployee = new Employee(
+                            datastate.slice(actualdate,nextdate).map((employee:any) => {
+                                const objectEmployee = new CEmployee(
                                     employee.id,
                                     employee.photo,
                                     employee.name,
@@ -340,7 +344,7 @@ export default function Table({columns,data}){
                     data.slice(0,lengthdate).map(element => {
                         i++
                         return <>
-                            <div valuepagination={i} onClick={(event) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{i}</div>
+                            <div valuepagination={i} onClick={(event:any) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{i}</div>
                         </>
                     })
                 }

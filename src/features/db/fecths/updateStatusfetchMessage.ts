@@ -1,5 +1,5 @@
 import Toastify from 'toastify-js'
-import Message from '../../../class/Message'
+import Message from '../../../class/CMessage'
 
 const updateStatusfetchMessage = (message:Message,type:string,notification:string) => {
     console.log(notification)

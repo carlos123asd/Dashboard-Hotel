@@ -1,9 +1,9 @@
 import { CaseReducer, createSlice, PayloadAction} from '@reduxjs/toolkit'
 import { dbThunk } from './dbThunk';
-import Room from '../../class/Room';
-import Booking from '../../class/Booking';
-import Message from '../../class/Message';
-import Employee from '../../class/Employee';
+import Room from '../../class/CRoom';
+import Booking from '../../class/CBooking';
+import Message from '../../class/CMessage';
+import Employee from '../../class/CEmployee';
 
 export interface interfaceState {
     status: 'idle' | 'fulfilled' | 'rejected' | 'pending',

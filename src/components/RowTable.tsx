@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { TrMainTable } from "../styles/table/table";
 import handleValidateFormEditRoom from "../features/forms/validationformEditRoom";
 import handleValidateFormEditBooking from "../features/forms/validationformEditBooking"
@@ -10,75 +10,72 @@ import { Modal } from "@mui/material";
 import { ModalNewNotes } from "../styles/table/ModalNotes";
 import phonecontact from '../assets/imgs/phone.svg'
 import { ModalNewRoom } from "../styles/table/ModalNewRoom";
-import { useSelector } from "react-redux";
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import 'dayjs/locale/en-gb';
 import editRoomBooking from '../assets/imgs/edit.svg'
-import editBooking from '../features/db/fecths/editBooking'
 import MuiPhoneNumber from "mui-phone-number";
-import editUser from "../features/db/fecths/editUser";
 import deleteUser from "../features/db/fecths/deleteUser";
 import restart from '../assets/imgs/restart.svg'
 import updateStatusfetchMessage from "../features/db/fecths/updateStatusfetchMessage";
 import handleValidateFormEditUser from "../features/forms/validationformEditUser";
+import { appSelector } from "../features/hooks/hooks";
+import { InterfacepropsvaluesEdit } from "../interfaces/InterfacePropsValidateFormEditRoom";
+import { valuesEditBooking } from "../interfaces/InterfacePropsValidateFormEditBooking";
+import { valuesEditUser } from "../interfaces/InterfacePropsValidateFormEditUser";
+import { InterfacePropsRowTable } from "../interfaces/InterfacePropsRowTable";
+import CRoom from "../class/CRoom"
+import CEmployee from "../class/CBooking"
+import CMessage from "../class/CBooking"
+import CBooking from "../class/CBooking"
 
 
-export default function RowTable({data=data.data}){
+export default function RowTable(props:InterfacePropsRowTable){
+    const {data}:any = props
     const [locationname,setLocationname] = useState(useLocation().pathname);
     
-    const [typeroomedit,setTyperoomedit] = useState("")
-    const [numroomedit,setNumroomedit] = useState("")
-    const [facilitiesedit,setFacilitiesedit] = useState("")
-    const [cancelationedit,setCancelationedit] = useState("")
-    const [descriptionedit,setDescriptionedit] = useState("")
-    const [priceedit,setPriceedit] = useState("")
-    const [discountedit,setDiscountedit] = useState("")
-    const [statusedit,setStatusedit] = useState("")
+    const [typeroomedit,setTyperoomedit] = useState<string>("")
+    const [numroomedit,setNumroomedit] = useState<string>("")
+    const [facilitiesedit,setFacilitiesedit] = useState<string>("")
+    const [cancelationedit,setCancelationedit] = useState<string>("")
+    const [descriptionedit,setDescriptionedit] = useState<string>("")
+    const [priceedit,setPriceedit] = useState<string>("")
+    const [discountedit,setDiscountedit] = useState<string>("")
+    const [statusedit,setStatusedit] = useState<string>("")
 
-    const [edit,setEdit] = useState(false) //evaluar de bool a id
-    const [showbtngroup2,setShowbtngroup2] = useState({
+    const [edit,setEdit] = useState<boolean>(false)
+    const [showbtngroup2,setShowbtngroup2] = useState<object>({
         display: 'none'
     })
-    const [showbtngroup3,setShowbtngroup3] = useState({
+    const [showbtngroup3,setShowbtngroup3] = useState<object>({
         display: 'none'
     })
-    const [hideedit,setHideedit] = useState({
+    const [hideedit,setHideedit] = useState<object>({
         display: 'inline-block'
     })
-    const [open, setOpen] = useState(false); 
-    const [bookingvisible, setBookingvisible] = useState(false);
-    const dbRoom = useSelector(state => state.db.data.rooms)
-    const [openeditroombooking,setOpeneditroombooking] = useState(false)
-    const [typeroombooking,setTyperoombooking] = useState("")
+    const [open, setOpen] = useState<boolean>(false); 
+    const [bookingvisible, setBookingvisible] = useState<boolean>(false);
+    const dbRoom = appSelector(state => state.db.data.rooms)
+    const [openeditroombooking,setOpeneditroombooking] = useState<boolean>(false)
+    const [typeroombooking,setTyperoombooking] = useState<string>("")
 
-    const [roomselectedit,setRoomselectedit] = useState("")
-    const [namebookingedit,setNamebookingedit] = useState("")
-    const [orderdatebookingedit,setOrderdatebookingedit] = useState("")
-    const [checkinbookingedit,setCheckinbookingedit] = useState("")
-    const [checkoutbookingedit,setCheckoutbookingedit] = useState("")
-    const [specialrequestedit,setSpecialrequestedit] = useState("")
-    const [statusbookingedit,setStatusbookingedit] = useState("")
+    const [roomselectedit,setRoomselectedit] = useState<string>("")
+    const [namebookingedit,setNamebookingedit] = useState<string>("")
+    const [orderdatebookingedit,setOrderdatebookingedit] = useState<string>("")
+    const [checkinbookingedit,setCheckinbookingedit] = useState<string>("")
+    const [checkoutbookingedit,setCheckoutbookingedit] = useState<string>("")
+    const [specialrequestedit,setSpecialrequestedit] = useState<string>("")
+    const [statusbookingedit,setStatusbookingedit] = useState<string>("")
     
-    const [numberphonestate,setNumberphonestate] = useState("")
-    const [nameedituser,setNameedituser] = useState("")
-    const [emailedituser,setEmailedituser] = useState("")
-    const [descriptionedituser,setDescriptionedituser] = useState("")
-    const [statusedituser,setStatusedituser] = useState("")
-    
+    const [numberphonestate,setNumberphonestate] = useState<string>("")
+    const [nameedituser,setNameedituser] = useState<string>("")
+    const [emailedituser,setEmailedituser] = useState<string>("")
+    const [descriptionedituser,setDescriptionedituser] = useState<string>("")
+    const [statusedituser,setStatusedituser] = useState<string>("")
 
-/*
-    useEffect(()=>{
-        if(locationname === 'bookings'){
-            const roomselectBooking = dbRoom.filter((booking) => {
-                return booking.id === (data.idRoom).toString()
-            })//roomselectBooking.photo[0] da error porque no hay relacion en mokeado (no hay un foreign key)
-        }
-    },[locationname])*/
-
-    const handlechangeTypeRoom = (typeroom) => {
+    const handlechangeTypeRoom = (typeroom:string) => {
         setTyperoomedit(typeroom)
     }
     
@@ -119,7 +116,7 @@ export default function RowTable({data=data.data}){
     }
 
     const handleClickSave = () => {
-        let objetDataSaveRoom = {
+        let objetDataSaveRoom:object = {
             typeRoom: (typeroomedit !== '') ? typeroomedit : data.typeRoom,
             roomNumber: (numroomedit !== '') ? numroomedit : data.roomNumber,
             amenities: (facilitiesedit !== '') ? facilitiesedit : data.amenities,
@@ -148,7 +145,7 @@ export default function RowTable({data=data.data}){
                 }
             }
         }
-        const response = handleValidateFormEditRoom(data,objetDataSaveRoom)
+        const response = handleValidateFormEditRoom(data,objetDataSaveRoom as InterfacepropsvaluesEdit)
         response === true ? handleClickFunctionEdit() : <></>
     }
 
@@ -157,14 +154,14 @@ export default function RowTable({data=data.data}){
         handleClickFunctionCancelDelete()
     }
 
-    const otherState = (state) => {
+    const otherState = (state:string) => {
         if(state === 'In Progress'){
             return <div className="status statusinprogress">In Progress</div>
         }else if(state === 'Check Out'){
             return <div className="status statusbooked">Check Out</div>
         }
     }
-    const otherStateEdit = (state) => {
+    const otherStateEdit = (state:string) => {
         if(state === 'In Progress'){
             return <select className="status statusinprogress"><option value="Check In">Check In</option><option value="Check Out">Check Out</option><option value="In Progress">In Progress</option></select>
         }else if(state === 'Check Out'){
@@ -192,7 +189,7 @@ export default function RowTable({data=data.data}){
             status: (statusbookingedit !== '') ? statusbookingedit : data.status,
             idRoom: (roomselectedit !== '') ? roomselectedit.split('-')[1] : data.idRoom,
         }
-        const response = handleValidateFormEditBooking(data,dataBookingEdit)
+        const response = handleValidateFormEditBooking(data,dataBookingEdit as valuesEditBooking)
         response === true ? handleClickFunctionEdit() : <></>
     }
     const handleSaveEditUser = () => {
@@ -206,7 +203,7 @@ export default function RowTable({data=data.data}){
             phone: (numberphonestate !== '') ? numberphonestate : data.phone,
             status: (statusedituser !== '') ? statusedituser : data.status,
         }
-        const response = handleValidateFormEditUser(data,dataUserEdit)
+        const response = handleValidateFormEditUser(data,dataUserEdit as valuesEditUser)
         response === true ? handleClickFunctionEdit() : <></>
     }
 
@@ -270,7 +267,7 @@ export default function RowTable({data=data.data}){
                     <td>{`$${(parseInt(data.price.slice(1))-((parseInt(data.price.slice(1))*data.discount)/100)).toFixed(2)}`}<input onChange={(e) => setDiscountedit(e.target.value)} name="discountEditable" className="inputText" placeholder={`${data.discount}%`}></input></td>
                     <td><textarea onChange={(e) => setCancelationedit(e.target.value)} name="cancelationedit" className="textareainputroomeditable" placeholder={data.cancellation}></textarea></td>
                     <td><textarea onChange={(e) => setDescriptionedit(e.target.value)} name="descriptionedit" className="textareainputroomeditable" placeholder={data.description}></textarea></td>
-                    <td>{data.status === 'Available' ? <div className="status"><select onSelect={(e) => setStatusedit(e.target.value)} name="statusEditable" value={data.status} className="inputSelect inputSelect--statusAvaible"><option value="Available">Available</option><option value="Booked">Booked</option></select></div> : <div className="status statusbooked"><select onChange={(e) => setStatusedit(e.target.value)} name="statusEditable" className="inputSelect inputSelect--statusBooked"><option value="Available">Available</option><option value="Booked">Booked</option></select></div>}</td>
+                    <td>{data.status === 'Available' ? <div className="status"><select onSelect={(e:any) => setStatusedit(e.target.value)} name="statusEditable" value={data.status} className="inputSelect inputSelect--statusAvaible"><option value="Available">Available</option><option value="Booked">Booked</option></select></div> : <div className="status statusbooked"><select onChange={(e) => setStatusedit(e.target.value)} name="statusEditable" className="inputSelect inputSelect--statusBooked"><option value="Available">Available</option><option value="Booked">Booked</option></select></div>}</td>
                     <td style={{position:'relative'}}>
                         <div style={hideedit}>
                             <div className="status editdelete" onClick={handleClickFunctionEdit}>Edit</div>
@@ -281,7 +278,7 @@ export default function RowTable({data=data.data}){
                             <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
                         </div>
                         <div style={showbtngroup3}>
-                            <div className="status editdelete" onClick={() => handledeleteRoom(data.id)}>Confirm</div>
+                            <div className="status editdelete" onClick={() => handledeleteRoom()}>Confirm</div>
                             <div className="status statusbooked editdelete" onClick={handleClickFunctionCancelDelete}>Cancel</div>
                         </div>
                     </td>
@@ -384,7 +381,7 @@ export default function RowTable({data=data.data}){
                 </Modal>
                 <TrMainTable>
                     <div>
-                        <td onClick={() => handleOpenViewBooking(data)}>
+                        <td onClick={() => handleOpenViewBooking()}>
                             <img className="imgroomnameColum" width={150} height={77} src={''} alt="Image Room" />
                             <div className="roomnameColumn">
                                 <span className="deluxenum numtit--black"><input className="inputEditBookingGuest" onChange={(e) => setNamebookingedit(e.target.value)} type="text" placeholder={data.guest} /></span>
@@ -399,7 +396,7 @@ export default function RowTable({data=data.data}){
                             label={'Day,Month,Year'}
                             views={['day','month','year']}
                             className="inputDataEditBooking"
-                            onChange={(e) => setOrderdatebookingedit(`${e.clone().$D} ${((e.clone()).toString()).split(' ')[2]} ${((e.clone()).toString()).split(' ')[3]}`)}
+                            onChange={(e:any) => setOrderdatebookingedit(`${e.clone().$D} ${((e.clone()).toString()).split(' ')[2]} ${((e.clone()).toString()).split(' ')[3]}`)}
                             />
                         </DemoContainer>
                         </LocalizationProvider>
@@ -411,7 +408,7 @@ export default function RowTable({data=data.data}){
                             label={'Day,Month,Year'}
                             views={['day','month','year']}
                             className="inputDataEditBooking"
-                            onChange={(e) => setCheckinbookingedit(`${e.clone().$D} ${((e.clone()).toString()).split(' ')[2]} ${((e.clone()).toString()).split(' ')[3]}`)}
+                            onChange={(e:any) => setCheckinbookingedit(`${e.clone().$D} ${((e.clone()).toString()).split(' ')[2]} ${((e.clone()).toString()).split(' ')[3]}`)}
                             />
                         </DemoContainer>
                         </LocalizationProvider>
@@ -423,14 +420,14 @@ export default function RowTable({data=data.data}){
                             label={'Day,Month,Year'}
                             views={['day','month','year']}
                             className="inputDataEditBooking"
-                            onChange={(e) => setCheckoutbookingedit(`${e.clone().$D} ${((e.clone()).toString()).split(' ')[2]} ${((e.clone()).toString()).split(' ')[3]}`)}
+                            onChange={(e:any) => setCheckoutbookingedit(`${e.clone().$D} ${((e.clone()).toString()).split(' ')[2]} ${((e.clone()).toString()).split(' ')[3]}`)}
                             />
                         </DemoContainer>
                         </LocalizationProvider>
                     </td>
                     <td onClick={handleOpen} notes='true'>Edit View Notes</td>
                     <td>{data.roomType}</td>
-                    <td>{data.status === 'Check In' ? <select onChange={(e) => setStatusbookingedit(e.target.value)} className="status"><option value="Check In">Check In</option><option value="Check Out">Check Out</option><option value="In Progress">In Progress</option></select> : otherStateEdit(data.status)}</td>
+                    <td>{data.status === 'Check In' ? <select onChange={(e:any) => setStatusbookingedit(e.target.value)} className="status"><option value="Check In">Check In</option><option value="Check Out">Check Out</option><option value="In Progress">In Progress</option></select> : otherStateEdit(data.status)}</td>
                         <div style={hideedit}>
                             <div className="status editdelete" onClick={handleClickFunctionEdit}>Edit</div>
                             <div className="status statusbooked editdelete" onClick={handleClickFunctionDelete}>Delete</div>
@@ -508,14 +505,14 @@ export default function RowTable({data=data.data}){
                     <td>
                         <img className="imgroomnameColum" width={150} height={77} src={data.photo} alt="Image Employee" />
                         <div className="roomnameColumn">
-                            <input onChange={(e) => setNameedituser(e.target.value)} className="inputEditBookingGuest" style={{height:'3em'}} type="text" name="nameuseredit" placeholder={data.name} />
+                            <input onChange={(e:any) => setNameedituser(e.target.value)} className="inputEditBookingGuest" style={{height:'3em'}} type="text" name="nameuseredit" placeholder={data.name} />
                             <span className="deluxenum">#{data.id}<br/>Joined on {data.startdate}</span>
                         </div>
                     </td>
                 </div>
                 <td className="descriptionemployee textareainputbookingeditable"><textarea onChange={(e) => setDescriptionedituser(e.target.value)} className="textareainputroomeditable" placeholder={data.description} name="descriptionuseredit"></textarea></td>
                 <td style={{alignContent: 'stretch'}} className="contactemployee">
-                    <MuiPhoneNumber style={{display:'block'}} defaultCountry={'es'} onChange={(e) => setNumberphonestate(e)}/>
+                    <MuiPhoneNumber style={{display:'block'}} defaultCountry={'es'} onChange={(e:any) => setNumberphonestate(e.target.value)}/>
                     <br />
                     <input onChange={(e) => setEmailedituser(e.target.value)} className="inputEditBookingGuest" style={{height:'3em',width:'100%'}} type="text" placeholder={data.email} />
                 </td>

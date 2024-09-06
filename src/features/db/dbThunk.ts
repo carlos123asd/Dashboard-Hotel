@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import Room from "../../class/Room";
-import Booking from "../../class/Booking";
-import Employee from "../../class/Employee";
-import Message from "../../class/Message";
+import Room from "../../class/CRoom";
+import Booking from "../../class/CBooking";
+import Employee from "../../class/CEmployee";
+import Message from "../../class/CMessage";
 
 export const dbThunk = createAsyncThunk('dbThunk', async (table ?: string) => {
     let response: any;

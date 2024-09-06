@@ -19,29 +19,31 @@ import { InterfacePropsBtnTableTopNew } from "../interfaces/InterfacePropsBtnTab
 
 export default function BtnTableTopNew(props:InterfacePropsBtnTableTopNew){
     let {title} = props;
-    let {databooking} = props;
 
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-    const [typeroom,setTyperoom] = useState('Single Bed');
-    const [roomnumber,setRoomNumber] = useState('91234');
+    const [open, setOpen] = useState<boolean>(false);
+    const [typeroom,setTyperoom] = useState<string>('Single Bed');
+    const [roomnumber,setRoomNumber] = useState<string>('91234');
     const [offer,setOffer] = useState<string|number>('No Offer');
-    const [display,setDisplay] = useState({display: 'none'});
+    const [display,setDisplay] = useState<object>({display: 'none'});
     const [price,setPrice] = useState<number>(0);
     const [total,setTotal] = useState<number|string>(offer === 'No Offer' ? price : (price-((price * Number(offer))/100)));
-    const [image1,setImage1] = useState(imagestandar);
-    const [image2,setImage2] = useState(imagestandar);
-    const [image3,setImage3] = useState(imagestandar);
-    const [Typeroombooking,setTyperoombooking] = useState('Single Bed');
+    const [image1,setImage1] = useState<string>(imagestandar);
+    const [image2,setImage2] = useState<string>(imagestandar);
+    const [image3,setImage3] = useState<string>(imagestandar);
+    const [Typeroombooking,setTyperoombooking] = useState<string>('Single Bed');
     const [startdateuser,setStartdateuser] = useState<string>("")
-    const [numberphonestate,setNumberphonestate] = useState("")
+    const [numberphonestate,setNumberphonestate] = useState<string>("")
     const dataRooms = appSelector(state => state.db.data.rooms)
     const dataBookings = appSelector(state => state.db.data.bookings)
     const dataUser = appSelector(state => state.db.data.employee)
     const location = useLocation().pathname;
-    const [roomid,setRoomid] = useState("")
+    const [roomid,setRoomid] = useState<string>("")
     
+
+
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
     useEffect(() => {
         if(open){
             setPrice(0)

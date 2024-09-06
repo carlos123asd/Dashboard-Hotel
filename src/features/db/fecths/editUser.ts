@@ -1,5 +1,5 @@
 import Toastify from 'toastify-js'
-import Employee from '../../../class/Employee';
+import Employee from '../../../class/CEmployee';
 import { valuesEditUser } from '../../forms/validationformEditUser';
 
 const editUser = (user:Employee,values:valuesEditUser) => {
