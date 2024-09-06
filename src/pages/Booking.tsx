@@ -2,19 +2,20 @@ import BtnTableTopNew from "../components/BtnTableTopNew";
 import Table from "../components/Table";
 import { ContentPageMain } from "../styles/nav/nav";
 import FilterTableTop from "../components/FilterTableTop";
-import {  useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { appSelector } from "../features/hooks/hooks";
 
 export default function Booking(){
     const columns = ['Guest','Order Date','Check in','Check out','Special Request','Room Type','Status',' ']
     const filterstop = ['All Bookings','Checking In','Checking Out','In Progress']
-    const filtername = useSelector(state => state.filterToptable.orderby)
-    const selectorDbData = useSelector(state => state.db.data);
-    const [databooking,setDatabooking] = useState([])
+    const filtername = appSelector(state => state.filterToptable.orderby)
+    const selectorDbData = appSelector(state => state.db.data);
+    const [databooking,setDatabooking] = useState(selectorDbData.bookings)
 
+    /*
     useEffect(() => {
         setDatabooking(selectorDbData.bookings)
-    },[])
+    },[])*/
 
     useEffect(() => {
         if(filtername === 'All Bookings'){

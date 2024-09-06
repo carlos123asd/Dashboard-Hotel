@@ -3,20 +3,20 @@ import FilterTableTop from "../components/FilterTableTop";
 import Table from "../components/Table";
 import { ContentPageMain } from "../styles/nav/nav";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { appSelector } from "../features/hooks/hooks";
 
 
 export default function Guest(){
     const columns = ['Name','Job Desk','Contact','Status']
     const filterstop = ['All Employee','Active Employee','Inactive Employee']
-    const filterTopEmployee = useSelector(state => state.filterToptable.orderby)
-
-    const [dataemployee,setDataemployee] = useState([])
-    const selectorDbData = useSelector(state => state.db.data.employee);
+    const filterTopEmployee = appSelector(state => state.filterToptable.orderby)
+    const selectorDbData = appSelector(state => state.db.data.employee);
+    const [dataemployee,setDataemployee] = useState(selectorDbData)
     
+    /*
     useEffect(() => {
         setDataemployee(selectorDbData)
-    },[])
+    },[])*/
 
     useEffect(() => {
         if(filterTopEmployee === 'All Employee'){

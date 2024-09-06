@@ -6,21 +6,21 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-import { useSelector } from 'react-redux';
 import icon from '../assets/imgs/logo.svg'
+import { appSelector } from '../features/hooks/hooks';
+import { styleListBookingMessage } from '../interfaces/styleListBookingMessage';
 
 export default function ListBookings(){
 
-    const selectorDBBookings = useSelector(state => state.db.data.bookings)
-    const selectorShowBookingList = useSelector(state => state.notification.show)
+    const selectorDBBookings = appSelector(state => state.db.data.bookings)
+    const selectorShowBookingList = appSelector(state => state.notification.show)
     const filterbymonthActual = selectorDBBookings.filter((booking) => {
         return new Date(booking.orderDate).getMonth() === new Date().getMonth()
     })
-    const [styleList,setStyleList] = useState({
+    
+    const [styleList,setStyleList] = useState<styleListBookingMessage>({
         borderRadius: 12,
-        //left: 0,
         overflowY: 'auto',
-        //position: 'absolute',
         border: '1px solid rgb(223, 226, 231)',
         boxShadow: 'rgba(170, 180, 190, 0.3) 0px 4px 20px',
         height: '30em',

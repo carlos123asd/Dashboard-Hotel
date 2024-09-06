@@ -1,6 +1,6 @@
 import BtnTopNew from "../styles/table/BtnTopNew";
 import Modal from '@mui/material/Modal';
-import { useEffect, useState } from "react";
+import { FormEventHandler, useEffect, useState } from "react";
 import { ModalNewRoom } from "../styles/table/ModalNewRoom";
 import imagestandar from '../assets/imgs/logo.svg';
 import "toastify-js/src/toastify.css"
@@ -13,28 +13,32 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import 'dayjs/locale/en-gb';
 import MuiPhoneNumber from 'mui-phone-number';
-import { useSelector } from "react-redux";
 import validationNewuser from '../features/forms/validationformNewUser'
+import { appSelector } from "../features/hooks/hooks";
+import { InterfacePropsBtnTableTopNew } from "../interfaces/InterfacePropsBtnTableTopNew";
 
-export default function BtnTableTopNew({title,databooking}){
+export default function BtnTableTopNew(props:InterfacePropsBtnTableTopNew){
+    let {title} = props;
+    let {databooking} = props;
+
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [typeroom,setTyperoom] = useState('Single Bed');
     const [roomnumber,setRoomNumber] = useState('91234');
-    const [offer,setOffer] = useState('No Offer');
+    const [offer,setOffer] = useState<string|number>('No Offer');
     const [display,setDisplay] = useState({display: 'none'});
-    const [price,setPrice] = useState(0);
-    const [total,setTotal] = useState(offer === 'No Offer' ? price : (price-((price*offer)/100)));
+    const [price,setPrice] = useState<number>(0);
+    const [total,setTotal] = useState<number|string>(offer === 'No Offer' ? price : (price-((price * Number(offer))/100)));
     const [image1,setImage1] = useState(imagestandar);
     const [image2,setImage2] = useState(imagestandar);
     const [image3,setImage3] = useState(imagestandar);
     const [Typeroombooking,setTyperoombooking] = useState('Single Bed');
-    const [startdateuser,setStartdateuser] = useState("")
+    const [startdateuser,setStartdateuser] = useState<string>("")
     const [numberphonestate,setNumberphonestate] = useState("")
-    const dataRooms = useSelector(state => state.db.data.rooms)
-    const dataBookings = useSelector(state => state.db.data.bookings)
-    const dataUser = useSelector(state => state.db.data.employee)
+    const dataRooms = appSelector(state => state.db.data.rooms)
+    const dataBookings = appSelector(state => state.db.data.bookings)
+    const dataUser = appSelector(state => state.db.data.employee)
     const location = useLocation().pathname;
     const [roomid,setRoomid] = useState("")
     
@@ -49,7 +53,7 @@ export default function BtnTableTopNew({title,databooking}){
         }
     },[open])
 
-    const handleTypeRoom = value => {
+    const handleTypeRoom = (value:string) => {
         if(value === 'Single Bed'){
             setTyperoom('Single Bed');
         }else if(value === 'Double Bed'){
@@ -63,18 +67,18 @@ export default function BtnTableTopNew({title,databooking}){
         }
     }
 
-    const handleRoomNumber = value => {
-        setRoomNumber(parseInt(value));
+    const handleRoomNumber = (value:string) => {
+        setRoomNumber(value);
         if(value === "")
             setRoomNumber('91234');
     }
 
-    const handleOffer = value => {
+    const handleOffer = (value:string) => {
         if(value === 'yes'){
             setOffer('With offer')
             setDisplay({display: 'inline-block'})
-            if(parseInt(value) > 0){
-                setTotal((price-((price*parseInt(value))/100)).toFixed(2))
+            if(Number(value) > 0){
+                setTotal((price - ((price * Number(value)) / 100)).toFixed(2))
             }else{
                 setTotal(price)
             }
@@ -85,65 +89,69 @@ export default function BtnTableTopNew({title,databooking}){
         }
     }
 
-    const handleOfferNum = value => {
+    const handleOfferNum = (value:string) => {
         setOffer(`${value}`)
-        setTotal((price-((price*parseInt(value))/100)))
+        setTotal((price-((price*Number(value))/100)))
     }
 
-    const handlePrice = value => {
-        setPrice(`${value}`)
-        if(parseInt(offer) > 0){
-            setTotal((value-((value*parseInt(offer))/100)).toFixed(2))
+    const handlePrice = (value:number) => {
+        setPrice(value)
+        if(Number(offer) > 0){
+            setTotal((value - ((value * Number(offer)) / 100)).toFixed(2))
         }
         else if(offer === 'No Offer'){
             setTotal(value)
         }
-        else if(value > 0){
+        else if(Number(value) > 0){
             setTotal(value)
         }
     }
 
-    const handleUrl1 = (value) => {
+    const handleUrl1 = (value:string) => {
         setImage1(value)
         if(value === ""){
             setImage1(imagestandar)
         }
     }
-    const handleUrl2 = (value) => {
+    const handleUrl2 = (value:string) => {
         setImage2(value)
         if(value === ""){
             setImage2(imagestandar)
         }
     }
-    const handleUrl3 = (value) => {
+    const handleUrl3 = (value:string) => {
         setImage3(value)
         if(value === ""){
             setImage3(imagestandar)
         }
     }
 
-    const validFormRoom = (e) => {
+    interface formLogin extends HTMLFormElement {
+        value: HTMLInputElement;
+    }
+
+    const validFormRoom:FormEventHandler<formLogin> = (e) => {
         let lastObjectRoom = dataRooms.map((room) => {
             return room
-        }).sort((a,b) => a.id - b.id)
+        }).sort((a,b) => Number(a.id) - Number(b.id))
         let idnew = ((lastObjectRoom[lastObjectRoom.length - 1]).id) + 1
         handlesubmitnewRoom(e,idnew)
         handleClose()
     }
 
-    const validFormBooking = (e) => {
+    const validFormBooking:FormEventHandler<formLogin> = (e) => {
         let lastObjectBooking = dataBookings.map((booking) => {
             return booking
-        }).sort((a,b) => a.id - b.id)
+        }).sort((a,b) => Number(a.id) - Number(b.id))
         let idnew = ((lastObjectBooking[lastObjectBooking.length - 1]).id) + 1
         const response = handlesubmitnewBooking(e,idnew,roomid)
         response === true ? handleClose() : <></>
     }
 
-    const validFormUser = (e) => {
+    const validFormUser:FormEventHandler<formLogin> = (e) => {
         let lastObjectUser = dataUser.map((user) => {
             return user
-        }).sort((a,b) => a.id - b.id)
+        }).sort((a,b) => Number(a.id) - Number(b.id))
         let idnew = ((lastObjectUser[lastObjectUser.length - 1]).id) + 1
         const response = validationNewuser(e,idnew)
         response === true ? handleClose() : <></>
@@ -168,7 +176,7 @@ export default function BtnTableTopNew({title,databooking}){
             <ModalNewRoom>
                 <h1>{title}</h1>
                 <div className="contentRoomNewRoom">
-                    <form onSubmit={e => validFormRoom(e)} action="">
+                    <form onSubmit={(e:any) => validFormRoom(e)} action="">
                         <h2>Room Detail</h2>
                         <div>
                             <div className="contentRoomNewRoom__firstblock">
@@ -208,7 +216,7 @@ export default function BtnTableTopNew({title,databooking}){
                             <label htmlFor="price">Price</label>
                             <div>
                                 <div>$</div>
-                                <input onChange={event => handlePrice(event.target.value)} name="price" id="price" type="text" placeholder="323" />
+                                <input onChange={event => handlePrice(Number(event.target.value))} name="price" id="price" type="text" placeholder="323" />
                             </div>
                         </div>
 
@@ -280,7 +288,7 @@ export default function BtnTableTopNew({title,databooking}){
                 <ModalNewRoom className="modalbooking">
                     <h1>{title}</h1>
                     <div className="contentRoomNewRoom">
-                        <form onSubmit={e => validFormBooking(e)} action="">
+                        <form onSubmit={(e:any) => validFormBooking(e)} action="">
                             <h2>Booking Details</h2>
                             <div className="sectionformbooking">
                                 <div className="contentRoomNewRoom__firstblock">
@@ -358,7 +366,7 @@ export default function BtnTableTopNew({title,databooking}){
             <ModalNewRoom style={{padding:'2.5em',width:'50%'}}>
                 <h1>{title}</h1>
                 <div className="contentRoomNewRoom">
-                    <form onSubmit={e => validFormUser(e)} action="">
+                    <form onSubmit={(e:any) => validFormUser(e)} action="">
                         <h2>Employee Details</h2>
                         <div className="sectionformbooking sectionformbooking--inputdetailemployee">
                             <div className="contentRoomNewRoom__firstblock contentRoomNewRoom--margin">
@@ -379,7 +387,7 @@ export default function BtnTableTopNew({title,databooking}){
                                         name="dateformnewuser"
                                         label={'Day,Month,Year'}
                                         views={['day','month','year']}
-                                        onChange={(e) => setStartdateuser(`${e.clone().$D} ${((e.clone()).toString()).split(' ')[2]} ${((e.clone()).toString()).split(' ')[3]}`)}
+                                        onChange={(e:any) => setStartdateuser(`${e.clone().$D} ${((e.clone()).toString()).split(' ')[2]} ${((e.clone()).toString()).split(' ')[3]}`)}
                                         />
                                     </DemoContainer>
                             </LocalizationProvider>
@@ -393,7 +401,7 @@ export default function BtnTableTopNew({title,databooking}){
                         <h2>Contact</h2>
                         <div className="sectionformbooking">
                             <label htmlFor="specialrequest">Phone</label>
-                            <MuiPhoneNumber name="phonenewuser" style={{display:'block'}} defaultCountry={'es'} onChange={(e) => setNumberphonestate(e)}/>
+                            <MuiPhoneNumber name="phonenewuser" style={{display:'block'}} defaultCountry={'es'} onChange={(e:any) => setNumberphonestate(e)}/>
                         </div>
 
                         <div className="contentRoomNewRoom__firstblock sectionformbooking">

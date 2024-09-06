@@ -7,14 +7,19 @@ import Employee from '../../class/Employee';
 
 export interface interfaceState {
     status: 'idle' | 'fulfilled' | 'rejected' | 'pending',
-    data: {rooms:Room[],bookings:Booking[],employee:Employee[],comment:Message[]} | [],
+    data: {rooms:Room[],bookings:Booking[],employee:Employee[],comment:Message[]},
     error: string | null,
     update: boolean
 }
 
 const initialState:interfaceState = {
     status: 'idle',
-    data: [],
+    data: {
+        rooms: [],
+        bookings: [],
+        employee: [],
+        comment: []
+    },
     error: null,
     update: false
 }

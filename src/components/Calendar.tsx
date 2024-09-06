@@ -1,16 +1,16 @@
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import { useSelector } from 'react-redux'
 import interactionPlugin from '@fullcalendar/interaction';
 import { Tooltip } from "bootstrap";
-import editBooking from '../features/db/fecths/editBooking';
+import { editCalendarCheckOut } from '../features/db/fecths/editBooking';
+import { appSelector } from '../features/hooks/hooks';
 
 export default function Calendar(){
 
-    const selectorDataBookings = useSelector(state => state.db.data.bookings)
-    let tooltipInstance = null;
+    const selectorDataBookings = appSelector(state => state.db.data.bookings)
+    let tooltipInstance:any = null;
 
-    const otherStatus = (status) => {
+    const otherStatus = (status:string) => {
         if(status === 'Check In'){
             return '#135846'
         }else{
@@ -18,7 +18,7 @@ export default function Calendar(){
         }
     }
 
-    const otherStatusStyle = (status) => {
+    const otherStatusStyle = (status:string) => {
         if(status === 'Check In'){
             return 'tooltipcheckin'
         }else{
@@ -41,7 +41,7 @@ export default function Calendar(){
         }
     });
 
-    function renderEventContent(eventInfo) {
+    function renderEventContent(eventInfo:any) {
         return (
           <>
             <i>{eventInfo.event.title}</i>
@@ -49,7 +49,7 @@ export default function Calendar(){
         )
     }
 
-    const handleMouseEnter = (info) => {
+    const handleMouseEnter = (info:any) => {
           tooltipInstance = new Tooltip(info.el, {
             title: `${info.event.title} / start: ${info.event.extendedProps.checkin}-${info.event.extendedProps.timein} / end: ${info.event.extendedProps.checkout}-${info.event.extendedProps.timeout}`,
             placement: 'top',
@@ -59,18 +59,17 @@ export default function Calendar(){
           });
     }
 
-    const formatDateDroped = (date) => {
+    const formatDateDroped = (date:string) => {
         const dateparts = (date.toString()).split(' ')
         return `${dateparts[2]} ${dateparts[1]} ${dateparts[3]}`
     }
 
-    const handleDrop = (info) => {
+    const handleDrop = (info:any) => {
         const bookingDroped = selectorDataBookings.filter((booking) => {
             return booking.id === info.event.extendedProps.ident
         })
         const actualRangeEndBooking = formatDateDroped(tooltipInstance._element.fcSeg.eventRange.instance.range.end)
-//"30 Jul 2024",
-        editBooking(bookingDroped[0],{checkout:actualRangeEndBooking})
+        editCalendarCheckOut(bookingDroped[0],{checkout:actualRangeEndBooking})
     }
 
     return <>

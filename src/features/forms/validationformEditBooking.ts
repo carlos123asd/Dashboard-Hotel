@@ -1,6 +1,6 @@
 import Toastify from 'toastify-js'
 import Booking from '../../class/Booking';
-import editBooking from '../db/fecths/editBooking';
+import { editBooking } from '../db/fecths/editBooking';
 
 export interface valuesEditBooking {
     id: string

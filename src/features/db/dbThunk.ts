@@ -22,9 +22,9 @@ export const dbThunk = createAsyncThunk('dbThunk', async (table ?: string) => {
 
             data = {
                 rooms: jsonrooms.sort((a:any, b:any) => Number(b.roomNumber) - Number(a.roomNumber)),
-                bookings: jsonbookings.sort((a:any, b:any) => new Date(b.orderDate) - new Date(a.orderDate)),
-                employee: jsonemployee.sort((a:any, b:any) => new Date(b.startdate) - new Date(a.startdate)),
-                comment: jsoncomment.sort((a:any, b:any) => new Date((b.date.split(' '))[0]) - new Date((a.date.split(' '))[0])),
+                bookings: jsonbookings.sort((a:any, b:any) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime()),
+                employee: jsonemployee.sort((a:any, b:any) => new Date(b.startdate).getTime() - new Date(a.startdate).getTime()),
+                comment: jsoncomment.sort((a:any, b:any) => new Date((b.date.split(' '))[0]).getTime() - new Date((a.date.split(' '))[0]).getTime()),
             }
             return data
         }

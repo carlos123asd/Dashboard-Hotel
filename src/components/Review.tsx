@@ -7,23 +7,27 @@ import back from '../assets/imgs/arrow.svg'
 import  profile from '../assets/imgs/menu/lateral/perfil.jpg'
 import { useState } from "react";
 import updateStatusfetchMessage from "../features/db/fecths/updateStatusfetchMessage";
+import { InterfacesPropsReview } from "../interfaces/InterfacesPropsReview";
+import Message from "../class/Message";
 
-export default function Review({data}){
-    const [datamessage,setDatamessage] = useState(data.filter((message) => {
+
+export default function Review(props:InterfacesPropsReview){
+    const {data} = props
+    const [datamessage,setDatamessage] = useState(data.filter((message:Message) => {
         return message.status === 'none'
     }))
 
-    const updateDataMessage = (id) => {
-        setDatamessage(datamessage.filter((message) => {
+    const updateDataMessage = (id:string) => {
+        setDatamessage(datamessage.filter((message:Message) => {
             return message.id !== id
         }))
     } 
 
-    const handlePublish = (message) => {
+    const handlePublish = (message:Message) => {
         updateDataMessage(message.id)
         updateStatusfetchMessage(message,'published','Message published')
     }
-    const handleArchive = (message) => {
+    const handleArchive = (message:Message) => {
         updateDataMessage(message.id)
         updateStatusfetchMessage(message,'archived','Message archived')
     }
@@ -53,7 +57,7 @@ export default function Review({data}){
                     className="ReviewCustomersContent"
                 >
                     {
-                        datamessage.map((comment) => {
+                        datamessage.map((comment:Message) => {
                             return <>
                                 <SwiperSlide style={{width:'max-content',height:'100%'}}>
                                     <div className="ReviewCustomersContent__review">

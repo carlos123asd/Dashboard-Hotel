@@ -3,11 +3,11 @@ import {
     Tooltip,
     Interval,
   } from "bizcharts";
-import { useSelector } from "react-redux";
+import { appSelector } from "../features/hooks/hooks";
 
 export default function Graphic(){
 
-    const selectorDbDataRooms = useSelector(state => state.db.data.rooms);
+    const selectorDbDataRooms = appSelector(state => state.db.data.rooms);
     const lengthData = selectorDbDataRooms.length
     const promedioBooked = ((((selectorDbDataRooms.filter((room) => {
         return room.status === 'Booked'

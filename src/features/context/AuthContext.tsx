@@ -1,14 +1,30 @@
-import { useReducer, createContext, useContext } from 'react'
+import { PayloadAction } from '@reduxjs/toolkit'
+import { useReducer, createContext, useContext, ReactNode } from 'react'
 
-const AuthContext = createContext()
-const initialState = {
+  export type TodoContextType = {
+    state: any,
+    dispatch: any
+  };
+
+const AuthContext = createContext<TodoContextType | null>(null)
+
+interface initialStetetype {
+    auth: boolean,
+    username: string,
+    email: string
+}
+const initialState:initialStetetype = {
     auth: false,
     username: "",
     email: ""
 }
 
-const authReducer = (state,action) => {
-    console.log(action.type)
+interface ContextAuthprops {
+    name: string,
+    email: string
+}
+
+const authReducer = (state:any,action:PayloadAction<ContextAuthprops>) => {
     switch(action.type){
         case 'LOGIN': {
             return {
@@ -30,10 +46,14 @@ const authReducer = (state,action) => {
     }
 }
 
-export function AuthProvider({ children }){
+type contectProvider = {
+    children: ReactNode
+}
+
+export function AuthProvider({children} : contectProvider){
     const [state,dispatch] = useReducer(authReducer,initialState)
     return <>
-        <AuthContext.Provider value={{state,dispatch}}>
+        <AuthContext.Provider value={{ state, dispatch }}>
             {children}
         </AuthContext.Provider>
     </>

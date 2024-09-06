@@ -1,11 +1,16 @@
 import { setorderby } from "../features/filterTopTable/sliceFilterTopTable";
+import { appDispatch } from "../features/hooks/hooks";
 import { Filtername, ContentFilterTop } from "../styles/table/filterTop"
-import { useDispatch } from 'react-redux'
 
-export default function FilterTableTop({title}){
-    const dispatch = useDispatch()
+interface PropsFilterTableTop {
+    title: string[]
+}
 
-    const handleClickFilter = (filterby) => {
+export default function FilterTableTop(props:PropsFilterTableTop){
+    const {title} = props
+    const dispatch = appDispatch()
+
+    const handleClickFilter = (filterby:string) => {
         dispatch(setorderby(filterby))
     }
 

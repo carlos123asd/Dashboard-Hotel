@@ -4,26 +4,38 @@ import {LoginImg,LoginTit,LoginSub,LoginLabel,LoginContentInline,LoginInput,Logi
 import Toastify from 'toastify-js'
 import "toastify-js/src/toastify.css"
 import { useContextAuth } from '../features/context/AuthContext';
-import { useEffect, useState } from 'react';
+import { FormEventHandler, useEffect, useState } from 'react';
 import { dbThunkUser } from '../features/db/login/loginThunk';
-import { useDispatch } from 'react-redux';
+import { appDispatch } from '../features/hooks/hooks';
+import Employee from '../class/Employee';
+import { PayloadAction } from '@reduxjs/toolkit';
+import { form } from '../interfaces/InterfacesForms';
+
 
 export default function Login(){
-    sessionStorage.setItem('auth',true);
+    sessionStorage.setItem('auth',String(true));
     const navigate = useNavigate(); 
     const {dispatch} = useContextAuth()
     const [email,setEmail] = useState("")
-    const [users,setUsers] = useState({})
-    const dispatchdb = useDispatch()
+    const [users,setUsers] = useState([])
+    const dispatchdb = appDispatch()
+
+    interface UserFoundprops {
+        name: string,
+        email: string
+    }
+    type PromiseUserData = {
+        users: []
+    }
 
     useEffect(() => {
-        dispatchdb(dbThunkUser()).then(response => setUsers(response.payload.users))
+        dispatchdb(dbThunkUser()).then((response:PayloadAction<PromiseUserData>) => setUsers(response.payload.users))
     },[])
-
-    const validateAuth = (event) => {
+    
+    const validateAuth:FormEventHandler<form> = (event) => {
         event.preventDefault();
         if(sessionStorage.getItem('auth') === 'true' && email !== ''){
-           const userFound = users.filter((user) => {
+           const userFound:UserFoundprops[] = users.filter((user:Employee) => {
                 return user.email === email
            })
            if(userFound.length !== 0){
@@ -86,7 +98,7 @@ export default function Login(){
             <LoginForm onSubmit={validateAuth} action="">
                 <LoginContentInline>
                     <LoginLabel htmlFor="username">Username:</LoginLabel>
-                    <LoginInput onChange={(e) => setEmail(e.target.value)} id='username' type="text" placeholder='Enter username' />
+                    <LoginInput onChange={(e:React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} id='username' type="text" placeholder='Enter username' />
                 </LoginContentInline>
                 <LoginContentInline>
                     <LoginLabel htmlFor="password">Password:</LoginLabel>

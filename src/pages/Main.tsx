@@ -6,25 +6,14 @@ import { Contentcalendargrafics } from "../styles/dashboard/Contentcalendargrafi
 import Graphic from "../components/Graphic"
 import { useEffect, useState } from "react"
 import { appSelector } from "../features/hooks/hooks"
-import Room from "../class/Room"
-import Booking from "../class/Booking"
-import Employee from "../class/Employee"
-import Message from "../class/Message"
-
-interface datageneral {
-    rooms:Room[],
-    bookings:Booking[],
-    employee:Employee[],
-    comment:Message[]
-}
 
 export default function Main(){
 
     const selectorDbData = appSelector(state => state.db.data);
-    const [datadashboard,setDatadashboard] = useState<datageneral>(selectorDbData as {rooms:Room[],bookings:Booking[],employee:Employee[],comment:Message[]})
+    const [datadashboard,setDatadashboard] = useState(selectorDbData)
 
     useEffect(() => {
-        setDatadashboard(selectorDbData as {rooms:Room[],bookings:Booking[],employee:Employee[],comment:Message[]})
+        setDatadashboard(selectorDbData)
     },[selectorDbData])
 
 

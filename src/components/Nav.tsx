@@ -8,27 +8,29 @@ import {
     ContentNavImg,
     ContentNavTit
 } from '../styles/nav/nav'
-
-import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Toastify from 'toastify-js'
 import "toastify-js/src/toastify.css"
 import { useContextAuth } from '../features/context/AuthContext'
 import ListBookings from './ListBookings'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { hidemessage, hidenotBookings, shownotificationBooking, shownotificationMessage } from '../features/TopMenu/NotificationSlice'
 import { styled } from '@mui/material/styles';
-import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import Tooltip, { tooltipClasses, TooltipProps } from '@mui/material/Tooltip';
 import ListMessage from './ListMessage'
 import { showMenu } from '../features/db/menu/menuSlice'
+import { appSelector } from '../features/hooks/hooks'
+import { InterfacePropsStyleNav } from '../interfaces/InterfacePropsStyleNav'
 
-export default function Nav({stylenav}){
+export default function Nav(props:InterfacePropsStyleNav){
+    const {stylenav} = props
+
     const navigate = useNavigate();
     const path = useLocation();
     const dispatchNav = useDispatch();
-    const { dispatch } = useContextAuth();
-    const selectorDBBookings = useSelector(state => state.db.data.bookings)
-    const selectorDBMessage = useSelector(state => state.db.data.comment)
+    const { dispatch }:any = useContextAuth();
+    const selectorDBBookings = appSelector(state => state.db.data.bookings)
+    const selectorDBMessage = appSelector(state => state.db.data.comment)
     const filterbymonthActualNum = (selectorDBBookings.filter((booking) => {
         return new Date(booking.orderDate).getMonth() === new Date().getMonth()
     })).length
@@ -36,7 +38,7 @@ export default function Nav({stylenav}){
         return message.status === 'none'
     })).length
 
-    const NotificationTooltip = styled(({ className, ...props }) => (
+    const NotificationTooltip = styled(({ className, ...props }:TooltipProps|any) => (
         <Tooltip {...props} classes={{ popper: className }} />
       ))(({ theme }) => ({
         [`& .${tooltipClasses.tooltip}`]: {

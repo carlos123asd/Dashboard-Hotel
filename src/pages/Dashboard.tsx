@@ -6,12 +6,8 @@ import { useEffect, useState } from 'react';
 import { dbThunk } from '../features/db/dbThunk';
 import { useContextAuth } from '../features/context/AuthContext';
 import { appDispatch, appSelector } from '../features/hooks/hooks';
+import { styleGrid } from '../interfaces/InterfaceStyleGrid';
 
-interface styleGrid {
-    grid: Object,
-    left: Object,
-    padding: Object
-}
 
 export default function Dashboard(){
 
