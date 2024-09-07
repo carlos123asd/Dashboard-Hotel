@@ -27,16 +27,24 @@ export default function Table(props:InterfacePropsTable){
     const [datastate,setDatastate] = useState<CBooking[]|CEmployee[]|CMessage[]|CRoom[]>(data.map((info) => {
         return info
     }))
-    const [lengthdate,setLengthdate] = useState<number>(Math.trunc(datastate.length / 10));
+    const [lengthdate,setLengthdate] = useState<number>(datastate.length / 10);
     const [columnsedit,setColumnsedit] = useState<string[]>(columns)
+    const [looppag,setLooppag] = useState<number[]>([])
 
+    useEffect(() => {
+        if(lengthdate % 1 !== 0){
+            setLengthdate(Math.ceil(lengthdate))
+        }
+        for(let i = 0; i < lengthdate; i++){
+            looppag.push(i + 1)
+        }
+    },[])
     useEffect(() => {
         setDatastate(data.map((info) => {
             return info
         }))
     },[data])
 
-    let i = 0
     const nextPaginationData = () => {
         if(nextdate <= data.length){
             setActualdate(actualdate+10);
@@ -150,7 +158,7 @@ export default function Table(props:InterfacePropsTable){
             }
         }
     }
-    
+    //.slice(actualdate,nextdate)
     if(locationname === '/bookings'){
         return <>
         <ContentTable>
@@ -194,10 +202,9 @@ export default function Table(props:InterfacePropsTable){
         <PaginationTable>
             <div onClick={backPaginationData}>Prev</div>
             {
-                data.slice(0,lengthdate).map(element => {
-                    i++
+                looppag.map((element,index) => {
                     return <>
-                        <div valuepagination={i} onClick={(event:any) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{i}</div>
+                        <div key={index} valuepagination={element} onClick={(event:any) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{element}</div>
                     </>
                 })
             }
@@ -245,9 +252,9 @@ export default function Table(props:InterfacePropsTable){
         <PaginationTable>
             <div onClick={backPaginationData}>Prev</div>
             {
-                datastate.slice(0,lengthdate).map((val,index) => {
+                looppag.map((val,index) => {
                     return <>
-                        <div valuepagination={index} onClick={(event:any) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{index}</div>
+                        <div key={index} valuepagination={val} onClick={(event:any) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{val}</div>
                     </>
                 })
             }
@@ -293,10 +300,9 @@ export default function Table(props:InterfacePropsTable){
             <PaginationTable>
                 <div onClick={backPaginationData}>Prev</div>
                 {
-                    data.slice(0,lengthdate).map(element => {
-                        i++
+                    looppag.map((element,index) => {
                         return <>
-                            <div valuepagination={i} onClick={(event:any) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{i}</div>
+                            <div key={index} valuepagination={element} onClick={(event:any) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{element}</div>
                         </>
                     })
                 }
@@ -341,10 +347,9 @@ export default function Table(props:InterfacePropsTable){
             <PaginationTable>
                 <div onClick={backPaginationData}>Prev</div>
                 {
-                    data.slice(0,lengthdate).map(element => {
-                        i++
+                    looppag.map((element,index) => {
                         return <>
-                            <div valuepagination={i} onClick={(event:any) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{i}</div>
+                            <div key={index} valuepagination={element} onClick={(event:any) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{element}</div>
                         </>
                     })
                 }
