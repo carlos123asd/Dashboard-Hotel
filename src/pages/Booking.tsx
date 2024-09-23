@@ -13,11 +13,6 @@ export default function Booking(){
     const selectorDbData = appSelector(state => state.db.data);
     const [databooking,setDatabooking] = useState<CBooking[]>(selectorDbData.bookings)
 
-    /*
-    useEffect(() => {
-        setDatabooking(selectorDbData.bookings)
-    },[])*/
-
     useEffect(() => {
         if(filtername === 'All Bookings'){
             setDatabooking(selectorDbData.bookings)

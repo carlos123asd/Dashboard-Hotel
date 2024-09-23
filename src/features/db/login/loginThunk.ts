@@ -1,15 +1,20 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import userLogin from "../../../interfaces/InterfaceUserAuth";
 
-export const dbThunkUser = createAsyncThunk('dbusers', async () => {
-        const employee = await fetch('http://localhost:3004/employee')
-        let data = {}
-        if(employee.ok){
-            const jsonemployee = await employee.json()
-            data = {
-                "users": jsonemployee,
+export const dbThunkUser = createAsyncThunk('dbusers', async (infoLogin:userLogin) => {
+        const employee = await fetch('http://localhost:8000/auth/login', {
+            method: "POST",
+            body: JSON.stringify({
+                email: infoLogin.email,
+                password: infoLogin.password
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
             }
-            console.log(data)
-            return data
+        })
+        if(employee.ok){
+            const tokenAuth = await employee.json()
+            return tokenAuth
         }
     }
 )

@@ -17,7 +17,8 @@ export default function Login(){
     const navigate = useNavigate(); 
     const {dispatch} = useContextAuth()
     const [email,setEmail] = useState("")
-    const [users,setUsers] = useState([])
+    const [password,setPassword] = useState("")
+    //const [users,setUsers] = useState([])
     const dispatchdb = appDispatch()
 
     interface UserFoundprops {
@@ -27,63 +28,32 @@ export default function Login(){
     type PromiseUserData = {
         users: []
     }
-
+/*
     useEffect(() => {
-        dispatchdb(dbThunkUser()).then((response:PayloadAction<PromiseUserData>) => setUsers(response.payload.users))
-    },[])
-    
+        dispatchdb(dbThunkUser()).then((response:PayloadAction<PromiseUserData>) => setUsers(response.payload))
+    },[])*/
+
     const validateAuth:FormEventHandler<form> = (event) => {
         event.preventDefault();
-        if(sessionStorage.getItem('auth') === 'true' && email !== ''){
-           const userFound:UserFoundprops[] = users.filter((user:Employee) => {
-                return user.email === email
-           })
-           if(userFound.length !== 0){
-                dispatch({
-                    type: 'LOGIN',
-                    payload: {
-                        name: userFound[0].name,
-                        email: userFound[0].email
-                    }
-                })
-                Toastify({
-                    text: "🏠 Bienvenido!!",
-                    duration: 2000,
-                    gravity: 'top',
-                    position: 'center',
-                    style:{
-                        background: '#135846'
-                    }
-                    }).showToast();
-
-                setTimeout(() => {
-                    navigate('/')
-                }, 2000)
-            }else{
-                Toastify({
-                    text: "❔ User not found!!",
-                    duration: 2000,
-                    gravity: 'top',
-                    position: 'center',
-                    style:{
-                        fontFamily: 'poppinssemibold',
-                        borderRadius: '1em',
-                        background: '#E23428'
-                    }
-                    }).showToast();
-            }
+        if(email !== "" || password !== ""){
+            dispatchdb(dbThunkUser({
+                email: email, 
+                password: password
+            })).then(response => {
+                    localStorage.setItem('TOKEN_AUTH', response.payload.token)
+            }).catch((error) => console.error(error)) 
         }
         else{
-        Toastify({
-            text: "Email and Password necesary",
-            duration: 3000,
-            gravity: 'top',
-            position: 'center',
-            style:{
-                fontFamily: 'poppinssemibold',
-                borderRadius: '1em',
-                background: '#E23428'
-            }
+            Toastify({
+                text: "Email and Password necesary",
+                duration: 3000,
+                gravity: 'top',
+                position: 'center',
+                style:{
+                    fontFamily: 'poppinssemibold',
+                    borderRadius: '1em',
+                    background: '#E23428'
+                }
             }).showToast();
         }
     }
@@ -102,10 +72,38 @@ export default function Login(){
                 </LoginContentInline>
                 <LoginContentInline>
                     <LoginLabel htmlFor="password">Password:</LoginLabel>
-                    <LoginInput id='password' type="password" placeholder='Enter password' />
+                    <LoginInput onChange={(e:React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} id='password' type="password" placeholder='Enter password' />
                 </LoginContentInline>
                 <LoginBtn id='login' type='submit' value="Log In" />
             </LoginForm>
         </LoginContentMain>
     </>
 }
+
+/*
+    Toastify({
+        text: "🏠 Bienvenido!!",
+        duration: 2000,
+        gravity: 'top',
+        position: 'center',
+        style:{
+            background: '#135846'
+        }
+        }).showToast();
+
+    setTimeout(() => {
+        navigate('/')
+    }, 2000)
+                
+             Toastify({
+                    text: "❔ User not found!!",
+                    duration: 2000,
+                    gravity: 'top',
+                    position: 'center',
+                    style:{
+                        fontFamily: 'poppinssemibold',
+                        borderRadius: '1em',
+                        background: '#E23428'
+                    }
+                    }).showToast();   
+*/

@@ -28,7 +28,6 @@ export default function Table(props:InterfacePropsTable){
         return info
     }))
     const [lengthdate,setLengthdate] = useState<number>(datastate.length / 10);
-    const [columnsedit,setColumnsedit] = useState<string[]>(columns)
     const [looppag,setLooppag] = useState<number[]>([])
 
     useEffect(() => {
