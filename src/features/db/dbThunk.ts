@@ -52,14 +52,23 @@ export const dbThunk = createAsyncThunk('dbThunk', async (table ?: string) => {
                 'Authorization': `Bearer ${token}`
             }
         })
+        const employee = await fetch('http://localhost:8000/users/user',{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
         if(comment.ok && rooms.ok && bookings.ok){
             const jsoncomment:Message[] = await comment.json()
             const jsonbookings:Booking[] = await bookings.json()
             const jsonrooms:Room[] = await rooms.json()
+            const jsonemployee:Employee[] = await employee.json()
             const data = {
                 comment: jsoncomment.sort((a:any, b:any) => new Date((b.date.split(' '))[0]).getTime() - new Date((a.date.split(' '))[0]).getTime()),
                 bookings: jsonbookings.sort((a:any, b:any) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime()),
-                rooms: jsonrooms.sort((a:any, b:any) => Number(b.roomNumber) - Number(a.roomNumber))
+                rooms: jsonrooms.sort((a:any, b:any) => Number(b.roomNumber) - Number(a.roomNumber)),
+                employee: jsonemployee.sort((a:any, b:any) => new Date(b.startdate).getTime() - new Date(a.startdate).getTime())
             }
             return data
         }

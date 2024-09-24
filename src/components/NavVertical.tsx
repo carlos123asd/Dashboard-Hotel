@@ -15,33 +15,26 @@ import imgprofile from '../assets/imgs/menu/lateral/perfil.jpg'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Modal } from "@mui/material";
 import { ModalNewRoom } from "../styles/table/ModalNewRoom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useContextAuth } from "../features/context/AuthContext";
 import MuiPhoneNumber from "mui-phone-number";
 import validationEdituser from "../features/forms/validationformEditUser";
 import { InterfaceStyleNavVertical } from "../interfaces/InterfaceStyleNavVertical";
-import { appDispatch, appSelector } from "../features/hooks/hooks";
-import { dbThunk } from "../features/db/dbThunk";
+import { appSelector } from "../features/hooks/hooks";
 import User from '../class/CEmployee'
 
 export default function NavVertical(props:InterfaceStyleNavVertical){
 
     const {stylenavvertical} = props
-    const dispatch = appDispatch()
     const [open, setOpen] = useState(false);
     const handleClose = () => setOpen(false);
     const handleOpen = () => setOpen(true);
     const navigate = useNavigate();
     const {state}:any = useContextAuth()
     const locationname = useLocation().pathname;
-    const [useredit,setUseredit] = useState([]);
-
-    useEffect(() => {
-        dispatch(dbThunk("users"));
-        setUseredit(appSelector(statee => statee.db.data.filter((user:User) => {
-            return user._id === state._id
-        })))
-    },[])
+    const [useredit,setUseredit] = useState<User[]>(appSelector(state => state.db.data.employee).filter((user:User) => {
+        return user._id === state._id
+    }));
 
     //Tipasr event (e)
     const handlevalidation = (e:any) => {
@@ -83,7 +76,7 @@ export default function NavVertical(props:InterfaceStyleNavVertical){
                             
                         <div style={{marginTop:'1em'}} className="contentRoomNewRoom__priceblock sectionformbooking">
                             <label htmlFor="specialrequest">Description of the user</label>
-                            <textarea name="descriptionuser" id="specialrequest" placeholder={userEdit[0].description}></textarea>
+                            <textarea name="descriptionuser" id="specialrequest" placeholder={useredit[0].description}></textarea>
                         </div>
 
                         <h2>Contact</h2>

@@ -29,14 +29,15 @@ export default function Nav(props:InterfacePropsStyleNav){
     const path = useLocation();
     const dispatchNav = useDispatch();
     const { dispatch }:any = useContextAuth();
-    //const selectorDBBookings = appSelector(state => state.db.data.bookings)
-    //const selectorDBMessage = appSelector(state => state.db.data.comment)
-    /*const filterbymonthActualNum = (selectorDBBookings.filter((booking) => {
+    const selectorDBBookings = appSelector(state => state.db.data.bookings)
+    const selectorDBMessage = appSelector(state => state.db.data.comment)
+  
+    const filterbymonthActualNum = (selectorDBBookings.filter((booking) => {
         return new Date(booking.orderDate).getMonth() === new Date().getMonth()
-    })).length*/
-    /*const Messagewaiting = (selectorDBMessage.filter((message) => {
+    })).length
+    const Messagewaiting = (selectorDBMessage.filter((message) => {
         return message.status === 'none'
-    })).length*/
+    })).length
 
     const NotificationTooltip = styled(({ className, ...props }:TooltipProps|any) => (
         <Tooltip {...props} classes={{ popper: className }} />
@@ -77,7 +78,6 @@ export default function Nav(props:InterfacePropsStyleNav){
     const handleShowListMessage = () => {
         dispatchNav(shownotificationMessage())
         dispatchNav(hidenotBookings(false))
-        
     }
 
     return <>
@@ -91,7 +91,7 @@ export default function Nav(props:InterfacePropsStyleNav){
                 <ContentNavImg>
                     <NotificationTooltip title="Latest Review by Customers" onClick={handleShowListMessage} className='contennotification'>
                         <img width={26} height={35} src={iconmessage} alt="Messages" />
-                        <div className='contennotification__num'></div>
+                        <div className='contennotification__num'>{Messagewaiting}</div>
                     </NotificationTooltip>
                     <div style={{left: 0,position: 'absolute',zIndex: "1000"}}>
                         <ListMessage />
@@ -101,7 +101,7 @@ export default function Nav(props:InterfacePropsStyleNav){
                 <ContentNavImg>
                     <NotificationTooltip title="Reservations for this month" onClick={handleShowListBookings} className='contennotification'>
                         <img width={26} height={35} src={iconnotification} alt="Notifications" />
-                        <div className='contennotification__num'></div>
+                        <div className='contennotification__num'>{filterbymonthActualNum}</div>
                     </NotificationTooltip>
                     <div style={{left: 0,position: 'absolute',zIndex: "1000"}}>
                         <ListBookings />

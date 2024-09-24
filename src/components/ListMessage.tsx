@@ -12,7 +12,7 @@ import { styleListBookingMessage } from '../interfaces/styleListBookingMessage';
 import Message from '../class/CMessage'
 
 export default function ListMessage(){
-    const selectorDBMessage = appSelector(state => state.db.data)
+    const selectorDBMessage = appSelector(state => state.db.data.comment)
     const selectorShowBookingList = appSelector(state => state.notification.showListMessage)
     const messagewaiting = selectorDBMessage.filter((message:Message) => {
         return message.status === 'none'

@@ -7,18 +7,19 @@ import Employee from '../../class/CEmployee';
 
 export interface interfaceState {
     status: 'idle' | 'fulfilled' | 'rejected' | 'pending',
-    data: []//{rooms:Room[],bookings:Booking[],comment:Message[]},
+    data: {rooms:Room[],bookings:Booking[],comment:Message[],employee:Employee[]},
     error: string | null,
     update: boolean
 }
 
 const initialState:interfaceState = {
     status: 'idle',
-    data: []/*{
+    data: {
         rooms: [],
         bookings: [],
-        comment: []
-    }*/,
+        comment: [],
+        employee: []
+    },
     error: null,
     update: false
 }
