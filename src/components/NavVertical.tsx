@@ -15,31 +15,36 @@ import imgprofile from '../assets/imgs/menu/lateral/perfil.jpg'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Modal } from "@mui/material";
 import { ModalNewRoom } from "../styles/table/ModalNewRoom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useContextAuth } from "../features/context/AuthContext";
 import MuiPhoneNumber from "mui-phone-number";
 import validationEdituser from "../features/forms/validationformEditUser";
 import { InterfaceStyleNavVertical } from "../interfaces/InterfaceStyleNavVertical";
-import { appSelector } from "../features/hooks/hooks";
-
+import { appDispatch, appSelector } from "../features/hooks/hooks";
+import { dbThunk } from "../features/db/dbThunk";
+import User from '../class/CEmployee'
 
 export default function NavVertical(props:InterfaceStyleNavVertical){
 
     const {stylenavvertical} = props
-
+    const dispatch = appDispatch()
     const [open, setOpen] = useState(false);
     const handleClose = () => setOpen(false);
     const handleOpen = () => setOpen(true);
     const navigate = useNavigate();
     const {state}:any = useContextAuth()
     const locationname = useLocation().pathname;
-    const users = appSelector(state => state.db.data.employee)
-    const userEdit = users.filter((user) => {
-        return user.email === state.email && user.name === state.username
-    })
+    const [useredit,setUseredit] = useState([]);
+
+    useEffect(() => {
+        dispatch(dbThunk("users"));
+        setUseredit(appSelector(statee => statee.db.data.filter((user:User) => {
+            return user._id === state._id
+        })))
+    },[])
 
     //Tipasr event (e)
-    const handlevalidation = (e) => {
+    const handlevalidation = (e:any) => {
         const user = {
             name: e.target.nameuser.value,
             email: e.target.emailuser.value,
@@ -47,7 +52,7 @@ export default function NavVertical(props:InterfaceStyleNavVertical){
             phone: e.target.phoneedituserNavVertical.value,
             status: e.target.statususer.value
         }
-        validationEdituser(userEdit[0],Object(user))
+        validationEdituser(Object(useredit),Object(user))
         handleClose()
     }
 
@@ -84,7 +89,7 @@ export default function NavVertical(props:InterfaceStyleNavVertical){
                         <h2>Contact</h2>
                         <div className="sectionformbooking">
                             <label htmlFor="specialrequest">Phone</label>
-                            <MuiPhoneNumber placeholder={userEdit[0].phone} style={{display:'block'}} defaultCountry={'es'} name="phoneedituserNavVertical" onChange={()=>{}}/>
+                            <MuiPhoneNumber placeholder={useredit[0].phone} style={{display:'block'}} defaultCountry={'es'} name="phoneedituserNavVertical" onChange={()=>{}}/>
                         </div>
 
                         <div className="contentRoomNewRoom__firstblock sectionformbooking">

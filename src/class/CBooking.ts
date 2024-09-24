@@ -1,5 +1,5 @@
 export default class Booking{
-    id: string
+    _id: string
     guest: string
     orderDate: string
     checkin: string
@@ -15,7 +15,7 @@ export default class Booking{
         checkin:string,timein:string,checkout:string,
         timeout:string,ordertime:string,specialRequest:string,
         roomType:string,status:string,idRoom:number){
-            this.id = id
+            this._id = id
             this.guest = guest
             this.orderDate = orderDate
             this.checkin = checkin

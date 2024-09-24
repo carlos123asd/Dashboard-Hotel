@@ -22,7 +22,11 @@ async function authenticate (req:Request, res:Response) {
         const accessToken = generateAccessToken(userFound._id)
         res.header('Authorization', accessToken).json({
             message: 'Usuario Autentificado',
-            token: accessToken
+            token: accessToken,
+            _id: userFound._id,
+            username: userFound.name,
+            photo: userFound.photo,
+            email: userFound.email
         })
       }
     }

@@ -1,5 +1,5 @@
 export default class Employee{
-    id:string
+    _id:string
     photo:string[]
     name:string
     email:string
@@ -10,7 +10,7 @@ export default class Employee{
     constructor(id:string,photo:string[],name:string,
         email:string,startdate:string,description:string,
         phone:string,status:string){
-            this.id = id
+            this._id = id
             this.photo = photo
             this.name = name
             this.email = email

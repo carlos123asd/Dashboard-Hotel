@@ -1,5 +1,5 @@
 export default class Message{
-    id:string
+    _id:string
     date:string
     idmessage:number
     customer:string
@@ -11,7 +11,7 @@ export default class Message{
     constructor(id:string,date:string,idmessage:number,
         customer:string,email:string,phone:string,
         reason:string,comment:string,status:string){
-            this.id = id
+            this._id = id
             this.date = date
             this.idmessage = idmessage
             this.customer = customer

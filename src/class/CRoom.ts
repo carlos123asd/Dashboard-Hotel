@@ -1,5 +1,5 @@
 export default class Room{
-    id:string
+    _id:string
     roomNumber:number
     photo:string[]
     typeRoom:string
@@ -14,7 +14,7 @@ export default class Room{
         typeRoom:string,description:string,offer:boolean,
         price:string,discount:number,cancellation:string,
         status:string,amenities:string){
-            this.id = id
+            this._id = id
             this.roomNumber = roomNumber
             this.photo = photo
             this.typeRoom = typeRoom

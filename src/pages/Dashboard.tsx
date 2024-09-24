@@ -4,7 +4,6 @@ import Layout from '../styles/layout/Layout'
 import NavVertical from '../components/NavVertical'
 import { useEffect, useState } from 'react';
 import { dbThunk } from '../features/db/dbThunk';
-import { useContextAuth } from '../features/context/AuthContext';
 import { appDispatch, appSelector } from '../features/hooks/hooks';
 import { styleGrid } from '../interfaces/InterfaceStyleGrid';
 
@@ -16,7 +15,6 @@ export default function Dashboard(){
     const [loading,setLoading] = useState(true);
     const dispatch = appDispatch()
     const navigate = useNavigate()
-    const {state} = useContextAuth()
     const selectorMenuDisplay = appSelector(state => state.menuSlice.show)
     const [stylegrid,setStylegrid] = useState<styleGrid>({
         grid: {
@@ -35,20 +33,15 @@ export default function Dashboard(){
     const selectordb = appSelector(state => state.db.data)
 
     useEffect(() =>{
-        if(state.auth === true){
-            if(stateDbStatus === 'idle'){
-                dispatch(dbThunk(""));
-            }else if(stateDbStatus === 'fulfilled'){
-                setLoading(false);
-                console.log('DATOS', selectordb)
-            }else if(stateDbStatus === 'rejected'){
-                console.log(selectorDbError)
-            }
-        }else{
-            navigate('/login')
+        if(stateDbStatus === 'idle'){
+            dispatch(dbThunk("init"));
+        }else if(stateDbStatus === 'fulfilled'){
+            setLoading(false);
+            console.log('DATOS', selectordb)
+        }else if(stateDbStatus === 'rejected'){
+            console.log(selectorDbError)
         }
-        
-    },[stateDbStatus,state])
+    },[stateDbStatus])
 
     useEffect(() => {
         if(selectorMenuDisplay === true){

@@ -8,7 +8,6 @@ import { useEffect, useState } from "react"
 import { appSelector } from "../features/hooks/hooks"
 
 export default function Main(){
-
     const selectorDbData = appSelector(state => state.db.data);
     const [datadashboard,setDatadashboard] = useState(selectorDbData)
 

@@ -9,11 +9,12 @@ import Typography from '@mui/material/Typography';
 import icon from '../assets/imgs/logo.svg'
 import { appSelector } from '../features/hooks/hooks';
 import { styleListBookingMessage } from '../interfaces/styleListBookingMessage';
+import Message from '../class/CMessage'
 
 export default function ListMessage(){
-    const selectorDBMessage = appSelector(state => state.db.data.comment)
+    const selectorDBMessage = appSelector(state => state.db.data)
     const selectorShowBookingList = appSelector(state => state.notification.showListMessage)
-    const messagewaiting = selectorDBMessage.filter((message) => {
+    const messagewaiting = selectorDBMessage.filter((message:Message) => {
         return message.status === 'none'
     })
 
@@ -52,7 +53,7 @@ export default function ListMessage(){
     return <>
         <List sx={{ width: '15em', maxWidth: 360, bgcolor: 'background.paper'}} style={styleList}>
             {
-                messagewaiting.map((message) => {
+                messagewaiting.map((message:Message) => {
                     return <>
                         <ListItem alignItems="flex-start">
                             <ListItemAvatar>

@@ -1,39 +1,23 @@
+
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/imgs/logo.svg'
 import {LoginImg,LoginTit,LoginSub,LoginLabel,LoginContentInline,LoginInput,LoginForm,LoginBtn,LoginContentMain} from '../styles/login/login'
 import Toastify from 'toastify-js'
 import "toastify-js/src/toastify.css"
 import { useContextAuth } from '../features/context/AuthContext';
-import { FormEventHandler, useEffect, useState } from 'react';
+import { FormEventHandler, useState } from 'react';
 import { dbThunkUser } from '../features/db/login/loginThunk';
 import { appDispatch } from '../features/hooks/hooks';
-import Employee from '../class/CEmployee';
-import { PayloadAction } from '@reduxjs/toolkit';
-import { form } from '../interfaces/InterfacesForms';
 
 
 export default function Login(){
-    sessionStorage.setItem('auth',String(true));
     const navigate = useNavigate(); 
     const {dispatch} = useContextAuth()
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
-    //const [users,setUsers] = useState([])
     const dispatchdb = appDispatch()
 
-    interface UserFoundprops {
-        name: string,
-        email: string
-    }
-    type PromiseUserData = {
-        users: []
-    }
-/*
-    useEffect(() => {
-        dispatchdb(dbThunkUser()).then((response:PayloadAction<PromiseUserData>) => setUsers(response.payload))
-    },[])*/
-
-    const validateAuth:FormEventHandler<form> = (event) => {
+    const validateAuth:FormEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault();
         if(email !== "" || password !== ""){
             dispatchdb(dbThunkUser({
@@ -41,7 +25,42 @@ export default function Login(){
                 password: password
             })).then(response => {
                     localStorage.setItem('TOKEN_AUTH', response.payload.token)
-            }).catch((error) => console.error(error)) 
+                    dispatch({
+                        type: 'LOGIN',
+                        payload: {
+                            _id: response.payload._id,
+                            username: response.payload.username,
+                            email: response.payload.email,
+                            photo: response.payload.photo
+                        },
+                    });
+                    Toastify({
+                    text: "🏠 Bienvenido!!",
+                    duration: 2000,
+                    gravity: 'top',
+                    position: 'center',
+                    style:{
+                        background: '#135846'
+                    }
+                    }).showToast();
+            
+                setTimeout(() => {
+                    navigate('/')
+                }, 2000)
+            }).catch((error) => {
+                Toastify({
+                    text: "❔ User not found!!",
+                    duration: 2000,
+                    gravity: 'top',
+                    position: 'center',
+                    style:{
+                        fontFamily: 'poppinssemibold',
+                        borderRadius: '1em',
+                        background: '#E23428'
+                    }
+                }).showToast();   
+                console.error(error)
+            }) 
         }
         else{
             Toastify({
@@ -79,31 +98,3 @@ export default function Login(){
         </LoginContentMain>
     </>
 }
-
-/*
-    Toastify({
-        text: "🏠 Bienvenido!!",
-        duration: 2000,
-        gravity: 'top',
-        position: 'center',
-        style:{
-            background: '#135846'
-        }
-        }).showToast();
-
-    setTimeout(() => {
-        navigate('/')
-    }, 2000)
-                
-             Toastify({
-                    text: "❔ User not found!!",
-                    duration: 2000,
-                    gravity: 'top',
-                    position: 'center',
-                    style:{
-                        fontFamily: 'poppinssemibold',
-                        borderRadius: '1em',
-                        background: '#E23428'
-                    }
-                    }).showToast();   
-*/

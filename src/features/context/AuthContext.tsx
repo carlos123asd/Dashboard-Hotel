@@ -3,25 +3,34 @@ import { useReducer, createContext, useContext, ReactNode } from 'react'
 
   export type TodoContextType = {
     state: any,
-    dispatch: any
+    dispatch: (action: any) => void
   };
 
-const AuthContext = createContext<TodoContextType | null>(null)
+  const defaultContextValue: TodoContextType = {
+    state: {},  // Puedes ajustar esto a lo que tenga sentido en tu aplicación
+    dispatch: () => {}  // Un dispatch que no hace nada, solo para evitar null
+  };
+
+const AuthContext = createContext<TodoContextType>(defaultContextValue)
 
 interface initialStetetype {
-    auth: boolean,
+    _id: string,
     username: string,
-    email: string
+    email: string,
+    photo: string
 }
 const initialState:initialStetetype = {
-    auth: false,
+    _id: "",
     username: "",
-    email: ""
+    email: "",
+    photo: ""
 }
 
 interface ContextAuthprops {
+    _id: string
     name: string,
-    email: string
+    email: string,
+    photo: string
 }
 
 const authReducer = (state:any,action:PayloadAction<ContextAuthprops>) => {
@@ -29,9 +38,10 @@ const authReducer = (state:any,action:PayloadAction<ContextAuthprops>) => {
         case 'LOGIN': {
             return {
                 ...state,
-                auth: true,
+                _id: action.payload._id,
                 username: action.payload.name,
-                email: action.payload.email
+                email: action.payload.email,
+                photo: action.payload.photo
             }
         }
         case 'LOGOUT': return initialState
@@ -39,7 +49,8 @@ const authReducer = (state:any,action:PayloadAction<ContextAuthprops>) => {
             return {
                 ...state,
                 username: action.payload.name,
-                email: action.payload.email
+                email: action.payload.email,
+                photo: action.payload.photo
             }   
         }
         default: return state
