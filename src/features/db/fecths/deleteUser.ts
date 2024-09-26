@@ -1,8 +1,12 @@
 import Toastify from 'toastify-js'
-
+const token = localStorage.getItem('TOKEN_AUTH')
 const deleteUser = (userid:string) => {
-    fetch(`http://localhost:3004/employee/${userid}`,{
-        method: 'DELETE'
+    fetch(`http://localhost:8000/users/user/delete/${userid}`,{
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
     }).then(response => {
         if(response.ok){
             Toastify({

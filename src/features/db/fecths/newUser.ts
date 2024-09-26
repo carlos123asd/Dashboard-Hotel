@@ -1,12 +1,14 @@
 import Toastify from 'toastify-js'
 import { eventPropertiesUser } from '../../forms/validationformNewUser';
 
+const token = localStorage.getItem('TOKEN_AUTH')
 const fetchnewUser = (user:eventPropertiesUser) => {
-    fetch('http://localhost:3004/employee',{
+    fetch('http://localhost:8000/users/user/add',{
         method: 'POST',
-        body: JSON.stringify(user), //Objeto -> JSON
+        body: JSON.stringify(user), 
         headers: {
-            'Content-type': 'application/json; charset=UTF-8'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
         }
     }).then(response => {
         if(response.ok){
