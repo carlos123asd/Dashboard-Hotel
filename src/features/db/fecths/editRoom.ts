@@ -1,20 +1,19 @@
 import Toastify from 'toastify-js'
 import Room from '../../../class/CRoom';
-import { valuesEdit } from '../../forms/validationformEditRoom';
 
-const editRoom = (room:Room,values:valuesEdit) => {
-    fetch(`http://localhost:3004/rooms/${room.id}`,{
+const token = localStorage.getItem('TOKEN_AUTH')
+const editRoom = (id:string,values:Room) => {
+    fetch(`http://localhost:8000/rooms/room/edit/${id}`,{
     method: 'PUT',
     body: JSON.stringify({
-        ...room,
         ...values
     }),
     headers: {
-        'Content-type': 'application/json; charset=UTF-8'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
     }
     }).then(response => {
         if(response.ok){
-            console.log(response.json())
             Toastify({
                 text: "Room Edited Successfully",
                 duration: 3000,
@@ -25,7 +24,7 @@ const editRoom = (room:Room,values:valuesEdit) => {
                 }
             }).showToast();
         }
-    }).catch(error => console.log(error))
+    }).catch(error => console.error(error))
 }
 
 export default editRoom

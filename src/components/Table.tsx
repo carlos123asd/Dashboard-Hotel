@@ -228,7 +228,7 @@ export default function Table(props:InterfacePropsTable){
                     {
                         datastate.slice(actualdate,nextdate).map((room:any) => {
                             const objectRoom = new CRoom(
-                                room.id,
+                                room._id,
                                 room.roomNumber,
                                 room.photo,
                                 room.typeRoom,

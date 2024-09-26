@@ -25,6 +25,7 @@ export default function Login(){
                 password: password
             })).then(response => {
                     localStorage.setItem('TOKEN_AUTH', response.payload.token)
+                    //Almacenar el objeto usuario directamente
                     dispatch({
                         type: 'LOGIN',
                         payload: {

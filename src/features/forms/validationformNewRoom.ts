@@ -179,12 +179,13 @@ const handlesubmitnewRoom = async (event:any,idnew:string) => {
                 status: "Available",
                 amenities: amenitiesClean
         }
-
-        fetch('http://localhost:3004/rooms',{
+        const token = localStorage.getItem('TOKEN_AUTH')
+        fetch('http://localhost:8000/rooms/room/add',{
             method: 'POST',
             body: JSON.stringify(send), //Objeto -> JSON
             headers: {
-                'Content-type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             }
         }).then(response => {
             if(response.ok){

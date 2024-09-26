@@ -9,5 +9,5 @@ export default interface Room{
     discount:number
     cancellation:string
     status:string
-    amenities:string
+    amenities:string[]
 }

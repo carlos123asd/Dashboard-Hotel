@@ -135,8 +135,8 @@ export default function BtnTableTopNew(props:InterfacePropsBtnTableTopNew){
     const validFormRoom:FormEventHandler<formLogin> = (e) => {
         let lastObjectRoom = dataRooms.map((room) => {
             return room
-        }).sort((a,b) => Number(a.id) - Number(b.id))
-        let idnew = ((lastObjectRoom[lastObjectRoom.length - 1]).id) + 1
+        }).sort((a,b) => Number(a._id) - Number(b._id))
+        let idnew = ((lastObjectRoom[lastObjectRoom.length - 1])._id) + 1
         handlesubmitnewRoom(e,idnew)
         handleClose()
     }
@@ -144,8 +144,8 @@ export default function BtnTableTopNew(props:InterfacePropsBtnTableTopNew){
     const validFormBooking:FormEventHandler<formLogin> = (e) => {
         let lastObjectBooking = dataBookings.map((booking) => {
             return booking
-        }).sort((a,b) => Number(a.id) - Number(b.id))
-        let idnew = ((lastObjectBooking[lastObjectBooking.length - 1]).id) + 1
+        }).sort((a,b) => Number(a._id) - Number(b._id))
+        let idnew = ((lastObjectBooking[lastObjectBooking.length - 1])._id) + 1
         const response = handlesubmitnewBooking(e,idnew,roomid)
         response === true ? handleClose() : <></>
     }
@@ -153,8 +153,8 @@ export default function BtnTableTopNew(props:InterfacePropsBtnTableTopNew){
     const validFormUser:FormEventHandler<formLogin> = (e) => {
         let lastObjectUser = dataUser.map((user) => {
             return user
-        }).sort((a,b) => Number(a.id) - Number(b.id))
-        let idnew = ((lastObjectUser[lastObjectUser.length - 1]).id) + 1
+        }).sort((a,b) => Number(a._id) - Number(b._id))
+        let idnew = ((lastObjectUser[lastObjectUser.length - 1])._id) + 1
         const response = validationNewuser(e,idnew)
         response === true ? handleClose() : <></>
     }
@@ -337,7 +337,7 @@ export default function BtnTableTopNew(props:InterfacePropsBtnTableTopNew){
                                         dataRooms.map(room => {
                                             if(room.status === "Available" && room.typeRoom === Typeroombooking){
                                                 return <>
-                                                    <li><input onChange={() => setRoomid(room.id)} type="checkbox" value={room.id}/>{room.typeRoom}-{room.roomNumber}</li>
+                                                    <li><input onChange={() => setRoomid(room._id)} type="checkbox" value={room._id}/>{room.typeRoom}-{room.roomNumber}</li>
                                                 </>
                                             }
                                             

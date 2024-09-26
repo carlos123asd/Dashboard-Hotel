@@ -9,11 +9,11 @@ export default class Room{
     discount:number
     cancellation:string
     status:string
-    amenities:string
+    amenities:string[]
     constructor(id:string,roomNumber:number,photo:string[],
         typeRoom:string,description:string,offer:boolean,
         price:string,discount:number,cancellation:string,
-        status:string,amenities:string){
+        status:string,amenities:string[]){
             this._id = id
             this.roomNumber = roomNumber
             this.photo = photo

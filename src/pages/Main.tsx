@@ -14,8 +14,7 @@ export default function Main(){
     useEffect(() => {
         setDatadashboard(selectorDbData)
     },[selectorDbData])
-
-
+    
         return <>
             <ContentPageMain>
                 <KpiDashboard>

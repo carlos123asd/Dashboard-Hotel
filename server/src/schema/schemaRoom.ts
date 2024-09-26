@@ -12,5 +12,5 @@ export const roomSchema = new Schema<Room>({
     discount: {type: Number, required: true},
     cancellation: {type: String, required: true},
     status: {type: String, required: true},
-    amenities: {type: String, required: true}
+    amenities: {type: [String], required: true}
 })

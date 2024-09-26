@@ -59,7 +59,7 @@ export const dbThunk = createAsyncThunk('dbThunk', async (table ?: string) => {
                 'Authorization': `Bearer ${token}`
             }
         })
-        if(comment.ok && rooms.ok && bookings.ok){
+        if(comment.ok && rooms.ok && bookings.ok && employee.ok){
             const jsoncomment:Message[] = await comment.json()
             const jsonbookings:Booking[] = await bookings.json()
             const jsonrooms:Room[] = await rooms.json()

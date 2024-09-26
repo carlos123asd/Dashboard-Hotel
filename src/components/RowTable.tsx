@@ -30,6 +30,7 @@ import CRoom from "../class/CRoom"
 import CEmployee from "../class/CBooking"
 import CMessage from "../class/CBooking"
 import CBooking from "../class/CBooking"
+import Room from "../class/CRoom";
 
 
 export default function RowTable(props:InterfacePropsRowTable){
@@ -116,7 +117,7 @@ export default function RowTable(props:InterfacePropsRowTable){
     }
 
     const handleClickSave = () => {
-        let objetDataSaveRoom:object = {
+        let objetDataSaveRoom: Object = {
             typeRoom: (typeroomedit !== '') ? typeroomedit : data.typeRoom,
             roomNumber: (numroomedit !== '') ? numroomedit : data.roomNumber,
             amenities: (facilitiesedit !== '') ? facilitiesedit : data.amenities,
@@ -145,12 +146,12 @@ export default function RowTable(props:InterfacePropsRowTable){
                 }
             }
         }
-        const response = handleValidateFormEditRoom(data,objetDataSaveRoom as InterfacepropsvaluesEdit)
+        const response = handleValidateFormEditRoom(data._id,objetDataSaveRoom as Room)
         response === true ? handleClickFunctionEdit() : <></>
     }
 
     const handledeleteRoom = () => {
-        deleteRoom(data.id)
+        deleteRoom(data._id)
         handleClickFunctionCancelDelete()
     }
 
@@ -214,7 +215,6 @@ export default function RowTable(props:InterfacePropsRowTable){
 
     //Message
     const otherStatusMessage = () => {
-        console.log(data.status)
         if(data.status === 'published'){
             return <>
                 <span className="controlsmessage controlsmessage--bordernone">Published</span>
@@ -239,6 +239,8 @@ export default function RowTable(props:InterfacePropsRowTable){
         updateStatusfetchMessage(data,'none','Message Restored')
         data.setStatus('none')
     }
+
+    console.log(data)
     
     if(locationname === '/room'){
         return (edit === true) ? <>
@@ -247,7 +249,7 @@ export default function RowTable(props:InterfacePropsRowTable){
                         <td>
                             <img className="imgroomnameColum" width={150} height={77} src={data.photo[0]} alt="Image Room" />
                             <div className="roomnameColumn">
-                                <span className="numtit">{`#000${data.id}`}</span>
+                                <span className="numtit">{`#000${data._id}`}</span>
                                 <span className="deluxenum">{`${data.typeRoom}-`}<input onChange={(e) => setNumroomedit(e.target.value)} name="roomNumberEditable" className="inputText" type="text" placeholder={data.roomNumber}/></span>
                             </div>
                         </td>
@@ -264,7 +266,7 @@ export default function RowTable(props:InterfacePropsRowTable){
                     </td>
                     <td><textarea onChange={(e) => setFacilitiesedit(e.target.value)} name="amenitiesEditable" className="textareainputroomeditable" placeholder={data.amenities}></textarea></td>
                     <td><input onChange={(e) => setPriceedit(e.target.value)} name="priceEditable" className="inputText inputText--size" type="text" placeholder={data.price}/><span className="nightroom"> /night</span></td>
-                    <td>{`$${(parseInt(data.price.slice(1))-((parseInt(data.price.slice(1))*data.discount)/100)).toFixed(2)}`}<input onChange={(e) => setDiscountedit(e.target.value)} name="discountEditable" className="inputText" placeholder={`${data.discount}%`}></input></td>
+                    <td>{`$${(Number(data.price.slice(1))-((Number(data.price.slice(1))*data.discount)/100)).toFixed(2)}`}<input onChange={(e) => setDiscountedit(e.target.value)} name="discountEditable" className="inputText" placeholder={`${data.discount}%`}></input></td>
                     <td><textarea onChange={(e) => setCancelationedit(e.target.value)} name="cancelationedit" className="textareainputroomeditable" placeholder={data.cancellation}></textarea></td>
                     <td><textarea onChange={(e) => setDescriptionedit(e.target.value)} name="descriptionedit" className="textareainputroomeditable" placeholder={data.description}></textarea></td>
                     <td>{data.status === 'Available' ? <div className="status"><select onSelect={(e:any) => setStatusedit(e.target.value)} name="statusEditable" value={data.status} className="inputSelect inputSelect--statusAvaible"><option value="Available">Available</option><option value="Booked">Booked</option></select></div> : <div className="status statusbooked"><select onChange={(e) => setStatusedit(e.target.value)} name="statusEditable" className="inputSelect inputSelect--statusBooked"><option value="Available">Available</option><option value="Booked">Booked</option></select></div>}</td>
@@ -290,15 +292,15 @@ export default function RowTable(props:InterfacePropsRowTable){
                         <td>
                             <img className="imgroomnameColum" width={150} height={77} src={data.photo[0]} alt="Image Room" />
                             <div className="roomnameColumn">
-                                <span className="numtit">{`#000${data.id}`}</span>
+                                <span className="numtit">{`#000${data._id}`}</span>
                                 <span className="deluxenum mediumletter">{`${data.typeRoom}-${data.roomNumber}`}</span>
                             </div>
                         </td>
                     </div>
                     <td className="mediumletter">{data.typeRoom}</td>
-                    <td className="mediumletter">{data.amenities}</td>
+                    <td className="mediumletter">{data.amenities.toString()}</td>
                     <td><span className="priceRoom">{data.price}</span><span className="nightroom"> /night</span></td>
-                    <td>{`$${(parseInt(data.price.slice(1))-((parseInt(data.price.slice(1))*data.discount)/100)).toFixed(2)}(${data.discount}%)`}</td>
+                    <td>{`$${(Number(data.price.slice(1))-((Number(data.price.slice(1))*data.discount)/100)).toFixed(2)}(${data.discount}%)`}</td>
                     <td className="mediumletter">{data.cancellation}</td>
                     <td className="mediumletter">{data.description}</td>
                     <td>{data.status === 'Available' ? <div className="status">Available</div> : <div className="status statusbooked">Booked</div>}</td>
