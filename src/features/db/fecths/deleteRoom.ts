@@ -1,7 +1,7 @@
 import Toastify from 'toastify-js'
 const token = localStorage.getItem('TOKEN_AUTH')
 const deleteRoom = (room:string) => {
-    fetch(`http://localhost:8000/rooms/room/delete/${room}`,{
+    fetch(`http://localhost:3000/rooms/room/delete/${room}`,{
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

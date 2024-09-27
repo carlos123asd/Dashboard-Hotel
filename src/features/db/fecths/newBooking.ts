@@ -3,7 +3,8 @@ import { eventPropertiesBooking } from '../../forms/validationformNewBooking';
 
 const token = localStorage.getItem('TOKEN_AUTH')
 const fetchNewBooking = (dataBooking:eventPropertiesBooking) => { 
-    fetch('http://localhost:8000/bookings/booking/add',{
+    console.log(dataBooking)
+    fetch('http://localhost:3000/bookings/booking/add',{
         method: 'POST',
         body: JSON.stringify(dataBooking),
         headers: {

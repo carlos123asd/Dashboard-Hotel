@@ -176,7 +176,7 @@ export default function Table(props:InterfacePropsTable){
                     {
                         datastate.slice(actualdate,nextdate).map((booking:any) => {
                             const objectBooking = new CBooking(
-                                booking.id,
+                                booking._id,
                                 booking.guest,
                                 booking.orderDate,
                                 booking.checkin,
@@ -278,7 +278,7 @@ export default function Table(props:InterfacePropsTable){
                         {
                             datastate.slice(actualdate,nextdate).map((register:any) => {
                                 const objectMessage = new CMessage(
-                                    register.id,
+                                    register._id,
                                     register.date,
                                     register.idmessage,
                                     register.customer,
@@ -326,7 +326,7 @@ export default function Table(props:InterfacePropsTable){
                         {
                             datastate.slice(actualdate,nextdate).map((employee:any) => {
                                 const objectEmployee = new CEmployee(
-                                    employee.id,
+                                    employee._id,
                                     employee.photo,
                                     employee.name,
                                     employee.email,

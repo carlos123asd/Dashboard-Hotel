@@ -142,11 +142,7 @@ export default function BtnTableTopNew(props:InterfacePropsBtnTableTopNew){
     }
 
     const validFormBooking:FormEventHandler<formLogin> = (e) => {
-        let lastObjectBooking = dataBookings.map((booking) => {
-            return booking
-        }).sort((a,b) => Number(a._id) - Number(b._id))
-        let idnew = ((lastObjectBooking[lastObjectBooking.length - 1])._id) + 1
-        const response = handlesubmitnewBooking(e,idnew,roomid)
+        const response = handlesubmitnewBooking(e,roomid)
         response === true ? handleClose() : <></>
     }
 

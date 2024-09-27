@@ -3,7 +3,7 @@ import Room from '../../../class/CRoom';
 
 const token = localStorage.getItem('TOKEN_AUTH')
 const editRoom = (id:string,values:Room) => {
-    fetch(`http://localhost:8000/rooms/room/edit/${id}`,{
+    fetch(`http://localhost:3000/rooms/room/edit/${id}`,{
     method: 'PUT',
     body: JSON.stringify({
         ...values

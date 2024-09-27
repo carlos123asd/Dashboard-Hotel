@@ -51,7 +51,7 @@ const deleteUser = async (req:Request, res:Response) => {
 
 //Users
 //Conseguir all datos de Users
-routerUser.get('/user',validateToken,getAllusers) //validateToken
+routerUser.get('/user',validateToken,getAllusers)
 //Conseguir un User
 routerUser.get('/user/:id',validateToken,getUser)
 //Nuevo User

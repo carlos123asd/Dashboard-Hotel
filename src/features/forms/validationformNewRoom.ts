@@ -182,7 +182,7 @@ const handlesubmitnewRoom = async (event:any,idnew:string) => {
         const token = localStorage.getItem('TOKEN_AUTH')
         fetch('http://localhost:8000/rooms/room/add',{
             method: 'POST',
-            body: JSON.stringify(send), //Objeto -> JSON
+            body: JSON.stringify(send), 
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`

@@ -2,39 +2,37 @@ import Toastify from 'toastify-js'
 import fetchNewBooking from '../db/fecths/newBooking'
 
 export interface eventPropertiesBooking {
-    id:String
-    guest: string
-    orderDate: string
-    checkin: string
-    timein: string
-    checkout: string
-    timeout: string
-    ordertime: string
-    specialRequest: string
-    roomType: string
-    status: string
-    idRoom: number
+    guest: String
+    orderDate: Date
+    checkin: String
+    timein: String
+    checkout: String
+    timeout: String
+    ordertime: Date
+    specialRequest: String
+    roomType: String
+    status: String
+    idRoom: String
 }
 
-const handlesubmitnewBooking = (event:any,idnew:string,roomid:string) => {
+const handlesubmitnewBooking = (event:any,roomid:string) => {
     event.preventDefault()
-    const dataBooking:eventPropertiesBooking = {
-        id: idnew,
+    let dataBooking:eventPropertiesBooking = {
         guest: event.target.nameguest.value,
-        orderDate: String(new Date().getDate),
+        orderDate: new Date(),
         checkin: event.target.checkin.value,
         timein: event.target.checkin.value,
         checkout: event.target.checkout.value,
         timeout: event.target.checkout.value,
-        ordertime: String(new Date().getTime),
+        ordertime: new Date(),
         specialRequest: event.target.specialrequest.value,
         roomType: event.target.selectroomtype.value,
         status: 'Check In',
-        idRoom: Number(roomid)
+        idRoom: roomid
     }
-    if(String(dataBooking.guest) === '' || dataBooking.orderDate === '' ||
+    if(String(dataBooking.guest) === '' || String(dataBooking.orderDate) === '' ||
     dataBooking.checkin === '' || dataBooking.checkout === '' ||
-     dataBooking.idRoom === 0)
+     dataBooking.idRoom === '')
         {
 
         if(dataBooking.guest === ''){
@@ -72,7 +70,7 @@ const handlesubmitnewBooking = (event:any,idnew:string,roomid:string) => {
                 }
             }).showToast();
         }
-        if(dataBooking.idRoom === 0){
+        if(dataBooking.idRoom === ''){
             Toastify({
                 text: "Room: It is necessary to select a room",
                 duration: 3000,
@@ -85,20 +83,6 @@ const handlesubmitnewBooking = (event:any,idnew:string,roomid:string) => {
         }
         return false
     }else{
-        let dataBooking:eventPropertiesBooking = {
-            id: idnew,
-            guest: event.target.nameguest.value,
-            orderDate: String(new Date().getDate()),
-            checkin: event.target.checkin.value,
-            timein: event.target.checkin.value,
-            checkout: event.target.checkout.value,
-            timeout: event.target.checkout.value,
-            ordertime: String(new Date().getTime()),
-            specialRequest: event.target.specialrequest.value,
-            roomType: event.target.selectroomtype.value,
-            status: 'Check In',
-            idRoom: Number(roomid)
-        }
         dataBooking = {
             ...dataBooking,
             specialRequest: String(event.target.specialrequest.value === "" ? "none" : event.target.specialrequest.value)

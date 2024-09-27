@@ -1,16 +1,17 @@
 import Toastify from 'toastify-js'
 import Employee from '../../../class/CEmployee';
-import { valuesEditUser } from '../../forms/validationformEditUser';
 
-const editUser = (user:Employee,values:valuesEditUser) => {
-    fetch(`http://localhost:3004/employee/${user.id}`,{
+const token = localStorage.getItem('TOKEN_AUTH')
+const editUser = (user:Employee,values:Object) => {
+    fetch(`http://localhost:3000/users/user/edit/${user._id}`,{
     method: 'PUT',
     body: JSON.stringify({
         ...user,
         ...values
     }),
     headers: {
-        'Content-type': 'application/json; charset=UTF-8'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
     }
     }).then(response => {
         if(response.ok){

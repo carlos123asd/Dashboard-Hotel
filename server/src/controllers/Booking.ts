@@ -41,6 +41,7 @@ const postBooking = async (req:Request, res:Response) => {
 //Edit/Update Booking
 const putBooking = async (req:Request, res:Response) => {
     const {body} = req
+    console.log(body)
     const {id} = req.params
     const updateBooking = await sputBooking(id,body)
     res.status(200).json(updateBooking)

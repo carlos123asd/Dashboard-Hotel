@@ -3,7 +3,7 @@ import { eventPropertiesUser } from '../../forms/validationformNewUser';
 
 const token = localStorage.getItem('TOKEN_AUTH')
 const fetchnewUser = (user:eventPropertiesUser) => {
-    fetch('http://localhost:8000/users/user/add',{
+    fetch('http://localhost:3000/users/user/add',{
         method: 'POST',
         body: JSON.stringify(user), 
         headers: {

@@ -173,7 +173,7 @@ export default function RowTable(props:InterfacePropsRowTable){
         setOpen(true)
     };
     const handledeleteBooking = () => {
-        deleteBooking(String(data.id))
+        deleteBooking(data._id)
         handleClickFunctionCancelDelete()
     }
 
@@ -190,7 +190,7 @@ export default function RowTable(props:InterfacePropsRowTable){
             status: (statusbookingedit !== '') ? statusbookingedit : data.status,
             idRoom: (roomselectedit !== '') ? roomselectedit.split('-')[1] : data.idRoom,
         }
-        const response = handleValidateFormEditBooking(data,dataBookingEdit as valuesEditBooking)
+        const response = handleValidateFormEditBooking(data._id,dataBookingEdit as valuesEditBooking)
         response === true ? handleClickFunctionEdit() : <></>
     }
     const handleSaveEditUser = () => {
@@ -486,18 +486,18 @@ export default function RowTable(props:InterfacePropsRowTable){
                     <td onClick={handleOpen} notes='true'>View Notes</td>
                     <td className="namebooking">{data.roomType}</td>
                     <td>{data.status === 'Check In' ? <div className="status">Check In</div> : otherState(data.status)}</td>
-                        <div style={hideedit}>
-                            <div className="status editdelete" onClick={handleClickFunctionEdit}>Edit</div>
-                            <div className="status statusbooked editdelete" onClick={handleClickFunctionDelete}>Delete</div>
-                        </div>
-                        <div style={showbtngroup2}>
-                            <div className="status editdelete">Save</div>
-                            <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
-                        </div>
-                        <div style={showbtngroup3}>
-                            <div className="status editdelete" onClick={() => handledeleteBooking()}>Confirm</div>
-                            <div className="status statusbooked editdelete" onClick={handleClickFunctionCancelDelete}>Cancel</div>
-                        </div>
+                    <div style={hideedit}>
+                        <div className="status editdelete" onClick={handleClickFunctionEdit}>Edit</div>
+                        <div className="status statusbooked editdelete" onClick={handleClickFunctionDelete}>Delete</div>
+                    </div>
+                    <div style={showbtngroup2}>
+                        <div className="status editdelete">Save</div>
+                        <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
+                    </div>
+                    <div style={showbtngroup3}>
+                        <div className="status editdelete" onClick={() => handledeleteBooking()}>Confirm</div>
+                        <div className="status statusbooked editdelete" onClick={handleClickFunctionCancelDelete}>Cancel</div>
+                    </div>
                 </TrMainTable>
         </>
     }else if(locationname === '/users'){

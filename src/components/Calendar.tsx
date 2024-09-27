@@ -2,7 +2,7 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction';
 import { Tooltip } from "bootstrap";
-import { editCalendarCheckOut } from '../features/db/fecths/editBooking';
+import { editBooking } from '../features/db/fecths/editBooking';
 import { appSelector } from '../features/hooks/hooks';
 
 export default function Calendar(){
@@ -37,7 +37,7 @@ export default function Calendar(){
             checkout: `${booking.checkout}`,
             timeout: `${booking.timeout}`,
             status: `${booking.status}`,
-            ident: `${booking.id}`
+            ident: `${booking._id}`
         }
     });
 
@@ -66,10 +66,10 @@ export default function Calendar(){
 
     const handleDrop = (info:any) => {
         const bookingDroped = selectorDataBookings.filter((booking) => {
-            return booking.id === info.event.extendedProps.ident
+            return booking._id === info.event.extendedProps.ident
         })
         const actualRangeEndBooking = formatDateDroped(tooltipInstance._element.fcSeg.eventRange.instance.range.end)
-        editCalendarCheckOut(bookingDroped[0],{checkout:actualRangeEndBooking})
+        editBooking(bookingDroped[0]._id,{checkout:actualRangeEndBooking})
     }
 
     return <>
