@@ -1,6 +1,6 @@
 export interface valuesEditUser {
     id:string
-    photo:string[]
+    photo:string
     name:string
     email:string
     startdate:string

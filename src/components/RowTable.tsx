@@ -195,21 +195,19 @@ export default function RowTable(props:InterfacePropsRowTable){
     }
     const handleSaveEditUser = () => {
         const dataUserEdit = {
-            photo: [
-                "https://static.vecteezy.com/system/resources/previews/011/186/876/original/male-profile-picture-symbol-vector.jpg"
-            ],
+            photo: "https://static.vecteezy.com/system/resources/previews/011/186/876/original/male-profile-picture-symbol-vector.jpg",
             name: (nameedituser !== '') ? nameedituser : data.name,
             email: (emailedituser !== '') ? emailedituser : data.email,
             description: (descriptionedituser !== '') ? descriptionedituser : data.description,
             phone: (numberphonestate !== '') ? numberphonestate : data.phone,
             status: (statusedituser !== '') ? statusedituser : data.status,
         }
-        const response = handleValidateFormEditUser(data,dataUserEdit as valuesEditUser)
+        const response = handleValidateFormEditUser(data._id,dataUserEdit as valuesEditUser)
         response === true ? handleClickFunctionEdit() : <></>
     }
 
     const handleDeleteUser = () => {
-        deleteUser(data.id)
+        deleteUser(data._id)
         handleClickFunctionCancelDelete()
     }
 
@@ -239,8 +237,6 @@ export default function RowTable(props:InterfacePropsRowTable){
         updateStatusfetchMessage(data,'none','Message Restored')
         data.setStatus('none')
     }
-
-    console.log(data)
     
     if(locationname === '/room'){
         return (edit === true) ? <>
@@ -368,7 +364,7 @@ export default function RowTable(props:InterfacePropsRowTable){
                                             if(room.status === "Available" && room.typeRoom === typeroombooking){
                                                 return <>
                                                     <li>
-                                                        <input id="roomselected" name="roomselected" type="radio" onClick={() => setRoomselectedit(`${room.typeRoom}-${room.id}`)} value={`${room.typeRoom}-${room.id}`}/>
+                                                        <input id="roomselected" name="roomselected" type="radio" onClick={() => setRoomselectedit(`${room.typeRoom}-${room._id}`)} value={`${room.typeRoom}-${room._id}`}/>
                                                         <span style={{marginLeft:'1em'}}>{room.typeRoom}-{room.roomNumber}</span>
                                                     </li>
                                                 </>
@@ -548,7 +544,7 @@ export default function RowTable(props:InterfacePropsRowTable){
                         <img className="imgroomnameColum" width={150} height={77} src={data.photo} alt="Image Employee" />
                         <div className="roomnameColumn">
                             <span className="nameemployee">{data.name}</span>
-                            <span className="deluxenum">#{data.id}<br/>Joined on {data.startdate}</span>
+                            <span className="deluxenum">#{data._id}<br/>Joined on {data.startdate}</span>
                         </div>
                     </td>
                 </div>

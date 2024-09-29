@@ -31,7 +31,7 @@ export default function BtnTableTopNew(props:InterfacePropsBtnTableTopNew){
     const [image2,setImage2] = useState<string>(imagestandar);
     const [image3,setImage3] = useState<string>(imagestandar);
     const [Typeroombooking,setTyperoombooking] = useState<string>('Single Bed');
-    const [startdateuser,setStartdateuser] = useState<string>("")
+    const [startdateuser,setStartdateuser] = useState<Date>(new Date)
     const [numberphonestate,setNumberphonestate] = useState<string>("")
     const dataRooms = appSelector(state => state.db.data.rooms)
     const dataBookings = appSelector(state => state.db.data.bookings)
@@ -147,11 +147,7 @@ export default function BtnTableTopNew(props:InterfacePropsBtnTableTopNew){
     }
 
     const validFormUser:FormEventHandler<formLogin> = (e) => {
-        let lastObjectUser = dataUser.map((user) => {
-            return user
-        }).sort((a,b) => Number(a._id) - Number(b._id))
-        let idnew = ((lastObjectUser[lastObjectUser.length - 1])._id) + 1
-        const response = validationNewuser(e,idnew)
+        const response = validationNewuser(e,startdateuser)
         response === true ? handleClose() : <></>
     }
 
@@ -385,7 +381,7 @@ export default function BtnTableTopNew(props:InterfacePropsBtnTableTopNew){
                                         name="dateformnewuser"
                                         label={'Day,Month,Year'}
                                         views={['day','month','year']}
-                                        onChange={(e:any) => setStartdateuser(`${e.clone().$D} ${((e.clone()).toString()).split(' ')[2]} ${((e.clone()).toString()).split(' ')[3]}`)}
+                                        onChange={(e:any) => setStartdateuser(new Date(`${e.clone().$D} ${((e.clone()).toString()).split(' ')[2]} ${((e.clone()).toString()).split(' ')[3]}`))}
                                         />
                                     </DemoContainer>
                             </LocalizationProvider>
@@ -398,7 +394,7 @@ export default function BtnTableTopNew(props:InterfacePropsBtnTableTopNew){
 
                         <h2>Contact</h2>
                         <div className="sectionformbooking">
-                            <label htmlFor="specialrequest">Phone</label>
+                            <label htmlFor="numbePhone">Phone</label>
                             <MuiPhoneNumber name="phonenewuser" style={{display:'block'}} defaultCountry={'es'} onChange={(e:any) => setNumberphonestate(e)}/>
                         </div>
 
@@ -408,6 +404,11 @@ export default function BtnTableTopNew(props:InterfacePropsBtnTableTopNew){
                                     <option value={'Active'}>Active</option>
                                     <option value={'Inactive'}>Inactive</option>
                                 </select>
+                        </div>
+
+                        <h2>Password</h2>
+                        <div>
+                            <input id="pass" name="password" type="text" />
                         </div>
 
                         <div style={{textAlign:'right'}}>

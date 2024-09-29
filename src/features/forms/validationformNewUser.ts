@@ -2,32 +2,30 @@ import Toastify from 'toastify-js'
 import fetchnewUser from '../db/fecths/newUser'
 
 export interface eventPropertiesUser {
-    id:string
-    photo:string[]
+    photo:string
     name:string
     email:string
-    startdate:string
+    password:string
+    startdate:Date
     description:string
     phone:string
     status:string
 }
 
-const handlesubmitnewUser = (event:any,idnew:string) => {
+const handlesubmitnewUser = (event:any,date:Date) => {
     event.preventDefault()
-    const dataUser:eventPropertiesUser = {
-        id: idnew,
-        photo: [
-            "https://static.vecteezy.com/system/resources/previews/011/186/876/original/male-profile-picture-symbol-vector.jpg"
-        ],
+    let dataUser:eventPropertiesUser = {
+        photo: "https://static.vecteezy.com/system/resources/previews/011/186/876/original/male-profile-picture-symbol-vector.jpg",
         name: event.target.nameuser.value,
         email: event.target.emailuser.value,
-        startdate: event.target.dateformnewuser.value,
+        password:event.target.password.value,
+        startdate: date,
         description: event.target.descriptionuser.value,
         phone: event.target.phonenewuser.value,
         status: event.target.statususer.value
     }
     if(dataUser.name === '' || dataUser.email === '' ||
-    dataUser.startdate === '' || dataUser.description === '' ||
+    String(dataUser.startdate) === '' || dataUser.description === '' ||
     dataUser.email === '' ||
     /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(dataUser.email) === false
     )
@@ -68,7 +66,7 @@ const handlesubmitnewUser = (event:any,idnew:string) => {
             }
         }
 
-        if(dataUser.startdate === ''){
+        if(String(dataUser.startdate) === ''){
             Toastify({
                 text: "Start Date: a start date is required",
                 duration: 3000,
@@ -92,18 +90,6 @@ const handlesubmitnewUser = (event:any,idnew:string) => {
         }
         return false
     }else{
-        let dataUser:eventPropertiesUser = {
-            id: idnew,
-            photo: [
-                "https://static.vecteezy.com/system/resources/previews/011/186/876/original/male-profile-picture-symbol-vector.jpg"
-            ],
-            name: event.target.nameuser.value,
-            email: event.target.emailuser.value,
-            startdate: event.target.dateformnewuser.value,
-            description: event.target.descriptionuser.value,
-            phone: event.target.phonenewuser.value,
-            status: event.target.statususer.value
-        }
         if(dataUser.phone.length > 1 &&
             dataUser.phone.length < 6){
             dataUser = {

@@ -59,6 +59,6 @@ routerUser.post('/user/add',validateToken,postUser)
 //Edit/Update User
 routerUser.put('/user/edit/:id',validateToken,putUser)
 //Remove User 
-routerUser.delete('user/delete/:id',validateToken,deleteUser)
+routerUser.delete('/user/delete/:id',validateToken,deleteUser)
 
 export default routerUser

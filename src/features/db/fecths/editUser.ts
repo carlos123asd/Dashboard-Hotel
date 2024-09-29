@@ -2,11 +2,11 @@ import Toastify from 'toastify-js'
 import Employee from '../../../class/CEmployee';
 
 const token = localStorage.getItem('TOKEN_AUTH')
-const editUser = (user:Employee,values:Object) => {
-    fetch(`http://localhost:3000/users/user/edit/${user._id}`,{
+const editUser = (id:string,values:Object) => {
+    console.log(values)
+    fetch(`http://localhost:3000/users/user/edit/${id}`,{
     method: 'PUT',
     body: JSON.stringify({
-        ...user,
         ...values
     }),
     headers: {
@@ -25,7 +25,7 @@ const editUser = (user:Employee,values:Object) => {
                 }
             }).showToast();
         }
-    }).catch(error => console.log(error))
+    }).catch(error => console.error(error))
 }
 
 export default editUser

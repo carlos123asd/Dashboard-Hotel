@@ -19,7 +19,7 @@ const deleteRoom = (room:string) => {
                 }
             }).showToast();
         }
-    }).catch(error => console.log(error))
+    }).catch(error => console.error(error))
 }
 
 export default deleteRoom

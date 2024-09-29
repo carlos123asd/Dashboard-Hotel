@@ -3,7 +3,7 @@ import Employee from '../../class/CEmployee';
 import editUser from '../db/fecths/editUser';
 import { valuesEditUser } from '../../interfaces/InterfacePropsValidateFormEditUser';
 
-const handleValidateFormEditUser = (objedtEdit:Employee,valuesForEdit:valuesEditUser) => {
+const handleValidateFormEditUser = (id:string,valuesForEdit:valuesEditUser) => {
     if(/^[0-9]*$/.test(valuesForEdit.name) === true || 
         /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(valuesForEdit.email) === false)
         {
@@ -39,7 +39,7 @@ const handleValidateFormEditUser = (objedtEdit:Employee,valuesForEdit:valuesEdit
                 phone: 'none number phone'
             }
         }
-        editUser(objedtEdit,valuesForEdit)
+        editUser(id,valuesForEdit)
         return true
     }
 }
