@@ -4,8 +4,8 @@ import editUser from '../db/fecths/editUser';
 import { valuesEditUser } from '../../interfaces/InterfacePropsValidateFormEditUser';
 
 const handleValidateFormEditUser = (id:string,valuesForEdit:valuesEditUser) => {
-    if(/^[0-9]*$/.test(valuesForEdit.name) === true || 
-        /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(valuesForEdit.email) === false)
+    if(valuesForEdit.name !== "" || 
+        valuesForEdit.email !== "")
         {
             if(/^[0-9]*$/.test(valuesForEdit.name) === true){
                 Toastify({

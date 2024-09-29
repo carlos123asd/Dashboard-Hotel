@@ -14,23 +14,14 @@ import { useReducer, createContext, useContext, ReactNode } from 'react'
 const AuthContext = createContext<TodoContextType>(defaultContextValue)
 
 interface initialStetetype {
-    _id: string,
-    username: string,
-    email: string,
-    photo: string
+    user: Object
 }
 const initialState:initialStetetype = {
-    _id: "",
-    username: "",
-    email: "",
-    photo: ""
+    user: {}
 }
 
 interface ContextAuthprops {
-    _id: string
-    name: string,
-    email: string,
-    photo: string
+    user: Object
 }
 
 const authReducer = (state:any,action:PayloadAction<ContextAuthprops>) => {
@@ -38,19 +29,14 @@ const authReducer = (state:any,action:PayloadAction<ContextAuthprops>) => {
         case 'LOGIN': {
             return {
                 ...state,
-                _id: action.payload._id,
-                username: action.payload.name,
-                email: action.payload.email,
-                photo: action.payload.photo
+                user: action.payload.user
             }
         }
         case 'LOGOUT': return initialState
         case 'EDIT': {
             return {
                 ...state,
-                username: action.payload.name,
-                email: action.payload.email,
-                photo: action.payload.photo
+                user: action.payload.user
             }   
         }
         default: return state

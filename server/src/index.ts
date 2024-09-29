@@ -16,6 +16,7 @@ import { Bookings } from './models/modelBooking'
 import { Messages } from './models/modelMessage'
 import { bookingFaker } from './faker/bookings'
 import { messageFaker } from './faker/message'
+import bcrypt from 'bcrypt'
 
 dotenv.config()
 
@@ -49,6 +50,13 @@ app.use(apiPaths.users,routerUser)
 
 //Documentacion Rutas SwagGer
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+/*
+bcrypt.genSalt(10).then((response) => {
+     bcrypt.hash('jVRddMLh0sSYw5H', response).then((response) => {
+        console.log(response)
+     }) ;
+});*/
+      
 
 const startServer = async () => {
     try {

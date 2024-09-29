@@ -5,7 +5,7 @@ import { Users } from '../models/modelEmployee';
 import bcrypt from 'bcrypt'
 
 const routerAuth = Router()
-//WzN1p3EJeUCSfSb
+//jVRddMLh0sSYw5H 
 async function authenticate (req:Request, res:Response) {
   const {email,password} = req.body
   if(!email || !password){
@@ -23,10 +23,7 @@ async function authenticate (req:Request, res:Response) {
         res.header('Authorization', accessToken).json({
             message: 'Usuario Autentificado',
             token: accessToken,
-            _id: userFound._id,
-            username: userFound.name,
-            photo: userFound.photo,
-            email: userFound.email
+            user: userFound
         })
       }
     }

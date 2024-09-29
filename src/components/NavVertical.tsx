@@ -32,21 +32,20 @@ export default function NavVertical(props:InterfaceStyleNavVertical){
     const navigate = useNavigate();
     const {state}:any = useContextAuth()
     const locationname = useLocation().pathname;
-    const [useredit,setUseredit] = useState<User[]>(appSelector(state => state.db.data.employee).filter((user:User) => {
-        return user._id === state._id
-    }));
 
-    //Tipasr event (e)
     const handlevalidation = (e:any) => {
         const user = {
-            name: e.target.nameuser.value,
-            email: e.target.emailuser.value,
-            description: e.target.descriptionuser.value,
-            phone: e.target.phoneedituserNavVertical.value,
-            status: e.target.statususer.value
+            photo: state.user.photo,
+            name: (e.target.nameuser.value !== '') ? e.target.nameuser.value : state.user.name,
+            email: (e.target.emailuser.value !== '') ? e.target.emailuser.value : state.user.email,
+            password: (e.target.password.value !== '') ? e.target.password.value : state.user.password,
+            description: (e.target.descriptionuser.value !== '') ? e.target.descriptionuser.value : state.user.description,
+            phone: (e.target.phoneedituserNavVertical.value !== '') ? e.target.phoneedituserNavVertical.value : state.user.phone,
+            status: (e.target.statususer.value !== '') ? e.target.statususer.value : state.user.status
         }
-        validationEdituser(Object(useredit),Object(user))
-        handleClose()
+        console.log(user)
+        const response = validationEdituser(state.user._id,user)
+        response ? handleClose() : <></>
     }
 
     if(locationname === '/' || locationname === '/room'|| locationname === '/bookings'|| locationname === '/users'|| locationname === '/contact'){
@@ -66,23 +65,23 @@ export default function NavVertical(props:InterfaceStyleNavVertical){
                         <div className="sectionformbooking sectionformbooking--inputdetailemployee">
                             <div className="contentRoomNewRoom__firstblock contentRoomNewRoom--margin">
                                 <label htmlFor="nameguest">Name</label>
-                                <input className="inputroom" id="nameuser" name="nameuser" type="text" placeholder={state.username}></input>
+                                <input className="inputroom" id="nameuser" name="nameuser" type="text" placeholder={state.user.name}></input>
                             </div>
                             <div className="contentRoomNewRoom__firstblock">
                                 <label htmlFor="nameguest">Email</label>
-                                <input className="inputroom" id="emailuser" name="emailuser" type="text" placeholder={state.email}></input>
+                                <input className="inputroom" id="emailuser" name="emailuser" type="text" placeholder={state.user.email}></input>
                             </div>
                         </div>
                             
                         <div style={{marginTop:'1em'}} className="contentRoomNewRoom__priceblock sectionformbooking">
                             <label htmlFor="specialrequest">Description of the user</label>
-                            <textarea name="descriptionuser" id="specialrequest" placeholder={useredit[0].description}></textarea>
+                            <textarea name="descriptionuser" id="specialrequest" placeholder={state.user.description}></textarea>
                         </div>
 
                         <h2>Contact</h2>
                         <div className="sectionformbooking">
                             <label htmlFor="specialrequest">Phone</label>
-                            <MuiPhoneNumber placeholder={useredit[0].phone} style={{display:'block'}} defaultCountry={'es'} name="phoneedituserNavVertical" onChange={()=>{}}/>
+                            <MuiPhoneNumber value={state.user.phone} style={{display:'block'}} defaultCountry={'es'} name="phoneedituserNavVertical" onChange={()=>{}}/>
                         </div>
 
                         <div className="contentRoomNewRoom__firstblock sectionformbooking">
@@ -91,6 +90,11 @@ export default function NavVertical(props:InterfaceStyleNavVertical){
                                     <option value={'Active'}>Active</option>
                                     <option value={'Inactive'}>Inactive</option>
                                 </select>
+                        </div>
+
+                        <h2>Password</h2>
+                        <div>
+                            <input type="text" name="password" placeholder={state.user.password}/>
                         </div>
 
                         <div style={{textAlign:'right'}}>
@@ -153,10 +157,10 @@ export default function NavVertical(props:InterfaceStyleNavVertical){
                 </div>
                 <ContentContactNavVertical>
                     <ImageProfileHeaderNavVertical>
-                        <img width='100%' height='100%' src={imgprofile} alt="Image Profile" />
+                        <img width='100%' height='100%' src={state.user.photo} alt="Image Profile" />
                     </ImageProfileHeaderNavVertical>
-                    <span className='titprofile'>{state.username}</span>
-                    <span id="emailprofile" className='subtitprofile'>{state.email}</span>
+                    <span className='titprofile'>{state.user.name}</span>
+                    <span id="emailprofile" className='subtitprofile'>{state.user.email}</span>
                     <div onClick={handleOpen} className='btnContactUs'>Edit Profile</div>
                 </ContentContactNavVertical>
                 <ContentCopyNavVertical>

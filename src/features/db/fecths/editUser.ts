@@ -3,7 +3,6 @@ import Employee from '../../../class/CEmployee';
 
 const token = localStorage.getItem('TOKEN_AUTH')
 const editUser = (id:string,values:Object) => {
-    console.log(values)
     fetch(`http://localhost:3000/users/user/edit/${id}`,{
     method: 'PUT',
     body: JSON.stringify({

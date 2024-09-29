@@ -29,10 +29,7 @@ export default function Login(){
                     dispatch({
                         type: 'LOGIN',
                         payload: {
-                            _id: response.payload._id,
-                            username: response.payload.username,
-                            email: response.payload.email,
-                            photo: response.payload.photo
+                            user: response.payload.user,
                         },
                     });
                     Toastify({
