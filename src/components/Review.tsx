@@ -19,17 +19,17 @@ export default function Review(props:InterfacesPropsReview){
 
     const updateDataMessage = (id:string) => {
         setDatamessage(datamessage.filter((message:Message) => {
-            return message.id !== id
+            return message._id !== id
         }))
     } 
 
     const handlePublish = (message:Message) => {
-        updateDataMessage(message.id)
-        updateStatusfetchMessage(message,'published','Message published')
+        updateDataMessage(message._id)
+        updateStatusfetchMessage(message._id,'published','Message published')
     }
     const handleArchive = (message:Message) => {
-        updateDataMessage(message.id)
-        updateStatusfetchMessage(message,'archived','Message archived')
+        updateDataMessage(message._id)
+        updateStatusfetchMessage(message._id,'archived','Message archived')
     }
 
     return <>

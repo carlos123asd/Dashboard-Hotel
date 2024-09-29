@@ -1,13 +1,10 @@
 import Toastify from 'toastify-js'
-import Message from '../../../class/CMessage'
 
 const token = localStorage.getItem('TOKEN_AUTH')
-const updateStatusfetchMessage = (message:Message,type:string,notification:string) => {
-    console.log(notification)
-        fetch(`http://localhost:3000/messages/contact/edit/${message._id}`,{
+const updateStatusfetchMessage = (id:string,type:string,notification:string) => {
+        fetch(`http://localhost:3000/messages/contact/edit/${id}`,{
             method: 'PUT',
             body: JSON.stringify({
-                ...message,
                 status: type
             }),
             headers: {

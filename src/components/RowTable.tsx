@@ -226,15 +226,15 @@ export default function RowTable(props:InterfacePropsRowTable){
         }
     }
     const handlepublish = () => {
-        updateStatusfetchMessage(data,'published','Message Published')
+        updateStatusfetchMessage(data._id,'published','Message Published')
         data.setStatus('published')
     }
     const handlearchive = () => {
-        updateStatusfetchMessage(data,'archived','Message Archived')
+        updateStatusfetchMessage(data._id,'archived','Message Archived')
         data.setStatus('archived')
     }
     const handlerestart = () => {
-        updateStatusfetchMessage(data,'none','Message Restored')
+        updateStatusfetchMessage(data._id,'none','Message Restored')
         data.setStatus('none')
     }
     
