@@ -13,11 +13,11 @@ import { InterfacePropsViewBooking } from "../interfaces/InterfacePropsViewBooki
 
 export default function ViewBooking(props:InterfacePropsViewBooking){
     const {booking} = props
-    const dbRoom = appSelector(state => state.db.data.rooms)
+    const dbRoom = appSelector(state => state.dbRoom.data)
     const roomselected = dbRoom.filter((room) => {
-        return room.id === String(booking.idRoom)
+        return room._id === String(booking.idRoom)
     })
-    console.log(roomselected[0].amenities)
+    console.log(roomselected)
         return <>
             <BookingView>
                 <div>
@@ -27,7 +27,7 @@ export default function ViewBooking(props:InterfacePropsViewBooking){
                                 <img src={logo} alt="Logo Booking" />
                                 <div>
                                     <span>{booking.guest}</span>
-                                    <span>ID {booking.id}</span>
+                                    <span>ID {booking._id}</span>
                                     <div>
                                         <img className="bookingcall" src={call} alt="call booking" />
                                         <div className="bookingmessage"><img src={message} alt="message booking" />Send Message</div>
@@ -65,7 +65,7 @@ export default function ViewBooking(props:InterfacePropsViewBooking){
                     <div className="facilitiesbooking">
                         <span>Facilities</span>
                         {
-                            roomselected[0].amenities.split(',').map((amenitie) => {
+                            roomselected[0].amenities.map((amenitie) => {
                                     return <>
                                         <div>{amenitie}</div>
                                     </> 
