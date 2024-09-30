@@ -5,16 +5,41 @@ import Calendar from "../components/Calendar"
 import { Contentcalendargrafics } from "../styles/dashboard/Contentcalendargrafics"
 import Graphic from "../components/Graphic"
 import { useEffect, useState } from "react"
-import { appSelector } from "../features/hooks/hooks"
+import { appDispatch, appSelector } from "../features/hooks/hooks"
+import { dbThunkRoom } from "../features/db/thunks/dbThunkRoom"
+import { dbThunkBooking } from "../features/db/thunks/dbThunkBooking"
 
 export default function Main(){
-    const selectorDbData = appSelector(state => state.db.data);
-    const [datadashboard,setDatadashboard] = useState(selectorDbData)
+    const dispatch = appDispatch()
+    const stateDbStatusBooking = appSelector(state => state.dbBooking.status)
+    const stateDbStatusRoom = appSelector(state => state.dbRoom.status)
+    const selectorDbErrorBooking = appSelector(state => state.dbBooking.error)
+    const selectorDbErrorRoom = appSelector(state => state.dbRoom.error)
+    const stateDbDataBooking = appSelector(state => state.dbBooking.data)
+    const stateDbDataRoom = appSelector(state => state.dbRoom.data)
+    const [loading,setLoading] = useState<boolean>(true)
 
-    useEffect(() => {
-        setDatadashboard(selectorDbData)
-    },[selectorDbData])
+    useEffect(() =>{
+        if(stateDbStatusBooking === 'idle' && stateDbStatusRoom === 'idle'){
+            dispatch(dbThunkRoom());
+            dispatch(dbThunkBooking());
+        }else if(stateDbStatusBooking === 'fulfilled' && stateDbStatusRoom === 'fulfilled'){
+            setLoading(false);
+        }else if(stateDbStatusBooking === 'rejected' || stateDbStatusRoom === 'rejected'){
+            if(stateDbStatusBooking === 'rejected'){
+                console.error(selectorDbErrorBooking)
+            }
+            if(stateDbStatusRoom === 'rejected'){
+                console.error(selectorDbErrorRoom)
+            }
+        }
+    },[stateDbStatusBooking,stateDbStatusRoom])
     
+    if(loading === true){
+        return <>
+            <h1>Loading...</h1>
+        </>
+    }else{
         return <>
             <ContentPageMain>
                 <KpiDashboard>
@@ -25,7 +50,7 @@ export default function Main(){
                             </svg>
                         </div>
                         <div className='kpicontent__values'>
-                            <span className='kpicontent__values__tit'>{datadashboard.bookings.length}</span>
+                            <span className='kpicontent__values__tit'>{stateDbDataBooking.length}</span>
                             <span className='kpicontent__values__sub'>New Booking</span>
                         </div>
                     </div>
@@ -36,7 +61,7 @@ export default function Main(){
                             </svg>
                         </div>
                         <div className='kpicontent__values'>
-                            <span className='kpicontent__values__tit'>{(datadashboard.rooms.filter(room => room.status === 'Booked')).length}</span>
+                            <span className='kpicontent__values__tit'>{(stateDbDataRoom.filter(room => room.status === 'Booked')).length}</span>
                             <span className='kpicontent__values__sub'>Bookeds Rooms</span>
                         </div>
                     </div>
@@ -48,7 +73,7 @@ export default function Main(){
                             </svg>
                         </div>
                         <div className='kpicontent__values'>
-                            <span className='kpicontent__values__tit'>{(datadashboard.bookings.filter(booking => booking.status === 'Check In')).length}</span>
+                            <span className='kpicontent__values__tit'>{(stateDbDataBooking.filter(booking => booking.status === 'Check In')).length}</span>
                             <span className='kpicontent__values__sub'>Check In</span>
                         </div>
                     </div>
@@ -60,7 +85,7 @@ export default function Main(){
                             </svg>
                         </div>
                         <div className='kpicontent__values'>
-                            <span className='kpicontent__values__tit'>{(datadashboard.bookings.filter(booking => booking.status === 'Check Out')).length}</span>
+                            <span className='kpicontent__values__tit'>{(stateDbDataBooking.filter(booking => booking.status === 'Check Out')).length}</span>
                             <span className='kpicontent__values__sub'>Check Out</span>
                         </div>
                     </div>
@@ -69,7 +94,8 @@ export default function Main(){
                     <Calendar />
                     <Graphic />
                 </Contentcalendargrafics>
-                <Review data={datadashboard.comment} />
+                <Review />
             </ContentPageMain>
         </>
+    }  
 }

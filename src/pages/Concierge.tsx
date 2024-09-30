@@ -3,7 +3,8 @@ import Review from "../components/Review";
 import Table from "../components/Table";
 import { ContentPageMain } from "../styles/nav/nav";
 import { useEffect, useState } from "react";
-import { appSelector } from "../features/hooks/hooks";
+import { appDispatch, appSelector } from "../features/hooks/hooks";
+import { dbThunkMessage } from "../features/db/thunks/dbThunkMessage";
 
 
 export default function Concierge(){
@@ -12,8 +13,23 @@ export default function Concierge(){
     const columns = ['Order ID','Date','Customer','Comment','Action']
     const filetstatus = appSelector(state => state.filterToptable.orderby)
 
-    const selectorDbData = appSelector(state => state.db.data.comment);
+    const selectorDbData = appSelector(state => state.dbMessage.data);
+    const selectorDbStatus = appSelector(state => state.dbMessage.status);
+    const selectorDbError = appSelector(state => state.dbMessage.error);
     const [datamessage,setDatamessage] = useState(selectorDbData)
+    const dispatch = appDispatch()
+    const [loading,setLoading] = useState<boolean>(true)
+ 
+    useEffect(() =>{
+        if(selectorDbStatus === 'idle'){
+            dispatch(dbThunkMessage());
+        }else if(selectorDbStatus === 'fulfilled'){
+            setDatamessage(selectorDbData);
+            setLoading(false);
+        }else if(selectorDbStatus === 'rejected'){
+            console.error(selectorDbError)
+        }
+    },[selectorDbStatus])
 
     useEffect(() => {
         if(filetstatus === 'All customer'){
@@ -30,13 +46,19 @@ export default function Concierge(){
         }
     },[filetstatus])
 
-    return <>
-        <ContentPageMain>
-            <Review data={datamessage} />
-            <div contentflex='true'>
-                <FilterTableTop title={filterstop} />
-            </div>
-            <Table columns={columns} data={datamessage} />
-        </ContentPageMain>
-    </>
+    if(loading === false){
+        return <>
+            <ContentPageMain>
+                <Review data={datamessage} />
+                <div contentflex='true'>
+                    <FilterTableTop title={filterstop} />
+                </div>
+                <Table columns={columns} data={datamessage} />
+            </ContentPageMain>
+        </>
+    }else{
+        <>
+            <h1>Loading...</h1>
+        </>
+    }
 }

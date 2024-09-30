@@ -33,9 +33,9 @@ export default function BtnTableTopNew(props:InterfacePropsBtnTableTopNew){
     const [Typeroombooking,setTyperoombooking] = useState<string>('Single Bed');
     const [startdateuser,setStartdateuser] = useState<Date>(new Date)
     const [numberphonestate,setNumberphonestate] = useState<string>("")
-    const dataRooms = appSelector(state => state.db.data.rooms)
-    const dataBookings = appSelector(state => state.db.data.bookings)
-    const dataUser = appSelector(state => state.db.data.employee)
+    const dataRooms = appSelector(state => state.dbRoom.data)
+    const dataBookings = appSelector(state => state.dbBooking.data)
+    const dataUser = appSelector(state => state.dbUser.data)
     const location = useLocation().pathname;
     const [roomid,setRoomid] = useState<string>("")
     

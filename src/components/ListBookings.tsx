@@ -12,7 +12,7 @@ import { styleListBookingMessage } from '../interfaces/styleListBookingMessage';
 
 export default function ListBookings(){
 
-    const selectorDBBookings = appSelector(state => state.db.data.bookings)
+    const selectorDBBookings = appSelector(state => state.dbBooking.data)
     const selectorShowBookingList = appSelector(state => state.notification.show)
     const filterbymonthActual = selectorDBBookings.filter((booking) => {
         return new Date(booking.orderDate).getMonth() === new Date().getMonth()

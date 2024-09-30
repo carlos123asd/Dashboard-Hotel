@@ -7,7 +7,7 @@ import { appSelector } from '../features/hooks/hooks';
 
 export default function Calendar(){
 
-    const selectorDataBookings = appSelector(state => state.db.data.bookings)
+    const selectorDataBookings = appSelector(state => state.dbBooking.data)
     let tooltipInstance:any = null;
 
     const otherStatus = (status:string) => {

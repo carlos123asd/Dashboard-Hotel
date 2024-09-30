@@ -7,17 +7,20 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import icon from '../assets/imgs/logo.svg'
-import { appSelector } from '../features/hooks/hooks';
+import { appDispatch, appSelector } from '../features/hooks/hooks';
 import { styleListBookingMessage } from '../interfaces/styleListBookingMessage';
 import Message from '../class/CMessage'
+import { dbThunkMessage } from '../features/db/thunks/dbThunkMessage';
 
 export default function ListMessage(){
-    const selectorDBMessage = appSelector(state => state.db.data.comment)
+    const selectorDBMessage = appSelector(state => state.dbMessage.data)
+    const selectorStatusDBMessage = appSelector(state => state.dbMessage.status)
+    const selectorErrorDBMessage = appSelector(state => state.dbMessage.error)
     const selectorShowBookingList = appSelector(state => state.notification.showListMessage)
+    const dispatch = appDispatch()
     const messagewaiting = selectorDBMessage.filter((message:Message) => {
         return message.status === 'none'
     })
-
 
     const [styleList,setStyleList] = useState<styleListBookingMessage>({
         borderRadius: 12,
@@ -27,6 +30,16 @@ export default function ListMessage(){
         height: '30em',
         display: 'none'
     })
+
+    useEffect(() => {
+        if(selectorStatusDBMessage === "idle"){
+            dispatch(dbThunkMessage())
+        }else if(selectorStatusDBMessage === "fulfilled"){
+
+        }else if(selectorStatusDBMessage === "rejected"){
+            console.error(selectorErrorDBMessage)
+        }
+    },[selectorStatusDBMessage])
 
     useEffect(() => {
         if(selectorShowBookingList === true){

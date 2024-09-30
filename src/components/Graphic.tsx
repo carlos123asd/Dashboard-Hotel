@@ -7,7 +7,7 @@ import { appSelector } from "../features/hooks/hooks";
 
 export default function Graphic(){
 
-    const selectorDbDataRooms = appSelector(state => state.db.data.rooms);
+    const selectorDbDataRooms = appSelector(state => state.dbRoom.data);
     const lengthData = selectorDbDataRooms.length
     const promedioBooked = ((((selectorDbDataRooms.filter((room) => {
         return room.status === 'Booked'

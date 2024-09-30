@@ -1,13 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit'
 import sliceFilterTopTable from '../features/filterTopTable/sliceFilterTopTable';
-import dbSlice from '../features/db/dbSlice.js';
+import dbSliceRoom from '../features/db/slices/dbSliceRoom';
+import dbSliceBooking from '../features/db/slices/dbSliceBooking';
+import dbSliceMessage from '../features/db/slices/dbSliceMessage';
+import dbSliceUser from '../features/db/slices/dbSliceUser';
 import NotificationSlice from '../features/TopMenu/NotificationSlice';
 import menuSlice from '../features/db/menu/menuSlice';
 
 export const store = configureStore({
     reducer: {
         filterToptable: sliceFilterTopTable,
-        db: dbSlice,
+        dbRoom: dbSliceRoom,
+        dbBooking: dbSliceBooking,
+        dbMessage: dbSliceMessage,
+        dbUser: dbSliceUser,
         notification: NotificationSlice,
         menuSlice: menuSlice
     }

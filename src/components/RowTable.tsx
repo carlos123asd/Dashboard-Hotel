@@ -22,16 +22,10 @@ import restart from '../assets/imgs/restart.svg'
 import updateStatusfetchMessage from "../features/db/fecths/updateStatusfetchMessage";
 import handleValidateFormEditUser from "../features/forms/validationformEditUser";
 import { appSelector } from "../features/hooks/hooks";
-import { InterfacepropsvaluesEdit } from "../interfaces/InterfacePropsValidateFormEditRoom";
 import { valuesEditBooking } from "../interfaces/InterfacePropsValidateFormEditBooking";
 import { valuesEditUser } from "../interfaces/InterfacePropsValidateFormEditUser";
 import { InterfacePropsRowTable } from "../interfaces/InterfacePropsRowTable";
-import CRoom from "../class/CRoom"
-import CEmployee from "../class/CBooking"
-import CMessage from "../class/CBooking"
-import CBooking from "../class/CBooking"
 import Room from "../class/CRoom";
-
 
 export default function RowTable(props:InterfacePropsRowTable){
     const {data}:any = props
@@ -58,7 +52,7 @@ export default function RowTable(props:InterfacePropsRowTable){
     })
     const [open, setOpen] = useState<boolean>(false); 
     const [bookingvisible, setBookingvisible] = useState<boolean>(false);
-    const dbRoom = appSelector(state => state.db.data.rooms)
+    const dbRoom = appSelector(state => state.dbRoom.data)
     const [openeditroombooking,setOpeneditroombooking] = useState<boolean>(false)
     const [typeroombooking,setTyperoombooking] = useState<string>("")
 
