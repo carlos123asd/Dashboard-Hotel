@@ -1,5 +1,4 @@
 export default interface Booking{
-    _id:string
     guest: string;
     orderDate: Date;
     checkin: Date;

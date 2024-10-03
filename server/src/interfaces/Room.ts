@@ -1,7 +1,6 @@
 export default interface Room{
-    _id:string
+    idRoom:string
     roomNumber:number
-    photo:string[]
     typeRoom:string
     description:string
     offer:boolean
@@ -9,5 +8,4 @@ export default interface Room{
     discount:number
     cancellation:string
     status:string
-    amenities:string[]
 }

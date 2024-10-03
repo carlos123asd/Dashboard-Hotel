@@ -9,13 +9,14 @@ import routerAuth from './controllers/Auth'
 import cors from 'cors'
 import swaggerUi from 'swagger-ui-express'
 import swaggerDocument from '../swagger-output.json'
-import mongoose from 'mongoose'
-import { Users } from './models/modelEmployee'
-import { employeeFaker } from './faker/users'
-import { Bookings } from './models/modelBooking'
-import { Messages } from './models/modelMessage'
-import { bookingFaker } from './faker/bookings'
-import { messageFaker } from './faker/message'
+import { connectDB } from './db/conectionDB'
+import { RoomModel } from './models/modelRoom'
+import { UserModel } from './models/modelEmployee'
+import { MessageModel } from './models/modelMessage'
+import { BookingModel } from './models/modelBooking'
+import { createRandomEmployee } from './faker/users'
+import { createRandomBooking } from './faker/bookings'
+import { createRandomMessage } from './faker/message'
 import bcrypt from 'bcrypt'
 
 dotenv.config()
@@ -50,19 +51,15 @@ app.use(apiPaths.users,routerUser)
 
 //Documentacion Rutas SwagGer
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-/*
-bcrypt.genSalt(10).then((response) => {
-     bcrypt.hash('jVRddMLh0sSYw5H', response).then((response) => {
-        console.log(response)
-     }) ;
-});*/
       
 
 const startServer = async () => {
     try {
-        await mongoose.connect(
-            process.env.URIMongo as string   //Coneccion al cluster URI -> compass conection: mongodb://express:123456@localhost:27017/hoteldb
-        )
+        await connectDB()
+        RoomModel.create()
+        BookingModel.create()
+        MessageModel.create()
+        UserModel.create()
         app.listen(port, () => console.log('Server listen on port 3000'))
     } catch (error) {
         console.error(error)
@@ -72,28 +69,57 @@ const startServer = async () => {
 
 startServer()
 
+//FAKER USERS
+/*
+YDSHd2hRnnjZ4ml
+SCiLmAXnKirTpkw
+M2kroL42UYwdwcx
+XMYAtuYBf8Eov4M
+LK5o8dUzO7dCwTF
+Zq3Eg142igaP3n8
+jaibygqIZVnZ6qY
+54xOO8ACA6Kjm5X
+R7_EAbhq1Q1yP6b
+PQfkSR7ewWquGBO*/
+async function insertUsers(cantidad: number) {
+    const connection = await connectDB();
+    for (let i = 0; i < cantidad; i++) {
+        const sql = `INSERT INTO users (photo, name, email, password, startdate, description, phone, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+        let valores = createRandomEmployee();
+        console.log(valores[3])
+        const salt = await bcrypt.genSalt(10);
+        valores[3] = await bcrypt.hash(valores[3], salt)
 
+        await connection.execute(sql, valores);
+    }
+}
+insertUsers(10)
+    .then(() => console.log(`10 users insertados correctamente.`))
+    .catch(err => console.error('Error insertando datos:', err));
 
+//FAKER BOOKING
+async function insertBookings(cantidad: number) {
+    const connection = await connectDB();
+    for (let i = 0; i < cantidad; i++) {
+        const sql = `INSERT INTO bookings (guest, orderDate, checkin, timein, checkout, timeout, ordertime, specialRequest, roomType, status, idRoom) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        const valores = createRandomBooking();
 
+        await connection.execute(sql, valores);
+    }
+}
+insertBookings(10)
+    .then(() => console.log(`10 bookings insertados correctamente.`))
+    .catch(err => console.error('Error insertando datos:', err));
+//FAKER MESSAGE
+async function insertMessage(cantidad: number) {
+    const connection = await connectDB();
+    for (let i = 0; i < cantidad; i++) {
+        const sql = `INSERT INTO messages (date, customer, email, phone, reason, comment, status) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+        const valores = createRandomMessage();
 
-
-
-
-/*Users.insertMany(employeeFaker)
-  .then(docs => console.log(`${docs.length} users have been inserted into the database.`))
-  .catch(err => {
-    console.error(err);
-    console.error(`${err.writeErrors?.length ?? 0} users errors occurred during the insertMany operation.`);
-  });
-Bookings.insertMany(bookingFaker)
-.then(docs => console.log(`${docs.length} bookings have been inserted into the database.`))
-.catch(err => {
-console.error(err);
-console.error(`${err.writeErrors?.length ?? 0} bookings errors occurred during the insertMany operation.`);
-});
-Messages.insertMany(messageFaker)
-.then(docs => console.log(`${docs.length} messages have been inserted into the database.`))
-.catch(err => {
-console.error(err);
-console.error(`${err.writeErrors?.length ?? 0} messages errors occurred during the insertMany operation.`);
-});*/
+        await connection.execute(sql, valores);
+    }
+}
+insertMessage(10)
+    .then(() => console.log(`10 messages insertados correctamente.`))
+    .catch(err => console.error('Error insertando datos:', err));
