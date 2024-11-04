@@ -10,25 +10,25 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            #clonar repositorio
+            # Clonar repositorio
             - name: Checkout repository
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
             
-            #configurar node.js
+            # Configurar node.js
             - name: Set up Node.js
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@v3
               with:
                 node-version: '22.8.0'
             
-            #instalar dependencias
+            # Instalar dependencias
             - name: Install dependencies
               run: npm install
             
-            #Contruir la app
+            # Construir la app
             - name: Build the app
               run: npm run build
             
-            #Subir archivos a S3
+            # Subir archivos a S3
             - name: Deploy to S3
               uses: jakejarvis/s3-sync-action@master
               with:
@@ -40,11 +40,11 @@ jobs:
                 AWS_REGION: ${{ secrets.AWS_REGION }}
                 SOURCE_DIR: "build"
             
-            #Ejecutar pruebas de Cypress
-            #- name: Run Cypress Tests
-            #  uses: cypress-io/github-action@v2.0.0
-            #  with:
-            #    start: npm run dev
-            #    wait-on: http://localhost:5173 #http://localhost:3000
-            #  env:
-            #    CI: true
+            # Ejecutar pruebas de Cypress
+            # - name: Run Cypress Tests
+            #   uses: cypress-io/github-action@v2
+            #   with:
+            #     start: npm run dev
+            #     wait-on: http://localhost:5173
+            #   env:
+            #     CI: true
