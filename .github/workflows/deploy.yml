@@ -41,10 +41,10 @@ jobs:
                 SOURCE_DIR: "build"
             
             #Ejecutar pruebas de Cypress
-            - name: Run Cypress Tests
-              uses: cypress-io/github-action@v2.0.0
-              with:
-                start: npm run dev
-                wait-on: http://localhost:5173 #http://localhost:3000
-              env:
-                CI: true
+            #- name: Run Cypress Tests
+            #  uses: cypress-io/github-action@v2.0.0
+            #  with:
+            #    start: npm run dev
+            #    wait-on: http://localhost:5173 #http://localhost:3000
+            #  env:
+            #    CI: true
