@@ -22,11 +22,11 @@ jobs:
             
             #instalar dependencias
             - name: Install dependencies
-              uses: npm install
+              run: npm install
             
             #Contruir la app
             - name: Build the app
-              uses: npm run build
+              run: npm run build
             
             #Subir archivos a S3
             - name: Deploy to S3
