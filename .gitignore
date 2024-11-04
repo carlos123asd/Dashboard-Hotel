@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 
 querySQL
+.env
+server
+

@@ -1,0 +1,50 @@
+name: Deploy Miranda Dashboard to S3
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            #clonar repositorio
+            - name: Checkout repository
+              uses: actions/checkout@v2
+            
+            #configurar node.js
+            - name: Set up Node.js
+              uses: actions/setup-node@v2
+              with:
+                node-version: '22.8.0'
+            
+            #instalar dependencias
+            - name: Install dependencies
+              uses: npm install
+            
+            #Contruir la app
+            - name: Build the app
+              uses: npm run build
+            
+            #Subir archivos a S3
+            - name: Deploy to S3
+              uses: jakejarvis/s3-sync-action@master
+              with:
+                args: --acl public-read --delete
+              env:
+                AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET_NAME }}
+                AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                AWS_REGION: ${{ secrets.AWS_REGION }}
+                SOURCE_DIR: "build"
+            
+            #Ejecutar pruebas de Cypress
+            - name: Run Cypress Tests
+              uses: cypress-io/github-action@v2
+              with:
+                start: npm run dev
+                wait-on: http://localhost:5173 #http://localhost:3000
+              env:
+                CI: true
