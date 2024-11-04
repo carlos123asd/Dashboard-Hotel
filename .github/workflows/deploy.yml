@@ -41,11 +41,11 @@ jobs:
                 AWS_REGION: ${{ secrets.AWS_REGION }}
                 SOURCE_DIR: "dist"
             
-            # Ejecutar pruebas de Cypress
-            # - name: Run Cypress Tests
-            #   uses: cypress-io/github-action@v2
-            #   with:
-            #     start: npm run dev
-            #     wait-on: http://localhost:5173
-            #   env:
-            #     CI: true
+             
+            - name: Run Cypress Tests
+              uses: cypress-io/github-action@v2
+              with:
+                start: npm run dev
+                wait-on: http://localhost:5173
+              env:
+                CI: true
