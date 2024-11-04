@@ -56,7 +56,8 @@ export default function Booking(){
     }else{
         return <>
         <ContentPageMain>
-                <div contentflex='true'>
+                {/* contentflex='true' */}
+                <div>
                     <FilterTableTop title={filterstop}></FilterTableTop>
                     <BtnTableTopNew title='New Booking'/>
                 </div>

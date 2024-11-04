@@ -50,7 +50,8 @@ export default function Room(){
     if(loading === false){
         return <>
             <ContentPageMain>
-                <div contentflex='true'>
+                {/* contentflex='true' */}
+                <div>
                     <FilterTableTop title={filterstop} />
                     <BtnTableTopNew title='New Room' />
                 </div>

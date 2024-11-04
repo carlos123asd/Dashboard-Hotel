@@ -14,8 +14,8 @@ import CMessage from "../class/CMessage";
 import CEmployee from "../class/CEmployee";
 import { InterfacePropsTable } from "../interfaces/InterfacePropsTable";
 
-
-export default function Table(props:InterfacePropsTable){
+{/* props:InterfacePropsTable */}
+export default function Table(props:any){
     const {columns,data} = props
 
     const [nextdate,setNextdate] = useState<number>(10);
@@ -24,7 +24,7 @@ export default function Table(props:InterfacePropsTable){
     const [desc,setDesc] = useState<boolean>(false);
     const [descletter,setDescletter] = useState<boolean>(false);
     const [rotate,setRotate] = useState<object>({});
-    const [datastate,setDatastate] = useState<CBooking[]|CEmployee[]|CMessage[]|CRoom[]>(data.map((info) => {
+    const [datastate,setDatastate] = useState<CBooking[]|CEmployee[]|CMessage[]|CRoom[]>(data.map((info:any) => {
         return info
     }))
     const [lengthdate,setLengthdate] = useState<number>(datastate.length / 10);
@@ -39,7 +39,7 @@ export default function Table(props:InterfacePropsTable){
         }
     },[])
     useEffect(() => {
-        setDatastate(data.map((info) => {
+        setDatastate(data.map((info:any) => {
             return info
         }))
     },[data])
@@ -165,7 +165,7 @@ export default function Table(props:InterfacePropsTable){
                 <TableObj>
                     <TrMainTable>
                         {
-                            columns.map(column => {
+                            columns.map((column:any) => {
                                 return <>
                                     <th className="headercolumn">{column}{column === 'Guest' ? <span style={rotate} onClick={handleOrderByLetterBooking} className="filtercolumn"></span> : othercolumnsBooking(column)}</th>
                                 </>
@@ -218,7 +218,7 @@ export default function Table(props:InterfacePropsTable){
                 <TableObj>
                     <TrMainTable>
                         {
-                            columns.map(column => {
+                            columns.map((column:any) => {
                                 return <>
                                     <th className="headercolumn">{column}{column === 'Price' ? <span style={rotate} onClick={handleOrderBy} className="filtercolumn"></span> : othercolumns(column)}</th>
                                 </>
@@ -269,7 +269,7 @@ export default function Table(props:InterfacePropsTable){
                     <TableObj>
                         <TrMainTable>
                             {
-                                columns.map(column => {
+                                columns.map((column:any) => {
                                     return <>
                                         <th className="headercolumn">{column}</th>
                                     </>
@@ -318,7 +318,7 @@ export default function Table(props:InterfacePropsTable){
                     <TableObj>
                         <TrMainTable>
                             {
-                                columns.map(column => {
+                                columns.map((column:any) => {
                                     return <>
                                         <th className="headercolumn">{column}{column === 'Name' ? <span style={rotate} onClick={handleOrderByNameEmployee} className="filtercolumn"></span> : <></>}</th>
                                     </>

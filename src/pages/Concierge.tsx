@@ -49,8 +49,10 @@ export default function Concierge(){
     if(loading === false){
         return <>
             <ContentPageMain>
-                <Review data={datamessage} />
-                <div contentflex='true'>
+                {/* data={datamessage} */}
+                <Review />
+                {/* contentflex='true' */}
+                <div>
                     <FilterTableTop title={filterstop} />
                 </div>
                 <Table columns={columns} data={datamessage} />
