@@ -47,7 +47,8 @@ export default function Guest(){
     if(loading === false){
         return <>
             <ContentPageMain>
-                <div contentflex='true'>
+                {/* contentflex='true' */}
+                <div>
                     <FilterTableTop title={filterstop}/>
                     <BtnTableTopNew title='New Employee' />
                 </div>
