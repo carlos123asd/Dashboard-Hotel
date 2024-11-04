@@ -1,4 +1,4 @@
-export default class Employee{
+export default class CEmployee{
     _id:string
     photo:string[]
     name:string

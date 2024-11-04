@@ -1,4 +1,4 @@
-export default class Message{
+export default class CMessage{
     _id:string
     date:string
     idmessage:number

@@ -1,4 +1,4 @@
-export default class Booking{
+export default class CBooking{
     _id: string
     guest: string
     orderDate: string

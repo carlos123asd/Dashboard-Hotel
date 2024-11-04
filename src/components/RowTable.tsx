@@ -27,7 +27,7 @@ import { valuesEditUser } from "../interfaces/InterfacePropsValidateFormEditUser
 import { InterfacePropsRowTable } from "../interfaces/InterfacePropsRowTable";
 import Room from "../class/CRoom";
 
-export default function RowTable(props:InterfacePropsRowTable){
+export default function RowTable(props:any){
     const {data}:any = props
     const [locationname,setLocationname] = useState(useLocation().pathname);
     
@@ -417,7 +417,8 @@ export default function RowTable(props:InterfacePropsRowTable){
                         </DemoContainer>
                         </LocalizationProvider>
                     </td>
-                    <td onClick={handleOpen} notes='true'>Edit View Notes</td>
+                    {/* notes='true' */}
+                    <td onClick={() => handleOpen}>Edit View Notes</td>
                     <td>{data.roomType}</td>
                     <td>{data.status === 'Check In' ? <select onChange={(e:any) => setStatusbookingedit(e.target.value)} className="status"><option value="Check In">Check In</option><option value="Check Out">Check Out</option><option value="In Progress">In Progress</option></select> : otherStateEdit(data.status)}</td>
                         <div style={hideedit}>
@@ -473,7 +474,8 @@ export default function RowTable(props:InterfacePropsRowTable){
                     <td>{data.orderDate} {data.ordertime}</td>
                     <td><span className="namebooking">{data.checkin}</span><br/><span className="timeinbooking">{data.timein}</span></td>
                     <td><span className="namebooking">{data.checkout}</span><br/><span className="timeinbooking">{data.timeout}</span></td>
-                    <td onClick={handleOpen} notes='true'>View Notes</td>
+                    {/* notes='true' */}
+                    <td onClick={() => handleOpen}>View Notes</td>
                     <td className="namebooking">{data.roomType}</td>
                     <td>{data.status === 'Check In' ? <div className="status">Check In</div> : otherState(data.status)}</td>
                     <div style={hideedit}>

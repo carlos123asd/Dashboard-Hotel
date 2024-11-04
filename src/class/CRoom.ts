@@ -1,4 +1,4 @@
-export default class Room{
+export default class CRoom{
     _id:string
     roomNumber:number
     photo:string[]

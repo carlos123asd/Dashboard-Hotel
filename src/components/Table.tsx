@@ -203,7 +203,8 @@ export default function Table(props:InterfacePropsTable){
             {
                 looppag.map((element,index) => {
                     return <>
-                        <div key={index} valuepagination={element} onClick={(event:any) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{element}</div>
+                        {/*valuepagination={element}*/}
+                        <div key={index} onClick={(event:any) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{element}</div>
                     </>
                 })
             }
@@ -253,7 +254,8 @@ export default function Table(props:InterfacePropsTable){
             {
                 looppag.map((val,index) => {
                     return <>
-                        <div key={index} valuepagination={val} onClick={(event:any) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{val}</div>
+                    {/* valuepagination={val} */}
+                        <div key={index} onClick={(event:any) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{val}</div>
                     </>
                 })
             }
@@ -301,7 +303,8 @@ export default function Table(props:InterfacePropsTable){
                 {
                     looppag.map((element,index) => {
                         return <>
-                            <div key={index} valuepagination={element} onClick={(event:any) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{element}</div>
+                        {/* valuepagination={element} */}
+                            <div key={index}  onClick={(event:any) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{element}</div>
                         </>
                     })
                 }
@@ -348,7 +351,8 @@ export default function Table(props:InterfacePropsTable){
                 {
                     looppag.map((element,index) => {
                         return <>
-                            <div key={index} valuepagination={element} onClick={(event:any) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{element}</div>
+                            {/* valuepagination={element} */}
+                            <div key={index} onClick={(event:any) => numPickedPaginationData(event.currentTarget.getAttribute('valuepagination'))} className="numpaginationtable">{element}</div>
                         </>
                     })
                 }
