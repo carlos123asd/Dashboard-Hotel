@@ -50,6 +50,10 @@ export const LoginContentInline = styled.div`
         font-size: 1.50rem;
         line-height: 24px;
         color: black;
+        &:hover{
+            text-decoration: underline;
+            cursor: pointer;
+        }
     }
     & .labelPass{
         display: flex;
@@ -72,13 +76,17 @@ export const LoginBtn = styled.input`
     cursor: pointer;
     border-radius: 0.625em;
     margin-top: 1.5em;
+    &:hover{
+        scale: 1.02;
+        box-shadow: 5px 5px 4.5px rgba(0, 0, 0, 0.25);
+        transition: scale ease-in-out .20s;
+    }
 `
 export const LoginContentMain = styled.div`
     width: 100%;
     height: 100vh;
     display: flex;
     align-items: center;
-    padding: 2em 2em;
     & .formleft{
         width: 50%;
         padding: 2rem 10%;
@@ -86,7 +94,56 @@ export const LoginContentMain = styled.div`
             height: 2px;
             background-color: #A0A7A4;
             filter: blur(4px);
-            margin: 5.5em 0;
+            margin: 4em 0;
+        }
+    }
+    & .swiperlogin{
+        & h2{
+            position: absolute;
+            z-index: 1000;
+            top: 5%;
+            left: 5%;
+            font-family: 'merriweather_lightItalic';
+            font-size: 4rem;
+            color: #fff;
+            text-shadow: 
+                -1px -1px 0 black,
+                1px -1px 0 black,
+                -1px 1px 0 black,
+                1px 1px 0 black;
+        }
+        & img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        & .messageslider{
+            position: absolute;
+            width: 100%;
+            height: max-content;
+            text-align: center;
+            bottom: 8%;
+            left: 0;
+            z-index: 1000;
+            color: #fff;
+            font-family: 'merriweather';
+            font-size: 1.8rem;
+            text-shadow: 
+                -1px -1px 0 black,
+                1px -1px 0 black,
+                -1px 1px 0 black,
+                1px 1px 0 black;
+        }
+        & span{
+            width: 3.75rem;
+            height: 8px;
+            border-radius: 9999px;
+        }
+        & .swiper-pagination-bullet-active{
+            background: #fff;
+        }
+        & .swiper-button-prev,.swiper-button-next{  
+            color: #fff;
         }
     }
 `

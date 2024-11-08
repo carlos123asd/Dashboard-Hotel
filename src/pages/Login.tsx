@@ -104,7 +104,7 @@ export default function Login(){
                 </LoginForm>
             </div>
             <Swiper
-            style={{width:"50%",height:"100%",borderRadius:'21px'}}
+            style={{width:"50%",height:"100%",borderTopLeftRadius:'21px',borderBottomLeftRadius:'21px'}}
             modules={[Navigation, Pagination, Autoplay]}
             autoplay={{ delay: 3000, disableOnInteraction: false }}
             loop={true}
@@ -112,6 +112,7 @@ export default function Login(){
             slidesPerView={1}
             navigation
             pagination={{ clickable: true }}
+            className='swiperlogin'
             >
                 <h2>Hotel<br/>Miranda</h2>
                 <SwiperSlide>
@@ -119,9 +120,11 @@ export default function Login(){
                 </SwiperSlide>
                 <SwiperSlide>
                     <img src={imgslider2} alt="" />
+                    <span className='messageslider'>Capturing Moments</span>
                 </SwiperSlide>
                 <SwiperSlide>
                     <img src={imgslider3} alt="" />
+                    <span className='messageslider'>Creating Memories</span>
                 </SwiperSlide>
             </Swiper>
         </LoginContentMain>

@@ -52,6 +52,14 @@
     font-family: 'nunito';
     src: url('./assets/fonts/Nunito/static/Nunito-Regular.ttf');
   }
+  @font-face {
+    font-family: 'merriweather_lightItalic';
+    src: url('./assets/fonts/Merriweather/Merriweather-LightItalic.ttf');
+  }
+  @font-face {
+    font-family: 'merriweather';
+    src: url('./assets/fonts/Merriweather/Merriweather-Black.ttf');
+  }
 
   .tooltipcheckout{
     background: #E23428;
