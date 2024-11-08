@@ -9,7 +9,7 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
         env: 
-          FORCE_JAVASCRIPT_ACTIONS_TO_NODE20: true
+           FORCE_JAVASCRIPT_ACTIONS_TO_NODE20: true
         steps:
             # Clonar repositorio
             - name: Checkout repository
