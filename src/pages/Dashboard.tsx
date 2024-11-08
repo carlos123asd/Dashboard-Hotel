@@ -5,6 +5,7 @@ import NavVertical from '../components/NavVertical'
 import { useEffect, useState } from 'react';
 import { appSelector } from '../features/hooks/hooks';
 import { styleGrid } from '../interfaces/InterfaceStyleGrid';
+import Login from './Login';
 
 
 export default function Dashboard(){
@@ -23,7 +24,8 @@ export default function Dashboard(){
             paddingLeft:'calc(25% + 2.563em)'
         }
     })
-
+    const token_auth = localStorage.getItem('TOKEN_AUTH');
+    
     useEffect(() => {
         if(selectorMenuDisplay === true){
             setStylegrid({
@@ -58,11 +60,18 @@ export default function Dashboard(){
         }
       },[selectorMenuDisplay])
 
-    return <>
-        <Layout style={stylegrid.grid}>
-            <Nav stylenav={stylegrid.padding} />
-            <NavVertical stylenavvertical={stylegrid.left}/>
-            <Outlet />
-        </Layout>
-    </>
+    
+    if(token_auth === null){
+        return <>
+            <Login />
+        </>
+    }else{
+        return <>
+            <Layout style={stylegrid.grid}>
+                <Nav stylenav={stylegrid.padding} />
+                <NavVertical stylenavvertical={stylegrid.left}/>
+                <Outlet />
+            </Layout>
+        </>
+    }
 }

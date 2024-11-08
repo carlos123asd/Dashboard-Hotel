@@ -8,7 +8,11 @@ import { useContextAuth } from '../features/context/AuthContext';
 import { FormEventHandler, useState } from 'react';
 import { dbThunkUser } from '../features/db/login/loginThunk';
 import { appDispatch } from '../features/hooks/hooks';
-
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import imgslider1 from '../assets/imgs/login/img1.jpg';
+import imgslider2 from '../assets/imgs/login/img2.jpg';
+import imgslider3 from '../assets/imgs/login/img3.jpg';
 
 export default function Login(){
     const navigate = useNavigate(); 
@@ -77,22 +81,49 @@ export default function Login(){
 
     return <>
         <LoginContentMain>
-            <div>
-                <LoginImg src={logo} alt="Logo Dashboard" />
+            <div className="formleft">
+                <div>
+                    <LoginImg src={logo} alt="Logo Dashboard" />
+                </div>
+                <LoginTit>Log in</LoginTit>
+                <LoginSub>Welcome to Hotel Miranda</LoginSub>
+                <div className='hr'></div>
+                <LoginForm onSubmit={validateAuth} action="">
+                    <LoginContentInline>
+                        <LoginLabel htmlFor="username">Email</LoginLabel>
+                        <LoginInput onChange={(e:React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} id='username' type="text" placeholder='Enter username' />
+                    </LoginContentInline>
+                    <LoginContentInline>
+                        <div className='labelPass'>
+                            <LoginLabel htmlFor="password">Password</LoginLabel>
+                            <a><span>Forgot?</span></a>
+                        </div>
+                        <LoginInput onChange={(e:React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} id='password' type="password" placeholder='Enter password' />
+                    </LoginContentInline>
+                    <LoginBtn id='login' type='submit' value="Log In" />
+                </LoginForm>
             </div>
-            <LoginTit>Welcome to Hotel Miranda</LoginTit>
-            <LoginSub>Experience the finest luxury and service</LoginSub>
-            <LoginForm onSubmit={validateAuth} action="">
-                <LoginContentInline>
-                    <LoginLabel htmlFor="username">Username:</LoginLabel>
-                    <LoginInput onChange={(e:React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} id='username' type="text" placeholder='Enter username' />
-                </LoginContentInline>
-                <LoginContentInline>
-                    <LoginLabel htmlFor="password">Password:</LoginLabel>
-                    <LoginInput onChange={(e:React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} id='password' type="password" placeholder='Enter password' />
-                </LoginContentInline>
-                <LoginBtn id='login' type='submit' value="Log In" />
-            </LoginForm>
+            <Swiper
+            style={{width:"50%",height:"100%",borderRadius:'21px'}}
+            modules={[Navigation, Pagination, Autoplay]}
+            autoplay={{ delay: 3000, disableOnInteraction: false }}
+            loop={true}
+            spaceBetween={50}
+            slidesPerView={1}
+            navigation
+            pagination={{ clickable: true }}
+            >
+                <h2>Hotel<br/>Miranda</h2>
+                <SwiperSlide>
+                    <img src={imgslider1} alt="" />
+                </SwiperSlide>
+                <SwiperSlide>
+                    <img src={imgslider2} alt="" />
+                </SwiperSlide>
+                <SwiperSlide>
+                    <img src={imgslider3} alt="" />
+                </SwiperSlide>
+            </Swiper>
         </LoginContentMain>
     </>
 }

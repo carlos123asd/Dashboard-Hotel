@@ -40,6 +40,18 @@
     font-family: 'poppinsmedium';
     src: url('./assets/fonts/poppins/Poppins-Medium.ttf');
   }
+  @font-face {
+    font-family: 'nunito_semibold';
+    src: url('./assets/fonts/Nunito/static/Nunito-SemiBold.ttf');
+  }
+  @font-face {
+    font-family: 'nunito_bold';
+    src: url('./assets/fonts/Nunito/static/Nunito-Bold.ttf');
+  }
+  @font-face {
+    font-family: 'nunito';
+    src: url('./assets/fonts/Nunito/static/Nunito-Regular.ttf');
+  }
 
   .tooltipcheckout{
     background: #E23428;

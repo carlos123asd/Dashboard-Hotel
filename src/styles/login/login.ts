@@ -1,30 +1,25 @@
 import styled from 'styled-components'
 
 export const LoginImg = styled.img`
-    margin: 0 auto;
     display: block;
 `
 export const LoginTit = styled.h1`
-    font-family: 'vietnamBold';
+    font-family: 'nunito_bold';
     font-size: 2.25rem;
     line-height: 35px;
-    color: white;
-    filter: drop-shadow(0px 0px 5px #135846);
-    text-align: center;
+    color: black;
     margin-bottom: .3em;
 `
 export const LoginSub = styled.h2`
-   font-family: 'vietnamBold';
-    font-size: 1rem;
+   font-family: 'nunito_semibold';
+    font-size: 1.50rem;
     line-height: 24px;
-    color: #135846;
-    text-align: center;
+    color: #A0A7A4;
 `
 
 export const LoginLabel = styled.label`
-        font-family: 'vietnamMedium';
-        font-size: 1rem;
-        line-height: 24px;
+        font-family: 'nunito_semibold';
+        font-size: 1.50rem;
         color: black;
         display: block;
         margin-bottom: .5em;
@@ -32,38 +27,66 @@ export const LoginLabel = styled.label`
 export const LoginInput = styled.input`
     display: block;
     border-radius: 0.75em;
-    width: 28em;
-    height: 3.5em;
-    border: 1px solid #E5E3D1;
+    width: 100%;
+    height: 4.188em;
+    border: 2px solid #E5EEEA;
     padding: 0.938em;
     outline: none;
-    font-family: 'vietnamRegular';
+    font-family: 'nunito';
     font-size: 1rem;
-    line-height: 24px;
-    color: #948A4F;
-    background: #FAFAF7;
+    color: black;
     margin: 0 auto;
+    &:focus{
+        border: 2px solid #247B53;
+    }
 `
 export const LoginContentInline = styled.div`
+    &:nth-child(2){
+        margin-top: 3em;
+    }
     margin-bottom: 1em;
+    & a{
+        font-family: 'nunito_semibold';
+        font-size: 1.50rem;
+        line-height: 24px;
+        color: black;
+    }
+    & .labelPass{
+        display: flex;
+        justify-content: space-between;
+    }
 `
 export const LoginForm = styled.form`
     margin: 0 auto;
     margin-top: 1em;
-    width: 30em;
 `
 
 export const LoginBtn = styled.input`
     color: white;
+    font-family: 'nunito_semibold';
+    font-size: 1.50rem;
     width: 100%;
-    height: 2.5em;
-    background: #BEAD8E;
+    height: 3em;
+    background: linear-gradient(0deg, #081D13 0%, #236D4E 100%);
     border: 0px;
     cursor: pointer;
     border-radius: 0.625em;
+    margin-top: 1.5em;
 `
 export const LoginContentMain = styled.div`
-    position: absolute;
-    left: calc(100vw - 50% - 14.5em);
-    top: calc(100vh - 50% - 17.5em);
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 2em 2em;
+    & .formleft{
+        width: 50%;
+        padding: 2rem 10%;
+        & .hr{
+            height: 2px;
+            background-color: #A0A7A4;
+            filter: blur(4px);
+            margin: 5.5em 0;
+        }
+    }
 `

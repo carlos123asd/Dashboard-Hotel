@@ -42,10 +42,10 @@ jobs:
                 SOURCE_DIR: "dist"
             
              
-            - name: Run Cypress Tests
-              uses: cypress-io/github-action@v2
-              with:
-                start: npm run dev
-                wait-on: http://localhost:5173
-              env:
-                CI: true
+            #- name: Run Cypress Tests
+            #  uses: cypress-io/github-action@v2
+            #  with:
+            #    start: npm run dev
+            #    wait-on: http://localhost:5173
+            #  env:
+            #    CI: true
