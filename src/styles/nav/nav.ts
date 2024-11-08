@@ -58,7 +58,7 @@ export const ContentNavVertical = styled.div`
     position: absolute;
     left: 0%;
     top: 0;
-    background: #fff;
+    background: #05372C;
     grid-column: 1;
     grid-row: 1 / auto;
 `
@@ -72,63 +72,83 @@ export const SubTitLogoNavVertical = styled.span`
 `
 
 export const TitLogoNavVertical = styled.span`
-    font-family: 'poppinssemibold';
-    font-size: 2.5em;
-    color: black;
-    line-height: 23.18px;
+    font-family: 'DM_Sans9T';
+    font-size: 2.5rem;
+    color: white;
     display: block;
-    margin-bottom: 0.386em;
 `
 
 export const ContentHeaderNavVertical = styled.div`
+    height: 10em;
     display: flex;
-    padding: 3.053em 1.5em;
-    justify-content: center;
+    gap: 3em;
+    justify-content: flex-start;
     align-items: center;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 1);
+    & svg{
+        width: 50px;
+        height: 50px;
+        margin-left: 2em;
+        margin-right: 1em;
+        transition: scale ease-in-out .1s;
+        &:hover{
+            cursor: pointer;
+            scale: 1.05;
+        }
+    }
 `
 
 export const ImagenHeaderNavVertical = styled.img`
-    margin-right: 1em;
+    width: 105px;
+    height: 105px;
+    margin-left: 2em;
 `
-export const ListHeaderNavVertical = styled.li`
-    font-family: 'poppinsregular';
-    font-size: 1.13rem;
-    display: block;
+export const ListHeaderNavVertical = styled.div`
+    width: max-content;
+    font-family: 'monserrat';
+    font-size: 1.5rem;
     height: 4.188em;
     margin-bottom: 0.938em;
     list-style: none;
     font-weight: 400;
     cursor: pointer;
-    color: #799283;
+    color: #fff;
     align-content: center;
-    padding-left: 3.938em;
+    padding: 1em 2em;
     display: flex;
     align-items: center;
+    transition: scale ease-in-out .1s;
+    & span{
+        width: 9em;
+    }
     &:hover{
-        border-left: 8px solid #E23428;
-        border-top-right-radius: 0.375em;
-        border-bottom-right-radius: 0.375em;
-        color: #E23428;
-        font-weight: 600;
+        scale: 1.1;
+        background-color: #02A18A;
+        border-radius: 11px;
     }
-    &:hover select{
-        color: #E23428;
-        font-weight: 600;
-    }
-    & svg{
+    & svg:nth-child(1){
         margin-right: 1.688em;
     }
-    & svg path{
-        fill: #799283;
+    & svg:nth-child(2){
+        margin-left: 2em;
     }
     &:hover svg path{
-        fill: #E23428;
+        fill: #fff;
     }
 `
-export const UnListContentHeaderNavVertical = styled.ul`
+export const UnListContentHeaderNavVertical = styled.div`
+    width: max-content;
+    margin: 0 auto;
     padding-left: 0;
     display: block;
     align-content: center;
+    margin-top: 3.5em;
+    & h2{
+        font-family: 'DM_Sans_extralight';
+        font-size: 2rem;
+        color: #fff;
+        margin-bottom: 1.5em;
+    }
 `
 export const SelectListHeaderNavVertical = styled.select`
     width: 9.938em;
@@ -140,25 +160,31 @@ export const SelectListHeaderNavVertical = styled.select`
     outline: none;
 `
 export const ImageProfileHeaderNavVertical = styled.div`
-    width: 70px;
-    height: 70px;
     border-radius: .5em;
-    margin: 0 auto;
-    margin-bottom: 0.938em;
     overflow: hidden;
+    position: absolute;
+    top: -25%;
+    width: 100%;
+    text-align: -webkit-center;
     & img{
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
+        width: 120px;
+        height: 120px;
+        display: block;
+        background: red;
+        border-radius: .5em;
+        object-fit: cover;
     }
 `
 export const ContentContactNavVertical = styled.div`
-    width: 14.563em;
-    padding: 1.5em 2.813em;
+    position: relative;
+    width: 50%;
+    height: 15em;
     box-shadow: 0px 20px 30px #00000014;
     text-align: center;
     margin: 0 auto;
-    margin-top: 2.563em;
+    margin-top: 10em;
+    background-color: #F0F7F6;
+    border-radius: 1em;
     & span{
         display: block;
         margin-bottom: 0.563em;
@@ -174,10 +200,10 @@ export const ContentContactNavVertical = styled.div`
         color: #B2B2B2;
     }
     & .btnContactUs{
-        font-family: 'poppinssemibold';
+        font-family: 'monserrat_semibold';
         width: 9.875em;
-        background-color: #EBF1EF;
-        color: #135846;
+        background-color: #02A18A;
+        color: #fff;
         text-align: center;
         padding: 0.875em 0;
         margin: 0 auto;
@@ -185,6 +211,7 @@ export const ContentContactNavVertical = styled.div`
         border-radius: 0.5em;
         box-shadow: 0px 4px 4px #135846;
         cursor: pointer;
+        transition: scale ease-in-out .1s;
         &:hover{
             scale: 1.1;
         } 
@@ -209,14 +236,16 @@ export const ContentCopyNavVertical = styled.div`
     margin-top: 3.875em;
     & .titcopy{
         display: block;
-        font-family: 'poppinssemibold';
+        font-family: 'monserrat_semibold';
         font-size: 1rem;
         margin-bottom: .313em;
+        color: #fff;
     }
     & .subtitcopy,.madecopy{
         display: block;
-        font-family: 'poppinslight';
+        font-family: 'monserrat_extralight';
         font-size: .88rem;
         margin-bottom: 4.188em;
+        color: #fff;
     }
 `

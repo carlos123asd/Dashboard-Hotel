@@ -60,6 +60,26 @@
     font-family: 'merriweather';
     src: url('./assets/fonts/Merriweather/Merriweather-Black.ttf');
   }
+  @font-face {
+    font-family: 'DM_Sans9T';
+    src: url('./assets/fonts/DM_Sans/static/DMSans_18pt-Regular.ttf');
+  }
+  @font-face {
+    font-family: 'DM_Sans_extralight';
+    src: url('./assets/fonts/DM_Sans/static/DMSans-ExtraLight.ttf');
+  }
+  @font-face {
+    font-family: 'monserrat';
+    src: url('./assets/fonts/Montserrat/static/Montserrat-Regular.ttf');
+  }
+  @font-face {
+    font-family: 'monserrat_semibold';
+    src: url('./assets/fonts/Montserrat/static/Montserrat-SemiBold.ttf');
+  }
+  @font-face {
+    font-family: 'monserrat_extralight';
+    src: url('./assets/fonts/Montserrat/static/Montserrat-ExtraLight.ttf');
+  }
 
   .tooltipcheckout{
     background: #E23428;
