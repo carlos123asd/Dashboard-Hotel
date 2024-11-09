@@ -105,7 +105,7 @@
     }
   
     100% {
-        padding-left: 25%;
+        padding-left: calc(25% + 2.563em);
     }
   }
 

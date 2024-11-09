@@ -106,46 +106,40 @@ export default function Nav(props:InterfacePropsStyleNav){
         }
     },[selectorStateBooking,selectorStateMessage])
 
-    if(loading === false){
-        return <>
-            <ContentNavMain style={stylenav}>
-                <div>
-                    <img onClick={showNavVertical} src={iconmenu} alt="Menu" />
-                    <ContentNavTit>{path.pathname === '/' ? 'Dashboard' : (path.pathname.split('/')[1])[0].toUpperCase()+(path.pathname.split('/')[1]).slice(1)}</ContentNavTit>
-                </div>
-                
-                <div className='pos-relative'>
-                    <ContentNavImg>
-                        <NotificationTooltip title="Latest Review by Customers" onClick={handleShowListMessage} className='contennotification'>
-                            <img width={26} height={35} src={iconmessage} alt="Messages" />
-                            <div className='contennotification__num'>{Messagewaiting}</div>
-                        </NotificationTooltip>
-                        <div style={{left: 0,position: 'absolute',zIndex: "1000"}}>
-                            <ListMessage />
-                        </div>
-                    </ContentNavImg>
+    return <>
+        <ContentNavMain style={stylenav}>
+            <div className='titpath'>
+                <img onClick={showNavVertical} src={iconmenu} alt="Menu" />
+                <ContentNavTit>{path.pathname === '/' ? 'Dashboard' : (path.pathname.split('/')[1])[0].toUpperCase()+(path.pathname.split('/')[1]).slice(1)}</ContentNavTit>
+            </div>
+            
+            <div className='pos-relative'>
+                <ContentNavImg>
+                    <NotificationTooltip title="Latest Review by Customers" onClick={handleShowListMessage} className='contennotification'>
+                        <img width={40} height={40} src={iconmessage} alt="Messages" />
+                        <div className='contennotification__num'>{Messagewaiting}</div>
+                    </NotificationTooltip>
+                    <div style={{left: 0,position: 'absolute',zIndex: "1000"}}>
+                        <ListMessage />
+                    </div>
+                </ContentNavImg>
 
-                    <ContentNavImg>
-                        <NotificationTooltip title="Reservations for this month" onClick={handleShowListBookings} className='contennotification'>
-                            <img width={26} height={35} src={iconnotification} alt="Notifications" />
-                            <div className='contennotification__num'>{filterbymonthActualNum}</div>
-                        </NotificationTooltip>
-                        <div style={{left: 0,position: 'absolute',zIndex: "1000"}}>
-                            <ListBookings />
-                        </div>
-                    </ContentNavImg>
+                <ContentNavImg>
+                    <NotificationTooltip title="Reservations for this month" onClick={handleShowListBookings} className='contennotification'>
+                        <img width={40} height={40} src={iconnotification} alt="Notifications" />
+                        <div className='contennotification__num'>{filterbymonthActualNum}</div>
+                    </NotificationTooltip>
+                    <div style={{left: 0,position: 'absolute',zIndex: "1000"}}>
+                        <ListBookings />
+                    </div>
+                </ContentNavImg>
 
-                    <ContentNavImg id='logoutt' onClick={logout} className='margin-2'>
-                        <NotificationTooltip title="Log Out">
-                            <img width={22} height={31} src={iconlogout} alt="Log Out" />
-                        </NotificationTooltip>
-                    </ContentNavImg>
-                </div>
-            </ContentNavMain>
-        </>
-    }else{
-        return <>
-            <h1>Loading...</h1>
-        </>
-    }
+                <ContentNavImg id='logoutt' onClick={logout} className='margin-2'>
+                    <NotificationTooltip title="Log Out">
+                        <img width={40} height={40} src={iconlogout} alt="Log Out" />
+                    </NotificationTooltip>
+                </ContentNavImg>
+            </div>
+        </ContentNavMain>
+    </>
 }

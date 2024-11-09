@@ -2,19 +2,27 @@ import styled from "styled-components";
 
 export const ContentNavMain = styled.div`
     width: 100%;
-    height: 7.5em;
-    box-shadow: 0px 3px 10px #00000005;
+    height: 10em;
+    box-shadow: 0px 4px 4px 2px rgba(0, 0, 0, 0.46);
     display: flex;
     justify-content: space-between;
     align-items: center;
     animation-duration: 3s;
     animation-name: slidein;
-    padding-left: 25%;
     grid-column: 1 / 3;
     grid-row: 1;
-
+    background-color: #05372C;
     & .pos-relative{
         position: relative;
+    }
+    & .titpath{
+        display: flex;
+        align-items: center;
+        & img{
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+        }
     }
 `
 
@@ -42,11 +50,11 @@ export const ContentNavImg = styled.div`
 `
 
 export const ContentNavTit = styled.span`
-    font-family: 'poppinssemibold';
-    font-size: 1.75rem;
+    font-family: 'DM_Sans9T';
+    font-size: 2rem;
     line-height: 42px;
     margin-left: 1.3em;
-    color: #262626;
+    color: #fff;
 `
 
 export const ContentNavVertical = styled.div`
@@ -61,6 +69,7 @@ export const ContentNavVertical = styled.div`
     background: #05372C;
     grid-column: 1;
     grid-row: 1 / auto;
+    padding-bottom: 6em;
 `
 
 export const SubTitLogoNavVertical = styled.span`
@@ -142,7 +151,7 @@ export const UnListContentHeaderNavVertical = styled.div`
     padding-left: 0;
     display: block;
     align-content: center;
-    margin-top: 3.5em;
+    margin-top: 5em;
     & h2{
         font-family: 'DM_Sans_extralight';
         font-size: 2rem;
@@ -182,7 +191,7 @@ export const ContentContactNavVertical = styled.div`
     box-shadow: 0px 20px 30px #00000014;
     text-align: center;
     margin: 0 auto;
-    margin-top: 10em;
+    margin-top: 12em;
     background-color: #F0F7F6;
     border-radius: 1em;
     & span{

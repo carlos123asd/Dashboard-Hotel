@@ -61,7 +61,7 @@ export default function Dashboard(){
       },[selectorMenuDisplay])
 
     
-    if(token_auth !== null){
+    if(token_auth === null){
         return <>
             <Login />
         </>
