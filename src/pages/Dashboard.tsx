@@ -1,11 +1,15 @@
 import Nav from '../components/Nav'
-import { Outlet } from 'react-router-dom'
+import { Outlet, redirect, useNavigate } from 'react-router-dom'
 import Layout from '../styles/layout/Layout'
 import NavVertical from '../components/NavVertical'
 import { useEffect, useState } from 'react';
 import { appSelector } from '../features/hooks/hooks';
 import { styleGrid } from '../interfaces/InterfaceStyleGrid';
 import Login from './Login';
+import { WaveSpinner } from "react-spinners-kit";
+import logo from "../assets/imgs/menu/logo.svg";
+import Loading from '../styles/loading/Loading';
+import { useContextAuth } from '../features/context/AuthContext';
 
 
 export default function Dashboard(){
@@ -25,6 +29,9 @@ export default function Dashboard(){
         }
     })
     const token_auth = localStorage.getItem('TOKEN_AUTH');
+    const [loading,setLoading] = useState(true);
+    const {state}:any = useContextAuth();
+    const navigate = useNavigate();
     
     useEffect(() => {
         if(selectorMenuDisplay === true){
@@ -60,18 +67,27 @@ export default function Dashboard(){
         }
       },[selectorMenuDisplay])
 
-    
-    if(token_auth === null){
-        return <>
-            <Login />
-        </>
+    console.log(state.user)
+    if(token_auth === null || Object.keys(state.user).length === 0){
+        navigate('/login')
     }else{
-        return <>
-            <Layout style={stylegrid.grid}>
-                <Nav stylenav={stylegrid.padding} />
-                <NavVertical stylenavvertical={stylegrid.left}/>
-                <Outlet />
-            </Layout>
-        </>
+        setTimeout(() => {
+            setLoading(false);
+        },4000)
+       return (loading) ?
+            <>
+                <Loading>
+                    <img width={200} height={200} src={logo} alt="logo Hotel" />
+                    <WaveSpinner size={50} color="#c9a6a6" loading={loading} />
+                </Loading>
+            </>
+        :
+            <>
+                <Layout style={stylegrid.grid}>
+                    <Nav stylenav={stylegrid.padding} />
+                    <NavVertical stylenavvertical={stylegrid.left}/>
+                    <Outlet />
+                </Layout>
+            </>
     }
 }

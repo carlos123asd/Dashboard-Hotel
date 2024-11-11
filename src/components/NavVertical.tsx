@@ -9,7 +9,6 @@ import { ContentNavVertical,
     ContentCopyNavVertical } from "../styles/nav/nav"
 
 import iconLogo from '../assets/imgs/menu/logo.svg'
-import imgprofile from '../assets/imgs/menu/lateral/perfil.jpg'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Modal } from "@mui/material";
 import { ModalNewRoom } from "../styles/table/ModalNewRoom";
@@ -18,8 +17,6 @@ import { useContextAuth } from "../features/context/AuthContext";
 import MuiPhoneNumber from "mui-phone-number";
 import validationEdituser from "../features/forms/validationformEditUser";
 import { InterfaceStyleNavVertical } from "../interfaces/InterfaceStyleNavVertical";
-import { appSelector } from "../features/hooks/hooks";
-import User from '../class/CEmployee'
 
 export default function NavVertical(props:InterfaceStyleNavVertical){
 
@@ -183,7 +180,7 @@ export default function NavVertical(props:InterfaceStyleNavVertical){
                 <ContentCopyNavVertical>
                     <span className='titcopy'>Travl Hotel Admin Dashboard</span>
                     <span className='subtitcopy'>© 2024 All Rights Reserved</span>
-                    <span className='madecopy'>Made with ♥ by AlexDev</span>
+                    <span className='madecopy'>Made with ❤️ by AlexDev</span>
                 </ContentCopyNavVertical>
         </ContentNavVertical>
     </>

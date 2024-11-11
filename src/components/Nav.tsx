@@ -129,7 +129,7 @@ export default function Nav(props:InterfacePropsStyleNav){
                         <img width={40} height={40} src={iconnotification} alt="Notifications" />
                         <div className='contennotification__num'>{filterbymonthActualNum}</div>
                     </NotificationTooltip>
-                    <div style={{left: 0,position: 'absolute',zIndex: "1000"}}>
+                    <div style={{left: '-100%',position: 'absolute',zIndex: "1000"}}>
                         <ListBookings />
                     </div>
                 </ContentNavImg>

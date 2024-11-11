@@ -70,6 +70,7 @@ export const ContentNavVertical = styled.div`
     grid-column: 1;
     grid-row: 1 / auto;
     padding-bottom: 6em;
+    box-shadow: 4px 0px 4px 2px rgba(0, 0, 0, 0.46);
 `
 
 export const SubTitLogoNavVertical = styled.span`
@@ -194,19 +195,23 @@ export const ContentContactNavVertical = styled.div`
     margin-top: 12em;
     background-color: #F0F7F6;
     border-radius: 1em;
+    align-content: center;
     & span{
         display: block;
         margin-bottom: 0.563em;
     }
     & .titprofile{
         width: max-content;
-        font-family: 'poppinsmedium';
-        font-size: 1rem;
+        font-family: 'monserrat';
+        font-size: 1.3rem;
+        margin: 0 auto;
+        margin-top: 2.5em;
     }
     & .subtitprofile{
-        font-family: 'poppinslight';
-        font-size: 0.75rem;
+        font-family: 'monserrat_semibold';
+        font-size: .8rem;
         color: #B2B2B2;
+        margin-top: 1em;
     }
     & .btnContactUs{
         font-family: 'monserrat_semibold';
@@ -216,7 +221,7 @@ export const ContentContactNavVertical = styled.div`
         text-align: center;
         padding: 0.875em 0;
         margin: 0 auto;
-        margin-top: 1em;
+        margin-top: 1.3em;
         border-radius: 0.5em;
         box-shadow: 0px 4px 4px #135846;
         cursor: pointer;
