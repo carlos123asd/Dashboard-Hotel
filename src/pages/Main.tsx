@@ -8,6 +8,41 @@ import { useEffect, useState } from "react"
 import { appDispatch, appSelector } from "../features/hooks/hooks"
 import { dbThunkRoom } from "../features/db/thunks/dbThunkRoom"
 import { dbThunkBooking } from "../features/db/thunks/dbThunkBooking"
+import { Card, SparkAreaChart } from "@tremor/react"
+//import { Card } from "@/components/Card"
+//import { SparkAreaChart } from "@/components/SparkChart"
+
+const chartdata = [
+    {
+      month: "Jan 21",
+      Performance: 4000,
+    },
+    {
+      month: "Feb 21",
+      Performance: 3000,
+    },
+    {
+      month: "Mar 21",
+      Performance: 2000,
+    },
+    {
+      month: "Apr 21",
+      Performance: 2780,
+    },
+    {
+      month: "May 21",
+      Performance: 1890,
+    },
+    {
+      month: "Jun 21",
+      Performance: 2390,
+    },
+    {
+      month: "Jul 21",
+      Performance: 3490,
+    },
+  ]
+  
 
 export default function Main(){
     const dispatch = appDispatch()
@@ -43,6 +78,29 @@ export default function Main(){
         return <>
             <ContentPageMain>
                 <KpiDashboard>
+                    <Card className="mx-auto flex max-w-lg items-center justify-between px-4 py-3.5">
+                        <div className="flex items-center space-x-2.5">
+                            <p className="font-medium text-gray-700 dark:text-gray-300">Booking</p>
+                            <span className="text-sm text-gray-500 dark:text-gray-500">
+                                New Booking
+                            </span>
+                        </div>
+                        <SparkAreaChart
+                            data={chartdata}
+                            categories={["Performance"]}
+                            index={"month"}
+                            colors={["emerald"]}
+                            className="h-8 w-20 sm:h-10 sm:w-36"
+                        />
+                        <div className="flex items-center space-x-2.5">
+                            <span className="font-medium text-gray-700 dark:text-gray-300">
+                                {stateDbDataBooking.length}
+                            </span>
+                            <span className="rounded bg-emerald-500 px-2 py-1 text-sm font-medium text-white">
+                                +1.72%
+                            </span>
+                        </div>
+                    </Card>
                     <div className='kpicontent'>
                         <div className='kpicontent__img'>
                             <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
