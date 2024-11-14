@@ -78,7 +78,7 @@ export default function Dashboard(){
             <>
                 <Loading>
                     <img width={200} height={200} src={logo} alt="logo Hotel" />
-                    <WaveSpinner size={50} color="#c9a6a6" loading={loading} />
+                    <WaveSpinner size={50} color="#fff" loading={loading} />
                 </Loading>
             </>
         :

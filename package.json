@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "tailwind:build": "npx tsc tailwind.config.ts",
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": " && vite tscbuild",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "server": "json-server --watch ./src/data/room.json --port 3004",

@@ -84,6 +84,10 @@
     font-family: 'monserrat_extralight';
     src: url('./assets/fonts/Montserrat/static/Montserrat-ExtraLight.ttf');
   }
+  @font-face {
+    font-family: 'spacemono_bold';
+    src: url('./assets/fonts/Space_Mono/SpaceMono-Bold.ttf');
+  }
 
   .tooltipcheckout{
     background: #E23428;

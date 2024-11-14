@@ -4,7 +4,6 @@ export const KpiDashboard = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-evenly;
-    flex-wrap: wrap;
     flex-direction: row;
     gap: 2.375em;
     margin-bottom: 2.5em;
@@ -15,13 +14,25 @@ export const KpiDashboard = styled.div`
         padding: 1.875em;
         background-color: #fff;
         display: flex;
+        &--purple{
+            background-color: #8F5CCB
+        }
+        &--greenv2{
+            background-color: #02A18A
+        }
+        &--green{
+            background-color: #66D255
+        }
+        &--yellow{
+            background-color: #FFBC3B
+        }
         &__img{ 
             width: 60px;
             height: 100%;
             border-radius: .5em;
             text-align: center;
             align-content: center;
-            background-color: #FFEDEC;
+            //background-color: #8F5CCB;
             padding: 20px 0;
             margin-right: 1.375em;
             vertical-align: text-bottom;

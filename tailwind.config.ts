@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 /* eslint-disable max-len */
-const colors = require('tailwindcss/colors');
+import colors from 'tailwindcss/colors';
+
 module.exports = {
   content: [
     "./index.html",
@@ -11,8 +12,12 @@ module.exports = {
     transparent: "transparent",
     current: "currentColor",
     extend: {
+      fontFamily:{
+        'titDashboard': ['nunito_bold'],
+        'subTitDashboard': ['nunito'],
+        'numeros': ['spacemono_bold'],
+      },
       colors: {
-        // light mode
         tremor: {
           brand: {
             faint: colors.blue[50],
