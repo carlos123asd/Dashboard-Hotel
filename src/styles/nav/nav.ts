@@ -235,10 +235,50 @@ export const ContentPageMain = styled.div`
     padding: 3.125em;
     animation-duration: 3s;
     animation-name: slidecontent;
-    background: #F8F8F8;
+    background: #F0F7F6;
     grid-column: 2;
     grid-row: 2/auto;
+    & .parent{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+        gap: 20px;
+        & .div3 {
+            grid-column-start: 1;
+            grid-row-start: 2;
+        }
 
+        & .div4 {
+            grid-column-start: 2;
+            grid-row-start: 2;
+        }
+
+        & .div5 {
+            grid-row: span 3 / span 3;
+            grid-column-start: 3;
+            grid-row-start: 1;
+            padding: 3.5rem;
+        }
+
+        & .div6 {
+            grid-column: span 2 / span 2;
+            grid-row: span 2 / span 2;
+            grid-row-start: 3;
+            margin-top: 3rem;
+        }
+
+        & .div7 {
+            grid-column: span 2 / span 2;
+            grid-column-start: 1;
+            grid-row-start: 5;
+        }
+
+        & .div8 {
+            grid-row: span 2 / span 2;
+            grid-column-start: 3;
+            grid-row-start: 4;
+        }
+    }
     & div[contentflex="true"]{
         display: flex;
         justify-content: space-between;

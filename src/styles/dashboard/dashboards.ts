@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const KpiDashboard = styled.div`
     width: 100%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     flex-direction: row;
     gap: 2.375em;
     margin-bottom: 2.5em;

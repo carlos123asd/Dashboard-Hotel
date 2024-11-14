@@ -27,7 +27,6 @@
     "@mui/x-date-pickers": "^7.14.0",
     "@reduxjs/toolkit": "^2.2.7",
     "@tremor/react": "^3.18.4",
-    "bizcharts": "^4.1.23",
     "bootstrap": "^5.3.3",
     "common-js": "^0.3.8",
     "dayjs": "^1.11.13",
