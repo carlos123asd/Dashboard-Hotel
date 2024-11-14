@@ -1,4 +1,4 @@
-import { BarChart } from "@tremor/react";
+import { BarChart, Card } from "@tremor/react";
 import { appSelector } from "../features/hooks/hooks";
 
 export default function Graphic(){
@@ -77,12 +77,15 @@ export default function Graphic(){
     
 
       return (
-        <BarChart
-        className="h-full"
-        data={chartdata}
-        index="date"
-        categories={["SolarPanels", "Inverters"]}
-        showLegend={false}
-        />
+        <Card className="h-full">
+            <BarChart
+            className="h-full"
+            data={chartdata}
+            index="date"
+            categories={["SolarPanels", "Inverters"]}
+            showLegend={false}
+            colors={["teal", "yellow"]}
+            />
+        </Card>
       )
 }
