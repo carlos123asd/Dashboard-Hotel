@@ -271,6 +271,7 @@ export const ContentPageMain = styled.div`
         grid-template-rows: repeat(4, 1fr);
         gap: 25px;
         .div1 {
+            height: max-content;
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             grid-template-rows: repeat(2, 1fr);
@@ -280,10 +281,11 @@ export const ContentPageMain = styled.div`
         }
 
         .div2 {
+            height: max-content;
             display: grid;
             grid-template-columns: repeat(1, 1fr);
             grid-template-rows: repeat(2, 1fr);
-            gap: 8px;
+            gap: 28px;
             grid-row: span 2 / span 2;
             grid-column-start: 3;
         }

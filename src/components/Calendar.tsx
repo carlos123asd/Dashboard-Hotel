@@ -27,7 +27,6 @@ export default function Calendar(){
     }
 
     const events = selectorDataBookings.map((booking) => {
-        console.log(selectorDataBookings);
         return {
             title: `${booking.guest}-${booking.roomType} #${booking.idRoom}`,
             start: new Date(`${booking.checkin}`),
@@ -91,7 +90,7 @@ export default function Calendar(){
         }
         navLinks={true}
         aspectRatio={2}
-        height={510}
+        height="100%"
         editable={true}
         selectable={true}
         nowIndicator={true}
