@@ -19,6 +19,16 @@ export default function Review(){
     const [loading,setLoading] = useState<boolean>(true)
     const dispatch = appDispatch()
 
+
+    useEffect(() =>{
+        if(stateDbStatusdbMessage === 'idle'){
+            dispatch(dbThunkMessage());
+        }else if(stateDbStatusdbMessage === 'fulfilled'){
+            setLoading(false);
+        }else if(stateDbStatusdbMessage === 'rejected'){
+            console.error(selectorDbErrordbMessage)
+        }
+    },[stateDbStatusdbMessage])
     /*
     const [datamessage,setDatamessage] = useState(stateDbDatadbMessage.filter((message:Message) => {
         return message.status === 'none'
@@ -39,15 +49,7 @@ export default function Review(){
         updateStatusfetchMessage(message._id,'archived','Message archived')
     }
 
-    useEffect(() =>{
-        if(stateDbStatusdbMessage === 'idle'){
-            dispatch(dbThunkMessage());
-        }else if(stateDbStatusdbMessage === 'fulfilled'){
-            setLoading(false);
-        }else if(stateDbStatusdbMessage === 'rejected'){
-            console.error(selectorDbErrordbMessage)
-        }
-    },[stateDbStatusdbMessage])
+    console.log(stateDbDatadbMessage);
 
     if(loading === false){
         return <>

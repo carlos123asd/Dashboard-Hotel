@@ -67,7 +67,6 @@ export default function Dashboard(){
         }
       },[selectorMenuDisplay])
 
-    console.log(state.user)
     if(token_auth === null || Object.keys(state.user).length === 0){
         navigate('/login')
     }else{
