@@ -267,6 +267,9 @@ export default function Main(){
                                 <div className="w-4/5 font-titDashboard bg-teal-600 font-black text-center rounded-full p-3 pt-6 pb-6 text-white text-2xl cursor-pointer" style={{margin:"0 auto",marginTop:"10%"}}>View Details</div>
                             </div>
                         </Card>
+                        <div>
+                            <Calendar />
+                        </div>
                     </div>
                     <div className="div3">
                         <Graphic />
@@ -276,9 +279,6 @@ export default function Main(){
                     </div>
                     <div className="div5">
                         <Review />
-                    </div>
-                    <div className="div6">
-                        <Calendar />
                     </div>
                 </div>
             </ContentPageMain>

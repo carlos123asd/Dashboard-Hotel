@@ -280,6 +280,10 @@ export const ContentPageMain = styled.div`
         }
 
         .div2 {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 8px;
             grid-row: span 2 / span 2;
             grid-column-start: 3;
         }
@@ -295,12 +299,7 @@ export const ContentPageMain = styled.div`
         }
 
         .div5 {
-            grid-column: span 2 / span 2;
-            grid-row-start: 4;
-        }
-
-        .div6 {
-            grid-column-start: 3;
+            grid-column: span 3 / span 3;
             grid-row-start: 4;
         }
     }
