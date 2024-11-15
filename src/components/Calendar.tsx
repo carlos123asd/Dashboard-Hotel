@@ -27,6 +27,7 @@ export default function Calendar(){
     }
 
     const events = selectorDataBookings.map((booking) => {
+        console.log(selectorDataBookings);
         return {
             title: `${booking.guest}-${booking.roomType} #${booking.idRoom}`,
             start: new Date(`${booking.checkin}`),
@@ -80,6 +81,7 @@ export default function Calendar(){
         events={events}
         eventContent={renderEventContent}
         expandRows={true}
+        _resize={()=>true}
         headerToolbar= {
             {
             left: 'prev,next today',

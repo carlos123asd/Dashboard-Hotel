@@ -12,7 +12,7 @@ export const dbThunkBooking = createAsyncThunk('dbThunkBooking', async () => {
     })
     if(bookings.ok){
         const jsonbookings:Booking[] = await bookings.json()
-        return jsonbookings.sort((a:any, b:any) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime())
+        return (jsonbookings.sort((a:any, b:any) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime()))[0]
     }
     
 });

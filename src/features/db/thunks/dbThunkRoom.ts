@@ -12,6 +12,6 @@ export const dbThunkRoom = createAsyncThunk('dbThunkRoom', async () => {
         })
         if(rooms.ok){
             const jsonrooms:Room[] = await rooms.json()
-            return jsonrooms.sort((a:any, b:any) => Number(b.roomNumber) - Number(a.roomNumber))
+            return (jsonrooms.sort((a:any, b:any) => Number(b.roomNumber) - Number(a.roomNumber)))[0]
         }
 });
