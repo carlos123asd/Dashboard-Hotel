@@ -1,15 +1,15 @@
-import { ContentPageMain } from "../styles/nav/nav"
-import { KpiDashboard } from '../styles/dashboard/dashboards'
-import Review from "../components/Review"
-import Calendar from "../components/Calendar"
-import { Contentcalendargrafics } from "../styles/dashboard/Contentcalendargrafics"
-import Graphic from "../components/Graphic"
-import { useEffect, useState } from "react"
 import { appDispatch, appSelector } from "../features/hooks/hooks"
-import { dbThunkRoom } from "../features/db/thunks/dbThunkRoom"
-import { dbThunkBooking } from "../features/db/thunks/dbThunkBooking"
 import { Card, SparkAreaChart } from "@tremor/react"
+import { Contentcalendargrafics } from "../styles/dashboard/Contentcalendargrafics"
+import { ContentPageMain } from "../styles/nav/nav"
+import { dbThunkBooking } from "../features/db/thunks/dbThunkBooking"
+import { dbThunkRoom } from "../features/db/thunks/dbThunkRoom"
+import { KpiDashboard } from '../styles/dashboard/dashboards'
+import { useEffect, useState } from "react"
+import Calendar from "../components/Calendar"
 import DonutChart from "../components/DonutChart"
+import Graphic from "../components/Graphic"
+import Review from "../components/Review"
 
 const chartdata = [
     {
@@ -229,57 +229,59 @@ export default function Main(){
                             </div>
                         </Card>
                     </div>
-                    <Card className="mx-auto h-max w-full flex flex-col items-center gap-10 bg-gradient-to-br from-teal-400 to-green-500 hover:shadow-lg hover:scale-105 transition-all justify-center div2">
-                        <svg width="300" height="300" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip0_83_2)">
-                                <path d="M150 149.775H6.52637" stroke="#090814" stroke-width="1.5" stroke-miterlimit="10"/>
-                                <path d="M38.1447 40.0536H29.2346V51.7783H38.1447V40.0536Z" fill="white"/>
-                                <path d="M47.9457 42.0078H39.0356V51.7783H47.9457V42.0078Z" fill="white"/>
-                                <path d="M57.7468 42.0078H48.8367V51.7783H57.7468V42.0078Z" fill="white"/>
-                                <path d="M77.3491 43.9619H68.439V51.7782H77.3491V43.9619Z" fill="white"/>
-                                <path d="M67.5478 14.6503H58.6377V51.7782H67.5478V14.6503Z" fill="#6C63FF"/>
-                                <path d="M106.549 0.224823H0.205078V51.7864H106.549V0.224823Z" stroke="#090814" stroke-width="1.5" stroke-miterlimit="10"/>
-                                <path d="M127.358 133.329L123.581 137.678L119.555 133.597L123.332 129.248L127.358 133.329Z" fill="#ED9DA0"/>
-                                <path d="M130.375 137.783L122.346 147.028C121.659 147.818 120.802 148.442 119.867 148.833L117.628 149.769C117.166 149.962 116.633 149.85 116.271 149.483C115.846 149.053 115.739 148.364 116.01 147.807L118.163 143.378L120.46 134.396L120.485 134.413C121.11 134.835 122.058 135.469 122.126 135.495C123.316 135.542 124.168 135.214 124.658 134.52C125.513 133.311 124.971 131.381 124.965 131.362L124.961 131.347L124.972 131.337C125.221 131.104 125.483 131.01 125.752 131.059C126.322 131.164 126.73 131.866 126.79 131.974C127.325 131.95 128.968 133.361 129.1 133.475C129.906 133.472 130.498 133.682 130.857 134.098C131.172 134.462 131.308 134.978 131.264 135.633C131.211 136.421 130.895 137.184 130.375 137.783Z" fill="#090814"/>
-                                <path d="M122.997 138.336H117.477V144.3H122.997V138.336Z" fill="#ED9DA0"/>
-                                <path d="M122.055 149.725H110.321C109.318 149.725 108.31 149.477 107.406 149.008L105.243 147.884C104.795 147.652 104.506 147.155 104.506 146.619C104.506 145.99 104.898 145.434 105.459 145.266L109.922 143.932L117.557 139.597L117.562 139.628C117.705 140.409 117.926 141.589 117.955 141.661C118.738 142.63 119.542 143.077 120.345 142.989C121.746 142.835 122.678 141.087 122.687 141.069L122.694 141.056L122.709 141.057C123.037 141.094 123.279 141.237 123.43 141.482C123.75 142.003 123.555 142.805 123.522 142.926C123.905 143.331 124.077 145.59 124.09 145.773C124.644 146.407 124.907 147.016 124.872 147.584C124.842 148.08 124.587 148.542 124.115 148.955C123.546 149.451 122.815 149.725 122.055 149.725Z" fill="#090814"/>
-                                <path d="M123.652 63.2241L104.091 63.2346L97.571 107.839L117.132 133.333L123.652 126.959L108.194 107.839L123.652 63.2241Z" fill="#090814"/>
-                                <path d="M112.091 69.7992L123.652 63.2241V139.706L117.132 139.903L112.091 69.7992Z" fill="#090814"/>
-                                <path d="M100.51 81.1108L100.648 74.1485L96.9404 74.0603L96.8027 81.0226C96.1111 81.7267 95.6545 82.8207 95.6299 84.061C95.587 86.2313 96.88 88.0222 98.5179 88.0611C100.156 88.1001 101.518 86.3724 101.561 84.2021C101.586 82.9618 101.173 81.8471 100.51 81.1108Z" fill="#ED9DA0"/>
-                                <path d="M118.089 13.116C118.089 13.116 123.41 13.1034 121.422 7.48086C119.434 1.85832 115.733 4.37584 115.733 4.37584C115.733 4.37584 114.173 5.27926 114.495 7.29491" fill="#090814"/>
-                                <path d="M118.621 15.813C118.621 11.5021 115.434 8.00751 111.503 8.00751C107.572 8.00751 104.385 11.5021 104.385 15.813C104.385 19.3091 106.481 22.268 109.371 23.2617L110.747 33.234L117.762 26.8236C117.762 26.8236 116.246 24.707 115.433 22.3203C117.354 20.9224 118.621 18.5304 118.621 15.813Z" fill="#ED9DA0"/>
-                                <path d="M114.923 22.4067C114.923 22.4067 115.868 18.4327 114.323 16.6054C112.781 14.7823 112.581 17.619 112.581 17.619L111.469 17.3537C111.469 17.3537 111.662 14.5951 109.485 14.1176L110.888 10.8284C110.888 10.8284 105.517 11.9721 105.369 11.4016C104.204 6.91282 115.317 3.07836 118.387 9.92655C123.162 20.5778 114.923 22.4067 114.923 22.4067Z" fill="#090814"/>
-                                <path d="M108.636 29.3604C103.468 30.4677 99.5894 35.186 99.119 40.9368L95.9023 80.266H101.547L108.636 29.3604Z" fill="#6C63FF"/>
-                                <path d="M103.298 60.6954L102.419 71.8L126.282 64.1037L123.375 56.0776L128.789 42.4441L117.736 25.0725L108.913 25.7322L105.504 30.5698" fill="#6C63FF"/>
-                                <path d="M122.759 71.2413L126.087 65.3104L122.929 63.1794L119.601 69.1104C118.679 69.3345 117.781 70.0253 117.188 71.0819C116.151 72.9306 116.441 75.1926 117.836 76.1341C119.231 77.0756 121.203 76.3402 122.241 74.4914C122.834 73.4349 122.991 72.2442 122.759 71.2413Z" fill="#ED9DA0"/>
-                                <path d="M115.932 25.2923L117.856 25.2048L121.146 27.9311C125.044 28.66 126.174 28.8644 127.369 31.6879C127.87 32.8743 128.203 34.1383 128.389 35.4301L131.172 54.7582L124.177 73.2293L119.541 67.5121L124.497 53.0709L123.674 49.6166" fill="#6C63FF"/>
-                            </g>
-                            <defs>
-                                <clipPath id="clip0_83_2">
-                                    <rect width="150" height="150" fill="white"/>
-                                </clipPath>
-                            </defs>
-                        </svg>
-                        <div style={{padding:"5%"}}>
-                            <h2 className="font-titDashboard text-5xl text-white text-left leading-tight">Analysis of Underperforming Rooms</h2>
-                            <p className="font-subTitDashboard text-3xl mt-8 text-white p-1 leading-tight">Identify and analyze the 5 rooms that need a marketing boost. Review their popularity and booking indexes to improve performance and increase occupancy.</p>
-                            <div className="w-4/5 font-titDashboard bg-teal-600 font-black text-center rounded-full p-3 pt-6 pb-6 text-white text-2xl cursor-pointer" style={{margin:"0 auto",marginTop:"10%"}}>View Details</div>
-                        </div>
-                    </Card>
+                    <div className="div2">
+                        <Card className="mx-auto h-max w-full flex flex-col items-center gap-10 bg-gradient-to-br from-teal-400 to-green-500 hover:shadow-lg hover:scale-105 transition-all justify-center">
+                            <svg width="300" height="300" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_83_2)">
+                                    <path d="M150 149.775H6.52637" stroke="#090814" stroke-width="1.5" stroke-miterlimit="10"/>
+                                    <path d="M38.1447 40.0536H29.2346V51.7783H38.1447V40.0536Z" fill="white"/>
+                                    <path d="M47.9457 42.0078H39.0356V51.7783H47.9457V42.0078Z" fill="white"/>
+                                    <path d="M57.7468 42.0078H48.8367V51.7783H57.7468V42.0078Z" fill="white"/>
+                                    <path d="M77.3491 43.9619H68.439V51.7782H77.3491V43.9619Z" fill="white"/>
+                                    <path d="M67.5478 14.6503H58.6377V51.7782H67.5478V14.6503Z" fill="#6C63FF"/>
+                                    <path d="M106.549 0.224823H0.205078V51.7864H106.549V0.224823Z" stroke="#090814" stroke-width="1.5" stroke-miterlimit="10"/>
+                                    <path d="M127.358 133.329L123.581 137.678L119.555 133.597L123.332 129.248L127.358 133.329Z" fill="#ED9DA0"/>
+                                    <path d="M130.375 137.783L122.346 147.028C121.659 147.818 120.802 148.442 119.867 148.833L117.628 149.769C117.166 149.962 116.633 149.85 116.271 149.483C115.846 149.053 115.739 148.364 116.01 147.807L118.163 143.378L120.46 134.396L120.485 134.413C121.11 134.835 122.058 135.469 122.126 135.495C123.316 135.542 124.168 135.214 124.658 134.52C125.513 133.311 124.971 131.381 124.965 131.362L124.961 131.347L124.972 131.337C125.221 131.104 125.483 131.01 125.752 131.059C126.322 131.164 126.73 131.866 126.79 131.974C127.325 131.95 128.968 133.361 129.1 133.475C129.906 133.472 130.498 133.682 130.857 134.098C131.172 134.462 131.308 134.978 131.264 135.633C131.211 136.421 130.895 137.184 130.375 137.783Z" fill="#090814"/>
+                                    <path d="M122.997 138.336H117.477V144.3H122.997V138.336Z" fill="#ED9DA0"/>
+                                    <path d="M122.055 149.725H110.321C109.318 149.725 108.31 149.477 107.406 149.008L105.243 147.884C104.795 147.652 104.506 147.155 104.506 146.619C104.506 145.99 104.898 145.434 105.459 145.266L109.922 143.932L117.557 139.597L117.562 139.628C117.705 140.409 117.926 141.589 117.955 141.661C118.738 142.63 119.542 143.077 120.345 142.989C121.746 142.835 122.678 141.087 122.687 141.069L122.694 141.056L122.709 141.057C123.037 141.094 123.279 141.237 123.43 141.482C123.75 142.003 123.555 142.805 123.522 142.926C123.905 143.331 124.077 145.59 124.09 145.773C124.644 146.407 124.907 147.016 124.872 147.584C124.842 148.08 124.587 148.542 124.115 148.955C123.546 149.451 122.815 149.725 122.055 149.725Z" fill="#090814"/>
+                                    <path d="M123.652 63.2241L104.091 63.2346L97.571 107.839L117.132 133.333L123.652 126.959L108.194 107.839L123.652 63.2241Z" fill="#090814"/>
+                                    <path d="M112.091 69.7992L123.652 63.2241V139.706L117.132 139.903L112.091 69.7992Z" fill="#090814"/>
+                                    <path d="M100.51 81.1108L100.648 74.1485L96.9404 74.0603L96.8027 81.0226C96.1111 81.7267 95.6545 82.8207 95.6299 84.061C95.587 86.2313 96.88 88.0222 98.5179 88.0611C100.156 88.1001 101.518 86.3724 101.561 84.2021C101.586 82.9618 101.173 81.8471 100.51 81.1108Z" fill="#ED9DA0"/>
+                                    <path d="M118.089 13.116C118.089 13.116 123.41 13.1034 121.422 7.48086C119.434 1.85832 115.733 4.37584 115.733 4.37584C115.733 4.37584 114.173 5.27926 114.495 7.29491" fill="#090814"/>
+                                    <path d="M118.621 15.813C118.621 11.5021 115.434 8.00751 111.503 8.00751C107.572 8.00751 104.385 11.5021 104.385 15.813C104.385 19.3091 106.481 22.268 109.371 23.2617L110.747 33.234L117.762 26.8236C117.762 26.8236 116.246 24.707 115.433 22.3203C117.354 20.9224 118.621 18.5304 118.621 15.813Z" fill="#ED9DA0"/>
+                                    <path d="M114.923 22.4067C114.923 22.4067 115.868 18.4327 114.323 16.6054C112.781 14.7823 112.581 17.619 112.581 17.619L111.469 17.3537C111.469 17.3537 111.662 14.5951 109.485 14.1176L110.888 10.8284C110.888 10.8284 105.517 11.9721 105.369 11.4016C104.204 6.91282 115.317 3.07836 118.387 9.92655C123.162 20.5778 114.923 22.4067 114.923 22.4067Z" fill="#090814"/>
+                                    <path d="M108.636 29.3604C103.468 30.4677 99.5894 35.186 99.119 40.9368L95.9023 80.266H101.547L108.636 29.3604Z" fill="#6C63FF"/>
+                                    <path d="M103.298 60.6954L102.419 71.8L126.282 64.1037L123.375 56.0776L128.789 42.4441L117.736 25.0725L108.913 25.7322L105.504 30.5698" fill="#6C63FF"/>
+                                    <path d="M122.759 71.2413L126.087 65.3104L122.929 63.1794L119.601 69.1104C118.679 69.3345 117.781 70.0253 117.188 71.0819C116.151 72.9306 116.441 75.1926 117.836 76.1341C119.231 77.0756 121.203 76.3402 122.241 74.4914C122.834 73.4349 122.991 72.2442 122.759 71.2413Z" fill="#ED9DA0"/>
+                                    <path d="M115.932 25.2923L117.856 25.2048L121.146 27.9311C125.044 28.66 126.174 28.8644 127.369 31.6879C127.87 32.8743 128.203 34.1383 128.389 35.4301L131.172 54.7582L124.177 73.2293L119.541 67.5121L124.497 53.0709L123.674 49.6166" fill="#6C63FF"/>
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_83_2">
+                                        <rect width="150" height="150" fill="white"/>
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                            <div style={{padding:"5%"}}>
+                                <h2 className="font-titDashboard text-5xl text-white text-left leading-tight">Analysis of Underperforming Rooms</h2>
+                                <p className="font-subTitDashboard text-3xl mt-8 text-white p-1 leading-tight">Identify and analyze the 5 rooms that need a marketing boost. Review their popularity and booking indexes to improve performance and increase occupancy.</p>
+                                <div className="w-4/5 font-titDashboard bg-teal-600 font-black text-center rounded-full p-3 pt-6 pb-6 text-white text-2xl cursor-pointer" style={{margin:"0 auto",marginTop:"10%"}}>View Details</div>
+                            </div>
+                        </Card>
+                    </div>
                     <div className="div3">
                         <Graphic />
                     </div>
                     <div className="div4">
                         <DonutChart />
                     </div>
+                    <div className="div5">
+                        <Review />
+                    </div>
+                    <div className="div6">
+                        <Calendar />
+                    </div>
                 </div>
             </ContentPageMain>
         </>
     }  
 }
-/**
- * 
-                    <div className="div7">
-                        <Review />
-                    </div>
- */

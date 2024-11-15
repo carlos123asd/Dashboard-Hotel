@@ -31,6 +31,9 @@ export const ContentNavImg = styled.div`
     margin-right: 3em;
     cursor: pointer;
     position: relative;
+    & img:nth-child(1){
+        height: 45px;
+    }
     & .contennotification{
         &__num{
             width: 30px;
@@ -266,7 +269,7 @@ export const ContentPageMain = styled.div`
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: repeat(4, 1fr);
-        gap: 35px;
+        gap: 25px;
         .div1 {
             display: grid;
             grid-template-columns: repeat(2, 1fr);

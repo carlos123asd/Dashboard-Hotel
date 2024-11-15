@@ -116,7 +116,7 @@ export default function Nav(props:InterfacePropsStyleNav){
             <div className='pos-relative'>
                 <ContentNavImg>
                     <NotificationTooltip title="Latest Review by Customers" onClick={handleShowListMessage} className='contennotification'>
-                        <img width={40} height={40} src={iconmessage} alt="Messages" />
+                        <img width={40} height={45} src={iconmessage} alt="Messages" />
                         <div className='contennotification__num'>{Messagewaiting}</div>
                     </NotificationTooltip>
                     <div style={{left: 0,position: 'absolute',zIndex: "1000"}}>
