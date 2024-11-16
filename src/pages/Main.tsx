@@ -10,6 +10,8 @@ import Calendar from "../components/Calendar"
 import DonutChart from "../components/DonutChart"
 import Graphic from "../components/Graphic"
 import Review from "../components/Review"
+import ProfitChar from "../components/ProfitsChar"
+import ProfitsCharCombo from "../components/ProfitsCharCombo"
 
 const chartdata = [
     {
@@ -248,7 +250,12 @@ export default function Main(){
                         </div>
                     </div>
                     <div className="div4">
-                        <Graphic />
+                        <div className="div7">
+                            <ProfitChar />
+                        </div>
+                        <div className="div8">
+                            {/*<ProfitsCharCombo />*/}
+                        </div>
                     </div>
                     <div className="div5">
                         <Review />

@@ -269,13 +269,13 @@ export const ContentPageMain = styled.div`
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: repeat(5, 1fr);
-        gap: 8px;
+        gap: 20px;
 
         & .div1 {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             grid-template-rows: repeat(2, 1fr);
-            gap: 8px;
+            gap: 18px;
             grid-column: span 2 / span 2;
             grid-row: span 2 / span 2;
         }
@@ -284,7 +284,7 @@ export const ContentPageMain = styled.div`
             display: grid;
             grid-template-columns: repeat(1, 1fr);
             grid-template-rows: repeat(2, 1fr);
-            gap: 8px;
+            gap: 22px;
             grid-row: span 2 / span 2;
             grid-column-start: 3;
         }
@@ -299,6 +299,10 @@ export const ContentPageMain = styled.div`
         }
 
         & .div4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(1, 1fr);
+            gap: 8px;
             grid-column: span 3 / span 3;
             grid-row-start: 4;
         }
@@ -310,6 +314,10 @@ export const ContentPageMain = styled.div`
 
         & .div7{//donut
             grid-column: span 2 / span 2;
+        }
+        & .div8{
+            grid-column: span 2 / span 2;
+            grid-column-start: 3;
         }
     }
     & div[contentflex="true"]{
