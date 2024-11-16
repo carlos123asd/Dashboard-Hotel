@@ -28,16 +28,14 @@ export default function Calendar(){
 
     const events = selectorDataBookings.map((booking) => {
         return {
-            title: `${booking.guest}-${booking.roomType} #${booking.idRoom}`,
+            title: `${booking.guest}-${booking.status} #${booking.room_id}`,
             start: new Date(`${booking.checkin}`),
             end: new Date(`${booking.checkout}`),
             color: booking.status === 'Check Out' ? '#E23428' : otherStatus(booking.status),
             checkin: `${booking.checkin}`,
-            timein: `${booking.timein}`,
             checkout: `${booking.checkout}`,
-            timeout: `${booking.timeout}`,
             status: `${booking.status}`,
-            ident: `${booking._id}`
+            ident: `${booking.id}`
         }
     });
 
@@ -50,8 +48,9 @@ export default function Calendar(){
     }
 
     const handleMouseEnter = (info:any) => {
+        console.log()
           tooltipInstance = new Tooltip(info.el, {
-            title: `${info.event.title} / start: ${info.event.extendedProps.checkin}-${info.event.extendedProps.timein} / end: ${info.event.extendedProps.checkout}-${info.event.extendedProps.timeout}`,
+            title: `${info.event.title} / start: ${info.event.extendedProps.checkin} / end: ${info.event.extendedProps.checkout}`,
             placement: 'top',
             trigger: 'hover',
             container: 'body',
@@ -66,10 +65,10 @@ export default function Calendar(){
 
     const handleDrop = (info:any) => {
         const bookingDroped = selectorDataBookings.filter((booking) => {
-            return booking._id === info.event.extendedProps.ident
+            return booking.id === info.event.extendedProps.ident
         })
         const actualRangeEndBooking = formatDateDroped(tooltipInstance._element.fcSeg.eventRange.instance.range.end)
-        editBooking(bookingDroped[0]._id,{checkout:actualRangeEndBooking})
+        editBooking(bookingDroped[0].id,{checkout:actualRangeEndBooking})
     }
 
     return <>

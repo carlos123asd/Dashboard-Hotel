@@ -242,10 +242,13 @@ export default function Main(){
                         </div>
                     </div>
                     <div className="div3">
-                        <Graphic />
+                        <DonutChart />
+                        <div className="div7">
+                            <Graphic />
+                        </div>
                     </div>
                     <div className="div4">
-                        <DonutChart />
+                        <Graphic />
                     </div>
                     <div className="div5">
                         <Review />

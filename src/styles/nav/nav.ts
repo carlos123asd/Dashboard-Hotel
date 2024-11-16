@@ -268,41 +268,48 @@ export const ContentPageMain = styled.div`
     & .parent{
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(4, 1fr);
-        gap: 25px;
-        .div1 {
-            height: max-content;
+        grid-template-rows: repeat(5, 1fr);
+        gap: 8px;
+
+        & .div1 {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             grid-template-rows: repeat(2, 1fr);
-            gap: 15px;
+            gap: 8px;
             grid-column: span 2 / span 2;
             grid-row: span 2 / span 2;
         }
 
-        .div2 {
-            height: max-content;
+        & .div2 {
             display: grid;
             grid-template-columns: repeat(1, 1fr);
             grid-template-rows: repeat(2, 1fr);
-            gap: 28px;
+            gap: 8px;
             grid-row: span 2 / span 2;
             grid-column-start: 3;
         }
 
-        .div3 {
-            grid-column: span 2 / span 2;
+        & .div3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(1, 1fr);
+            gap: 8px;
+            grid-column: span 3 / span 3;
             grid-row-start: 3;
         }
 
-        .div4 {
-            grid-column-start: 3;
-            grid-row-start: 3;
-        }
-
-        .div5 {
+        & .div4 {
             grid-column: span 3 / span 3;
             grid-row-start: 4;
+        }
+
+        & .div5 {
+            grid-column: span 3 / span 3;
+            grid-row-start: 5;
+        }
+
+        & .div7{//donut
+            grid-column: span 2 / span 2;
         }
     }
     & div[contentflex="true"]{

@@ -1,5 +1,5 @@
 export default class CBooking{
-    _id: string
+    id: string
     guest: string
     orderDate: string
     checkin: string
@@ -10,12 +10,12 @@ export default class CBooking{
     specialRequest: string
     roomType: string
     status: string
-    idRoom: number
+    room_id: number
     constructor(id:string,guest:string,orderDate:string,
         checkin:string,timein:string,checkout:string,
         timeout:string,ordertime:string,specialRequest:string,
         roomType:string,status:string,idRoom:number){
-            this._id = id
+            this.id = id
             this.guest = guest
             this.orderDate = orderDate
             this.checkin = checkin
@@ -26,6 +26,6 @@ export default class CBooking{
             this.specialRequest = specialRequest
             this.roomType = roomType
             this.status = status
-            this.idRoom = idRoom
+            this.room_id = idRoom
     }
 }
