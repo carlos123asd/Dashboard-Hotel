@@ -73,7 +73,7 @@ export const ContentNavVertical = styled.div`
     grid-column: 1;
     grid-row: 1 / auto;
     padding-bottom: 6em;
-    box-shadow: 4px 0px 4px 2px rgba(0, 0, 0, 0.46);
+    border-bottom: none;
 `
 
 export const SubTitLogoNavVertical = styled.span`
@@ -267,59 +267,56 @@ export const ContentPageMain = styled.div`
 
     & .parent{
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(5, 1fr);
         gap: 20px;
 
         & .div1 {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(2, 1fr);
-            gap: 18px;
-            grid-column: span 2 / span 2;
-            grid-row: span 2 / span 2;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(1, 1fr);
+            gap: 8px;
+            grid-column: span 4 / span 4;
         }
 
         & .div2 {
             display: grid;
-            grid-template-columns: repeat(1, 1fr);
-            grid-template-rows: repeat(2, 1fr);
-            gap: 22px;
-            grid-row: span 2 / span 2;
-            grid-column-start: 3;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(1, 1fr);
+            gap: 8px;
+            grid-column: span 4 / span 4;
+            grid-row-start: 2;
         }
 
         & .div3 {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             grid-template-rows: repeat(1, 1fr);
             gap: 8px;
-            grid-column: span 3 / span 3;
+            grid-column: span 4 / span 4;
             grid-row-start: 3;
         }
 
         & .div4 {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: repeat(1, 1fr);
-            gap: 8px;
-            grid-column: span 3 / span 3;
+            grid-column: span 4 / span 4;
             grid-row-start: 4;
         }
-
         & .div5 {
-            grid-column: span 3 / span 3;
+            grid-column: span 4 / span 4;
             grid-row-start: 5;
         }
-
-        & .div7{//donut
-            grid-column: span 2 / span 2;
-        }
-        & .div8{
+        & .div7 {
             grid-column: span 2 / span 2;
             grid-column-start: 3;
         }
+        & .div6 { 
+            grid-column: span 3 / span 3;
+        }
+        & .div8{
+            grid-column: span 2 / span 2;
+        }
     }
+
     & div[contentflex="true"]{
         display: flex;
         justify-content: space-between;

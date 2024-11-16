@@ -16,8 +16,9 @@ export default function Dashboard(){
     const selectorMenuDisplay = appSelector(state => state.menuSlice.show)
     const [stylegrid,setStylegrid] = useState<styleGrid>({
         grid: {
+            background: '#05372C',
             transition: 'grid-template-columns .6s',
-            gridTemplateColumns: '25% 75%' 
+            gridTemplateColumns: '25% 75%'
         },
         left: {
             transition: 'left .8s',
@@ -37,6 +38,7 @@ export default function Dashboard(){
         if(selectorMenuDisplay === true){
             setStylegrid({
                 grid: {
+                    background: '#05372C',
                     transition: 'grid-template-columns .6s',
                     gridTemplateColumns: '0% 100%' 
                 },
@@ -52,6 +54,7 @@ export default function Dashboard(){
         }else{
             setStylegrid({
                 grid: {
+                    background: '#05372C',
                     transition: 'grid-template-columns .6s',
                     gridTemplateColumns: '25% 75%' 
                 },

@@ -1,72 +1,74 @@
-import { AreaChart, Card } from "@tremor/react"
+import { AreaChart, Card, Divider } from "@tremor/react"
+
+const chartdata = [
+    {
+      date: "Jan 23",
+      SolarPanels: 2890,
+      Inverters: 2338,
+    },
+    {
+      date: "Feb 23",
+      SolarPanels: 2756,
+      Inverters: 2103,
+    },
+    {
+      date: "Mar 23",
+      SolarPanels: 3322,
+      Inverters: 2194,
+    },
+    {
+      date: "Apr 23",
+      SolarPanels: 3470,
+      Inverters: 2108,
+    },
+    {
+      date: "May 23",
+      SolarPanels: 3475,
+      Inverters: 1812,
+    },
+    {
+      date: "Jun 23",
+      SolarPanels: 3129,
+      Inverters: 1726,
+    },
+    {
+      date: "Jul 23",
+      SolarPanels: 3490,
+      Inverters: 1982,
+    },
+    {
+      date: "Aug 23",
+      SolarPanels: 2903,
+      Inverters: 2012,
+    },
+    {
+      date: "Sep 23",
+      SolarPanels: 2643,
+      Inverters: 2342,
+    },
+    {
+      date: "Oct 23",
+      SolarPanels: 2837,
+      Inverters: 2473,
+    },
+    {
+      date: "Nov 23",
+      SolarPanels: 2954,
+      Inverters: 3848,
+    },
+    {
+      date: "Dec 23",
+      SolarPanels: 3239,
+      Inverters: 3736,
+    },
+  ]    
 
 export default function ProfitChar(){
-    const chartdata = [
-        {
-          date: "Jan 23",
-          SolarPanels: 2890,
-          Inverters: 2338,
-        },
-        {
-          date: "Feb 23",
-          SolarPanels: 2756,
-          Inverters: 2103,
-        },
-        {
-          date: "Mar 23",
-          SolarPanels: 3322,
-          Inverters: 2194,
-        },
-        {
-          date: "Apr 23",
-          SolarPanels: 3470,
-          Inverters: 2108,
-        },
-        {
-          date: "May 23",
-          SolarPanels: 3475,
-          Inverters: 1812,
-        },
-        {
-          date: "Jun 23",
-          SolarPanels: 3129,
-          Inverters: 1726,
-        },
-        {
-          date: "Jul 23",
-          SolarPanels: 3490,
-          Inverters: 1982,
-        },
-        {
-          date: "Aug 23",
-          SolarPanels: 2903,
-          Inverters: 2012,
-        },
-        {
-          date: "Sep 23",
-          SolarPanels: 2643,
-          Inverters: 2342,
-        },
-        {
-          date: "Oct 23",
-          SolarPanels: 2837,
-          Inverters: 2473,
-        },
-        {
-          date: "Nov 23",
-          SolarPanels: 2954,
-          Inverters: 3848,
-        },
-        {
-          date: "Dec 23",
-          SolarPanels: 3239,
-          Inverters: 3736,
-        },
-      ]      
+      
     return <>
-        <Card className="h-full">
+        <Card className="h-full w-full flex gap-6">
             <AreaChart
-                className="h-full"
+                className="h-full w-6/12"
                 data={chartdata}
                 index="date"
                 categories={["SolarPanels", "Inverters"]}
@@ -74,6 +76,20 @@ export default function ProfitChar(){
                 `$${Intl.NumberFormat("us").format(number).toString()}`
                 }
                 onValueChange={(v) => console.log(v)} />
+            <div className="h-full w-6/12">
+                <p className="text-sm text-gray-500 dark:text-gray-500">Tickets Sold</p>
+                <p className="text-3xl font-semibold text-gray-900 dark:text-gray-50">
+                    1,587
+                </p>
+                <Divider>Details</Divider>
+                <p className="mt-2 text-sm leading-7 text-gray-500 dark:text-gray-500">
+                    Ticket sales peaked in March, largely due to the "March Mountain
+                    Madness" event on March 12th, drawing significant tourist interest.
+                    Operational efficiencies and local hotel partnerships further boosted
+                    sales. Additionally, targeted social media promotions ahead of the event
+                    significantly increased online bookings.
+                </p>
+            </div>
         </Card>
     </>
 }

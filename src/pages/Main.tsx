@@ -1,17 +1,14 @@
 import { appDispatch, appSelector } from "../features/hooks/hooks"
 import { Card, SparkAreaChart } from "@tremor/react"
-import { Contentcalendargrafics } from "../styles/dashboard/Contentcalendargrafics"
 import { ContentPageMain } from "../styles/nav/nav"
 import { dbThunkBooking } from "../features/db/thunks/dbThunkBooking"
 import { dbThunkRoom } from "../features/db/thunks/dbThunkRoom"
-import { KpiDashboard } from '../styles/dashboard/dashboards'
 import { useEffect, useState } from "react"
 import Calendar from "../components/Calendar"
 import DonutChart from "../components/DonutChart"
 import Graphic from "../components/Graphic"
 import Review from "../components/Review"
 import ProfitChar from "../components/ProfitsChar"
-import ProfitsCharCombo from "../components/ProfitsCharCombo"
 
 const chartdata = [
     {
@@ -232,30 +229,25 @@ export default function Main(){
                         </Card>
                     </div>
                     <div className="div2">
-                        <Card className="mx-auto h-max w-full flex flex-col items-center gap-10 bg-gradient-to-br from-teal-400 to-green-500 hover:shadow-lg hover:scale-105 transition-all justify-center">
+                        <Card className="gap-10 bg-gradient-to-br from-teal-400 to-green-500 hover:shadow-lg hover:scale-105 transition-all justify-center div8">
                             <div style={{padding:"5%"}}>
                                 <h2 className="font-titDashboard text-4xl text-white text-left leading-tight">Analysis of Underperforming Rooms</h2>
                                 <p className="font-subTitDashboard text-2xl mt-8 text-white p-1 leading-tight">Identify and analyze the 5 rooms that need a marketing boost. Review their popularity and booking indexes to improve performance and increase occupancy.</p>
                                 <div className="w-4/5 font-titDashboard bg-teal-600 font-black text-center rounded-full p-3 pt-6 pb-6 text-white text-xl cursor-pointer" style={{margin:"0 auto",marginTop:"10%"}}>View Details</div>
                             </div>
                         </Card>
-                        <div className="h-full">
+                        <div className="div7">
                             <Calendar />
                         </div>
                     </div>
                     <div className="div3">
                         <DonutChart />
-                        <div className="div7">
+                        <div className="div6">
                             <Graphic />
                         </div>
                     </div>
                     <div className="div4">
-                        <div className="div7">
-                            <ProfitChar />
-                        </div>
-                        <div className="div8">
-                            {/*<ProfitsCharCombo />*/}
-                        </div>
+                        <ProfitChar />
                     </div>
                     <div className="div5">
                         <Review />
