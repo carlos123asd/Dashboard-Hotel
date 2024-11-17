@@ -10,6 +10,9 @@ export const TrMainTable = styled.tr`
             border: 1px solid red;
             width: 6em;
         }*/
+        &:nth-child(n+2){
+            height: 150px;
+        }
         & .inputEditBookingGuest{
             border-radius: 1em;
             padding: 1em;
@@ -224,7 +227,6 @@ export const TrMainTable = styled.tr`
         & td{
             vertical-align: baseline;
             text-align: -webkit-center;
-            padding-bottom: 1em;
         }
         & td:nth-child(5){
             font-family: 'poppinssemibold';

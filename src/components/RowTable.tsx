@@ -235,8 +235,8 @@ export default function RowTable(props:any){
     if(locationname === '/room'){
         return (edit === true) ? <>
                 <TrMainTable>
-                    <div>
-                        <td>
+                    <div className="content-evenly ml-6" style={{textAlignLast:"left",height:"inherit"}}>
+                        <td className="block h-[150px] content-center">
                             <img className="imgroomnameColum" width={150} height={77} src={data.photo} alt="Image Room" />
                             <div className="roomnameColumn">
                                 <span className="numtit">{`#000${data.id}`}</span>
@@ -278,8 +278,8 @@ export default function RowTable(props:any){
             </> :
             <>
                 <TrMainTable>
-                    <div>
-                        <td>
+                    <div className="content-evenly ml-6" style={{textAlignLast:"left",height:"inherit"}}>
+                        <td className="block h-[150px] content-center">
                             <img className="imgroomnameColum" width={150} height={77} src={data.photo} alt="Image Room" />
                             <div className="roomnameColumn">
                                 <span className="numtit">{`#000${data.id}`}</span>
@@ -287,12 +287,12 @@ export default function RowTable(props:any){
                             </div>
                         </td>
                     </div>
-                    <td className="mediumletter">{data.type_room}</td>
-                    <td className="mediumletter">{data.amenities}</td>
-                    <td><span className="priceRoom">{data.price}</span><span className="nightroom"> /night</span></td>
-                    <td>{`$${(Number(data.price.slice(1))-((Number(data.price.slice(1))*data.discount)/100)).toFixed(2)}(${data.discount}%)`}</td>
-                    <td className="mediumletter">{data.cancellation}</td>
-                    <td className="mediumletter">{data.description}</td>
+                    <td className="content-center pb-0 mediumletter">{data.type_room}</td>
+                    <td className="content-center pb-0 mediumletter">{data.amenities}</td>
+                    <td className="content-center pb-0"><span className="priceRoom">{data.price}</span><span className="nightroom"> /night</span></td>
+                    <td className="content-center pb-0">{`$${(Number(data.price.slice(1))-((Number(data.price.slice(1))*data.discount)/100)).toFixed(2)}(${data.discount}%)`}</td>
+                    <td className="content-center pb-0 mediumletter">{data.cancellation}</td>
+                    <td className="content-center pb-0 mediumletter">{data.description}</td>
                     <td>{data.status === 'Available' ? <div className="status">Available</div> : <div className="status statusbooked">Booked</div>}</td>
                     <td style={{position:'relative'}}>
                         <div style={hideedit}>
