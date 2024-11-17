@@ -22,6 +22,7 @@ export const ReviewCustomers = styled.div`
         color: rgba(0,0,0,0);
         display: block !important;
         & img{
+            height: 100%;
             display: block !important;
             margin: 0 auto;
         }
@@ -68,7 +69,7 @@ export const ReviewCustomers = styled.div`
                 &__img{
                     display: inline-block;
                     width: 56px;
-                    height: 56px;
+                    height: max-content;
                     border-radius: .5em;
                     overflow: hidden;
                     margin-right: 1.313em;
@@ -94,8 +95,9 @@ export const ReviewCustomers = styled.div`
                     }
                 }
                 &__state{
+                    display: flex;
                     & svg[height="22"]{
-                        margin-right: 1em;
+                        margin-right: .5rem;
                     }
                     & svg:hover{
                         cursor: pointer;

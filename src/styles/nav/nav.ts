@@ -155,12 +155,12 @@ export const UnListContentHeaderNavVertical = styled.div`
     padding-left: 0;
     display: block;
     align-content: center;
-    margin-top: 5em;
+    margin-top: 8em;
     & h2{
         font-family: 'DM_Sans_extralight';
         font-size: 2rem;
         color: #fff;
-        margin-bottom: 1.5em;
+        margin-bottom: 2.8rem;
     }
 `
 export const SelectListHeaderNavVertical = styled.select`
@@ -195,7 +195,7 @@ export const ContentContactNavVertical = styled.div`
     box-shadow: 0px 20px 30px #00000014;
     text-align: center;
     margin: 0 auto;
-    margin-top: 12em;
+    margin-top: 70%;
     background-color: #F0F7F6;
     border-radius: 1em;
     align-content: center;
@@ -269,13 +269,13 @@ export const ContentPageMain = styled.div`
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(5, 1fr);
-        gap: 20px;
+        gap: 35px;
 
         & .div1 {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             grid-template-rows: repeat(1, 1fr);
-            gap: 8px;
+            gap: 18px;
             grid-column: span 4 / span 4;
         }
 
@@ -283,7 +283,7 @@ export const ContentPageMain = styled.div`
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             grid-template-rows: repeat(1, 1fr);
-            gap: 8px;
+            gap: 29px;
             grid-column: span 4 / span 4;
             grid-row-start: 2;
         }
@@ -325,7 +325,7 @@ export const ContentPageMain = styled.div`
 `
 export const ContentCopyNavVertical = styled.div`
     text-align: center;
-    margin-top: 3.875em;
+    margin-top: 6.875em;
     & .titcopy{
         display: block;
         font-family: 'monserrat_semibold';

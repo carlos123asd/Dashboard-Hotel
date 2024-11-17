@@ -110,8 +110,8 @@ export default function Review(){
                         </>
                     })
                 }
-                <div className="swiper-button-prev btnnextswiperReview"><img src={next} width={24} height={'100%'} alt="Next Element" /></div>
-                <div className="swiper-button-next btnnextswiperReview"><img src={back} width={24} height={'100%'} alt="Back Element" /></div>
+                <div className="swiper-button-prev btnnextswiperReview"><img src={next} width={24} height={"100%"} alt="Next Element" /></div>
+                <div className="swiper-button-next btnnextswiperReview"><img src={back} width={24} height={"100%"} alt="Back Element" /></div>
             </Swiper>
         </ReviewCustomers>
     </>

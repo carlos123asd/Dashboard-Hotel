@@ -77,7 +77,7 @@ export default function Main(){
             <ContentPageMain>
                 <div className="parent">
                     <div className="div1">
-                        <Card className="mx-auto w-full h-25 px-7 py-7 bg-white border-1 hover:shadow-lg hover:scale-105 rounded-lg transition-all content-evenly cursor-pointer">
+                        <Card className="mx-auto w-full h-max px-7 py-7 bg-white border-1 hover:shadow-lg hover:scale-105 rounded-lg transition-all content-evenly cursor-pointer">
                             <div className="h-full flex flex-col justify-center gap-10">
                                 <div className="flex items-center">
                                     <div className='kpicontent__img kpicontent--purple'>
@@ -101,7 +101,7 @@ export default function Main(){
                                 />
                                 <div className="flex items-center space-x-2.5 mt-3 place-content-between">
                                     <div>
-                                        <span className="font-numeros text-gray-700 dark:text-gray-300 text-5xl">
+                                        <span className="font-titDashboard text-gray-700 dark:text-gray-300 text-5xl">
                                             {stateDbDataBooking.length}
                                         </span>
                                         <span className="font-titDashboard">
@@ -114,7 +114,7 @@ export default function Main(){
                                 </div>
                             </div>
                         </Card>
-                        <Card className="mx-auto w-full flex-1 items-center justify-between px-7 py-7 bg-white border-1 hover:shadow-lg hover:scale-105 rounded-lg transition-all cursor-pointer">
+                        <Card className="mx-auto w-full h-max px-7 py-7 bg-white border-1 hover:shadow-lg hover:scale-105 rounded-lg transition-all cursor-pointer">
                             <div className="h-full flex flex-col justify-center gap-10">
                                 <div className="flex items-center">
                                     <div className='kpicontent__img kpicontent--greenv2'>
@@ -138,7 +138,7 @@ export default function Main(){
                                 />
                                 <div className="flex items-center space-x-2.5 mt-3 place-content-between">
                                     <div>
-                                        <span className="font-numeros text-gray-700 dark:text-gray-300 text-5xl">
+                                        <span className="font-titDashboard text-gray-700 dark:text-gray-300 text-5xl">
                                             {stateDbDataBooking.length}
                                         </span>
                                         <span className="font-titDashboard">
@@ -151,7 +151,7 @@ export default function Main(){
                                 </div>
                             </div>
                         </Card>
-                        <Card className="mx-auto w-full flex-1 items-center px-7 py-7 bg-white border-1 hover:shadow-lg hover:scale-105 rounded-lg transition-all mt-5 cursor-pointer">
+                        <Card className="mx-auto w-full h-max px-7 py-7 bg-white border-1 hover:shadow-lg hover:scale-105 rounded-lg transition-all cursor-pointer">
                             <div className="h-full flex flex-col justify-center gap-10">
                                 <div className="flex items-center">
                                     <div className='kpicontent__img kpicontent--green'>
@@ -176,7 +176,7 @@ export default function Main(){
                                 />
                                 <div className="flex items-center space-x-2.5 mt-3 place-content-between">
                                     <div>
-                                        <span className="font-numeros text-gray-700 dark:text-gray-300 text-5xl">
+                                        <span className="font-titDashboard text-gray-700 dark:text-gray-300 text-5xl">
                                             {stateDbDataBooking.length}
                                         </span>
                                         <span className="font-titDashboard">
@@ -189,7 +189,7 @@ export default function Main(){
                                 </div>
                             </div>
                         </Card>
-                        <Card className="mx-auto w-full flex-1 items-center px-7 py-7 bg-white border-1 hover:shadow-lg hover:scale-105 rounded-lg transition-all mt-5 cursor-pointer">
+                        <Card className="mx-auto w-full h-max px-7 py-7 bg-white border-1 hover:shadow-lg hover:scale-105 rounded-lg transition-all cursor-pointer">
                             <div className="h-full flex flex-col justify-center gap-10">
                                 <div className="flex items-center">
                                     <div className='kpicontent__img kpicontent--yellow'>
@@ -214,7 +214,7 @@ export default function Main(){
                                 />
                                 <div className="flex items-center space-x-2.5 mt-3 place-content-between">
                                     <div>
-                                        <span className="font-numeros text-gray-700 dark:text-gray-300 text-5xl">
+                                        <span className="font-titDashboard text-gray-700 dark:text-gray-300 text-5xl">
                                             {stateDbDataBooking.length}
                                         </span>
                                         <span className="font-titDashboard">
