@@ -12,7 +12,6 @@ import CRoom from "../class/CRoom";
 import CBooking from "../class/CBooking";
 import CMessage from "../class/CMessage";
 import CEmployee from "../class/CEmployee";
-import { InterfacePropsTable } from "../interfaces/InterfacePropsTable";
 
 {/* props:InterfacePropsTable */}
 export default function Table(props:any){
@@ -229,10 +228,10 @@ export default function Table(props:any){
                     {
                         datastate.slice(actualdate,nextdate).map((room:any) => {
                             const objectRoom = new CRoom(
-                                room._id,
-                                room.roomNumber,
-                                room.photo,
-                                room.typeRoom,
+                                room.id,
+                                room.room_number,
+                                room.photos||[],
+                                room.type_room,
                                 room.description,
                                 room.offer,
                                 room.price,

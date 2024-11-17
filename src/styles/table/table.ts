@@ -5,6 +5,7 @@ export const TrMainTable = styled.tr`
         font-family: 'poppinsregular';
         color: #212121;
         line-height: 25px;
+        border-bottom: 2px solid #ececec;
        /* & th[type="room"]:nth-last-child(n+4){
             border: 1px solid red;
             width: 6em;

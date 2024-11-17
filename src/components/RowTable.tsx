@@ -231,7 +231,7 @@ export default function RowTable(props:any){
         updateStatusfetchMessage(data._id,'none','Message Restored')
         data.setStatus('none')
     }
-    
+    console.log('data',data);
     if(locationname === '/room'){
         return (edit === true) ? <>
                 <TrMainTable>
@@ -239,8 +239,8 @@ export default function RowTable(props:any){
                         <td>
                             <img className="imgroomnameColum" width={150} height={77} src={data.photo[0]} alt="Image Room" />
                             <div className="roomnameColumn">
-                                <span className="numtit">{`#000${data._id}`}</span>
-                                <span className="deluxenum">{`${data.typeRoom}-`}<input onChange={(e) => setNumroomedit(e.target.value)} name="roomNumberEditable" className="inputText" type="text" placeholder={data.roomNumber}/></span>
+                                <span className="numtit">{`#000${data.id}`}</span>
+                                <span className="deluxenum">{`${data.type_room}-${data.room_number}`}<input onChange={(e) => setNumroomedit(e.target.value)} name="roomNumberEditable" className="inputText" type="text" placeholder={data.room_number}/></span>
                             </div>
                         </td>
                     </div>
@@ -282,13 +282,13 @@ export default function RowTable(props:any){
                         <td>
                             <img className="imgroomnameColum" width={150} height={77} src={data.photo[0]} alt="Image Room" />
                             <div className="roomnameColumn">
-                                <span className="numtit">{`#000${data._id}`}</span>
-                                <span className="deluxenum mediumletter">{`${data.typeRoom}-${data.roomNumber}`}</span>
+                                <span className="numtit">{`#000${data.id}`}</span>
+                                <span className="deluxenum mediumletter">{`${data.type_room}-${data.room_number}`}</span>
                             </div>
                         </td>
                     </div>
-                    <td className="mediumletter">{data.typeRoom}</td>
-                    <td className="mediumletter">{data.amenities.toString()}</td>
+                    <td className="mediumletter">{data.type_room}</td>
+                    <td className="mediumletter">{data.amenities}</td>
                     <td><span className="priceRoom">{data.price}</span><span className="nightroom"> /night</span></td>
                     <td>{`$${(Number(data.price.slice(1))-((Number(data.price.slice(1))*data.discount)/100)).toFixed(2)}(${data.discount}%)`}</td>
                     <td className="mediumletter">{data.cancellation}</td>
@@ -355,11 +355,11 @@ export default function RowTable(props:any){
                                 <ul>
                                     {
                                         dbRoom.map(room => {
-                                            if(room.status === "Available" && room.typeRoom === typeroombooking){
+                                            if(room.status === "Available" && room.type_room === typeroombooking){
                                                 return <>
                                                     <li>
-                                                        <input id="roomselected" name="roomselected" type="radio" onClick={() => setRoomselectedit(`${room.typeRoom}-${room._id}`)} value={`${room.typeRoom}-${room._id}`}/>
-                                                        <span style={{marginLeft:'1em'}}>{room.typeRoom}-{room.roomNumber}</span>
+                                                        <input id="roomselected" name="roomselected" type="radio" onClick={() => setRoomselectedit(`${room.type_room}-${room.id}`)} value={`${room.type_room}-${room.id}`}/>
+                                                        <span style={{marginLeft:'1em'}}>{room.type_room}-{room.room_number}</span>
                                                     </li>
                                                 </>
                                             }

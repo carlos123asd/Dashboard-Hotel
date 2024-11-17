@@ -1,8 +1,8 @@
 export default class CRoom{
-    _id:string
-    roomNumber:number
+    id:string
+    room_number:number
     photo:string[]
-    typeRoom:string
+    type_room:string
     description:string
     offer:boolean
     price:string
@@ -14,10 +14,10 @@ export default class CRoom{
         typeRoom:string,description:string,offer:boolean,
         price:string,discount:number,cancellation:string,
         status:string,amenities:string[]){
-            this._id = id
-            this.roomNumber = roomNumber
+            this.id = id
+            this.room_number = roomNumber
             this.photo = photo
-            this.typeRoom = typeRoom
+            this.type_room = typeRoom
             this.description = description
             this.offer = offer
             this.price = price
