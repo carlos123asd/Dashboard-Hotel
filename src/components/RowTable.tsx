@@ -26,6 +26,7 @@ import { valuesEditBooking } from "../interfaces/InterfacePropsValidateFormEditB
 import { valuesEditUser } from "../interfaces/InterfacePropsValidateFormEditUser";
 import { InterfacePropsRowTable } from "../interfaces/InterfacePropsRowTable";
 import Room from "../class/CRoom";
+import fetchGetRoom from "../features/db/fecths/getRoom";
 
 export default function RowTable(props:any){
     const {data}:any = props
@@ -231,6 +232,12 @@ export default function RowTable(props:any){
         updateStatusfetchMessage(data._id,'none','Message Restored')
         data.setStatus('none')
     }
+
+    const roomBooking = async (id:number) => {
+        const room = await fetchGetRoom(id);
+        return room
+    };
+
     console.log('data',data);
     if(locationname === '/room'){
         return (edit === true) ? <>
@@ -311,6 +318,11 @@ export default function RowTable(props:any){
                 </TrMainTable>
             </>
     }else if(locationname === '/bookings'){
+        let roomofBooking
+        roomBooking(data.room_id).then((response) => {
+            roomofBooking = response
+        })
+        console.log('aqui',roomofBooking); //BUSCAR LA FORMA PARA USAR ESE DATO DEL BOOKING, lo dejamos aqui
         return (edit === true) ? <>
                 <Modal
                 open={open}
