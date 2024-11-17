@@ -1,30 +1,21 @@
 export default class CBooking{
     id: string
     guest: string
-    orderDate: string
+    orderdate: string
     checkin: string
-    timein: string
     checkout: string
-    timeout: string
-    ordertime: string
-    specialRequest: string
-    roomType: string
+    specialrequest: string
     status: string
     room_id: number
     constructor(id:string,guest:string,orderDate:string,
-        checkin:string,timein:string,checkout:string,
-        timeout:string,ordertime:string,specialRequest:string,
-        roomType:string,status:string,idRoom:number){
+        checkin:string,checkout:string,
+        specialRequest:string,status:string,idRoom:number){
             this.id = id
             this.guest = guest
-            this.orderDate = orderDate
+            this.orderdate = orderDate
             this.checkin = checkin
-            this.timein = timein
             this.checkout = checkout
-            this.timeout = timeout
-            this.ordertime = ordertime
-            this.specialRequest = specialRequest
-            this.roomType = roomType
+            this.specialrequest = specialRequest
             this.status = status
             this.room_id = idRoom
     }

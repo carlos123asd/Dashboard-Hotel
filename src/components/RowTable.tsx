@@ -457,7 +457,7 @@ export default function RowTable(props:any){
                 >
                     <ModalNewNotes>
                         <div className="contentRoomNewRoom">
-                            <h2>{data.specialRequest}</h2>
+                            <h2>{data.specialrequest}</h2>
                         </div>
                     </ModalNewNotes>
                 </Modal>
@@ -471,9 +471,9 @@ export default function RowTable(props:any){
                             </div>
                         </td>
                     </div>
-                    <td>{data.orderDate} {data.ordertime}</td>
-                    <td><span className="namebooking">{data.checkin}</span><br/><span className="timeinbooking">{data.timein}</span></td>
-                    <td><span className="namebooking">{data.checkout}</span><br/><span className="timeinbooking">{data.timeout}</span></td>
+                    <td>{data.orderdate}</td>
+                    <td><span className="namebooking">{data.checkin}</span><br/><span className="timeinbooking">mod</span></td>
+                    <td><span className="namebooking">{data.checkout}</span><br/><span className="timeinbooking">mod</span></td>
                     {/* notes='true' */}
                     <td onClick={() => handleOpen}>View Notes</td>
                     <td className="namebooking">{data.roomType}</td>

@@ -174,18 +174,14 @@ export default function Table(props:any){
                     {
                         datastate.slice(actualdate,nextdate).map((booking:any) => {
                             const objectBooking = new CBooking(
-                                booking._id,
+                                booking.id,
                                 booking.guest,
-                                booking.orderDate,
+                                booking.orderdate,
                                 booking.checkin,
-                                booking.timein,
                                 booking.checkout,
-                                booking.timeout,
-                                booking.ordertime,
-                                booking.specialRequest,
-                                booking.roomType,
+                                booking.specialrequest,
                                 booking.status,
-                                booking.idRoom,
+                                booking.room_id,
                             )
                         return <>
                                 <RowTable data={objectBooking} />
