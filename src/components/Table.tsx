@@ -16,7 +16,6 @@ import CEmployee from "../class/CEmployee";
 {/* props:InterfacePropsTable */}
 export default function Table(props:any){
     const {columns,data} = props
-
     const [nextdate,setNextdate] = useState<number>(10);
     const [actualdate,setActualdate] = useState<number>(0);
     const locationname = useLocation().pathname;
@@ -28,7 +27,7 @@ export default function Table(props:any){
     }))
     const [lengthdate,setLengthdate] = useState<number>(datastate.length / 10);
     const [looppag,setLooppag] = useState<number[]>([])
-
+    
     useEffect(() => {
         if(lengthdate % 1 !== 0){
             setLengthdate(Math.ceil(lengthdate))

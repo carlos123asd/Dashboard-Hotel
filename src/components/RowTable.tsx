@@ -237,7 +237,7 @@ export default function RowTable(props:any){
                 <TrMainTable>
                     <div>
                         <td>
-                            <img className="imgroomnameColum" width={150} height={77} src={data.photo[0]} alt="Image Room" />
+                            <img className="imgroomnameColum" width={150} height={77} src={data.photo} alt="Image Room" />
                             <div className="roomnameColumn">
                                 <span className="numtit">{`#000${data.id}`}</span>
                                 <span className="deluxenum">{`${data.type_room}-${data.room_number}`}<input onChange={(e) => setNumroomedit(e.target.value)} name="roomNumberEditable" className="inputText" type="text" placeholder={data.room_number}/></span>
@@ -280,7 +280,7 @@ export default function RowTable(props:any){
                 <TrMainTable>
                     <div>
                         <td>
-                            <img className="imgroomnameColum" width={150} height={77} src={data.photo[0]} alt="Image Room" />
+                            <img className="imgroomnameColum" width={150} height={77} src={data.photo} alt="Image Room" />
                             <div className="roomnameColumn">
                                 <span className="numtit">{`#000${data.id}`}</span>
                                 <span className="deluxenum mediumletter">{`${data.type_room}-${data.room_number}`}</span>
