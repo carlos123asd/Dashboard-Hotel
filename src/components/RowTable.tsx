@@ -578,7 +578,7 @@ export default function RowTable(props:any){
         return (edit === false) ? <>
             <TrMainTable>
                 <div>
-                    <td>#{data.idmessage}</td>
+                    <td>#000{data.id}</td>
                 </div>
                 <td>{data.date}</td>
                 <td>{data.customer}</td>

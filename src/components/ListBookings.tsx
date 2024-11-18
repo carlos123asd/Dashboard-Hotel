@@ -15,7 +15,7 @@ export default function ListBookings(){
     const selectorDBBookings = appSelector(state => state.dbBooking.data)
     const selectorShowBookingList = appSelector(state => state.notification.show)
     const filterbymonthActual = selectorDBBookings.filter((booking) => {
-        return new Date(booking.orderDate).getMonth() === new Date().getMonth()
+        return new Date(booking.orderdate).getMonth() === new Date().getMonth()
     })
     
     const [styleList,setStyleList] = useState<styleListBookingMessage>({
@@ -59,7 +59,7 @@ export default function ListBookings(){
                                 <Avatar alt="Remy Sharp" src={icon} />
                             </ListItemAvatar>
                             <ListItemText
-                            primary={`Booking - ${booking.roomType}`}
+                            primary={`Booking - Room ${booking.room_id}`}
                             secondary={
                                 <Fragment>
                                     <Typography
@@ -71,7 +71,7 @@ export default function ListBookings(){
                                         {booking.guest}
                                         <br />
                                     </Typography>
-                                    {`Check In: ${booking.checkin}`} {(booking.specialRequest !== '' ) ? `- ${booking.specialRequest}` : ''}
+                                    {`Check In: ${booking.checkin.toString().split("T")[0]}`} {booking.specialrequest ? `- ${booking.specialrequest}` : `- Without special request`}
                                 </Fragment>
                             }
                             />

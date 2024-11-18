@@ -274,9 +274,8 @@ export default function Table(props:any){
                         {
                             datastate.slice(actualdate,nextdate).map((register:any) => {
                                 const objectMessage = new CMessage(
-                                    register._id,
+                                    register.id,
                                     register.date,
-                                    register.idmessage,
                                     register.customer,
                                     register.email,
                                     register.phone,
