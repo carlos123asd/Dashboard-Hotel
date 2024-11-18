@@ -175,7 +175,6 @@ export default function RowTable(props:any){
         }
     }
     const handleOpen = () => {
-        console.log('entra');
         setOpen(true)
     };
     const handledeleteBooking = () => {
@@ -244,7 +243,6 @@ export default function RowTable(props:any){
         data.setStatus('none')
     }
 
-    console.log('room',roombooking);
     if(locationname === '/room'){
         return (edit === true) ? <>
                 <TrMainTable>
@@ -553,12 +551,12 @@ export default function RowTable(props:any){
                         <img className="imgroomnameColum" width={150} height={77} src={data.photo} alt="Image Employee" />
                         <div className="roomnameColumn">
                             <span className="nameemployee">{data.name}</span>
-                            <span className="deluxenum">#{data._id}<br/>Joined on {data.startdate}</span>
+                            <span className="deluxenum">#{data.id}<br/>Joined on {data.startdate.toString().split("T")[0]}</span>
                         </div>
                     </td>
                 </div>
-                <td className="descriptionemployee">{data.description}</td>
-                <td className="contactemployee"><span><img src={phonecontact} alt="Contact Employee" />{data.phone}</span><br /><span>{data.email}</span></td>
+                <td className="descriptionemployee">{data.description ? data.description : "Not Description"}</td>
+                <td className="contactemployee"><span><img src={phonecontact} alt="Contact Employee" />{data.phone ? data.phone : "Not Phone"}</span><br /><span>{data.email}</span></td>
                 {data.status === 'active' ? <td className="statusemployee statusemployee--active">{data.status}</td> : <td className="statusemployee statusemployee--inactive">{data.status}</td>}
                 <td>
                     <div style={hideedit}>

@@ -323,7 +323,7 @@ export default function Table(props:any){
                         {
                             datastate.slice(actualdate,nextdate).map((employee:any) => {
                                 const objectEmployee = new CEmployee(
-                                    employee._id,
+                                    employee.id,
                                     employee.photo,
                                     employee.name,
                                     employee.email,

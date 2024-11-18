@@ -183,7 +183,6 @@ export const ImageProfileHeaderNavVertical = styled.div`
         width: 120px;
         height: 120px;
         display: block;
-        background: red;
         border-radius: .5em;
         object-fit: cover;
     }
