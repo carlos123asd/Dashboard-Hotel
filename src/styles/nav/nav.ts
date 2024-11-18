@@ -121,7 +121,7 @@ export const ListHeaderNavVertical = styled.div`
     font-family: 'monserrat';
     font-size: 1.5rem;
     height: 4.188em;
-    margin-bottom: 0.938em;
+    margin-bottom: 5rem;
     list-style: none;
     font-weight: 400;
     cursor: pointer;
