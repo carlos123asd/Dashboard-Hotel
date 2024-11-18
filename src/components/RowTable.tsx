@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TrMainTable } from "../styles/table/table";
 import handleValidateFormEditRoom from "../features/forms/validationformEditRoom";
 import handleValidateFormEditBooking from "../features/forms/validationformEditBooking"
@@ -31,7 +31,7 @@ import fetchGetRoom from "../features/db/fecths/getRoom";
 export default function RowTable(props:any){
     const {data}:any = props
     const [locationname,setLocationname] = useState(useLocation().pathname);
-    
+    const [roombooking,setRoombooking] = useState(Object);
     const [typeroomedit,setTyperoomedit] = useState<string>("")
     const [numroomedit,setNumroomedit] = useState<string>("")
     const [facilitiesedit,setFacilitiesedit] = useState<string>("")
@@ -70,6 +70,16 @@ export default function RowTable(props:any){
     const [emailedituser,setEmailedituser] = useState<string>("")
     const [descriptionedituser,setDescriptionedituser] = useState<string>("")
     const [statusedituser,setStatusedituser] = useState<string>("")
+
+    useEffect(() => {
+        if(locationname === '/bookings'){
+            async function fetchroom(){
+               const response = await fetchGetRoom(data.room_id)
+               setRoombooking(response)
+            }
+            fetchroom()
+        }
+    },[])
 
     const handlechangeTypeRoom = (typeroom:string) => {
         setTyperoomedit(typeroom)
@@ -165,6 +175,7 @@ export default function RowTable(props:any){
         }
     }
     const handleOpen = () => {
+        console.log('entra');
         setOpen(true)
     };
     const handledeleteBooking = () => {
@@ -233,12 +244,7 @@ export default function RowTable(props:any){
         data.setStatus('none')
     }
 
-    const roomBooking = async (id:number) => {
-        const room = await fetchGetRoom(id);
-        return room
-    };
-
-    console.log('data',data);
+    console.log('room',roombooking);
     if(locationname === '/room'){
         return (edit === true) ? <>
                 <TrMainTable>
@@ -318,11 +324,6 @@ export default function RowTable(props:any){
                 </TrMainTable>
             </>
     }else if(locationname === '/bookings'){
-        let roomofBooking
-        roomBooking(data.room_id).then((response) => {
-            roomofBooking = response
-        })
-        console.log('aqui',roomofBooking); //BUSCAR LA FORMA PARA USAR ESE DATO DEL BOOKING, lo dejamos aqui
         return (edit === true) ? <>
                 <Modal
                 open={open}
@@ -386,10 +387,10 @@ export default function RowTable(props:any){
                 <TrMainTable>
                     <div>
                         <td onClick={() => handleOpenViewBooking()}>
-                            <img className="imgroomnameColum" width={150} height={77} src={''} alt="Image Room" />
+                            <img className="imgroomnameColum" width={150} height={77} src={roombooking.photos} alt="Image Room" />
                             <div className="roomnameColumn">
                                 <span className="deluxenum numtit--black"><input className="inputEditBookingGuest" onChange={(e) => setNamebookingedit(e.target.value)} type="text" placeholder={data.guest} /></span>
-                                <span className="numtit">{`${data.roomType}-${'12341'}`}<img onClick={() => setOpeneditroombooking(true)} src={editRoomBooking} alt="Edit Reservation Room"></img></span>
+                                <span className="numtit">{`${roombooking.type_room}-${roombooking.room_number}`}<img onClick={() => setOpeneditroombooking(true)} src={editRoomBooking} alt="Edit Reservation Room"></img></span>
                             </div>
                         </td>
                     </div>
@@ -476,19 +477,19 @@ export default function RowTable(props:any){
                 <TrMainTable>
                     <div>
                         <td onClick={() => setBookingvisible(true)}>
-                            <img className="imgroomnameColum" width={150} height={77} src={''} alt="Image Room" />
+                            <img className="imgroomnameColum" width={150} height={77} src={roombooking.photos} alt="Image Room" />
                             <div className="roomnameColumn">
                                 <span className="deluxenum numtit--black namebooking">{`${data.guest}`}</span>
-                                <span className="numtit">{`${data.roomType}-${'12341'}`}</span>
+                                <span className="numtit">{`${roombooking.type_room}-${roombooking.room_number}`}</span>
                             </div>
                         </td>
                     </div>
-                    <td>{data.orderdate}</td>
-                    <td><span className="namebooking">{data.checkin}</span><br/><span className="timeinbooking">mod</span></td>
-                    <td><span className="namebooking">{data.checkout}</span><br/><span className="timeinbooking">mod</span></td>
+                    <td className="content-center">{data.orderdate.toString().split("T")[0]}</td>
+                    <td className="content-center"><span className="namebooking">{data.checkin.toString().split("T")[0]}</span><br/><span className="timeinbooking">{(data.checkin.toString().split("T")[1]).split("Z")[0]}</span></td>
+                    <td className="content-center"><span className="namebooking">{data.checkout.toString().split("T")[0]}</span><br/><span className="timeinbooking">{(data.checkout.toString().split("T")[1]).split("Z")[0]}</span></td>
                     {/* notes='true' */}
-                    <td onClick={() => handleOpen}>View Notes</td>
-                    <td className="namebooking">{data.roomType}</td>
+                    <td onClick={() => handleOpen()}><span className="block h-max py-5 bg-emerald-400 rounded-full">View Notes</span></td>
+                    <td className="content-center namebooking">{roombooking.type_room}</td>
                     <td>{data.status === 'Check In' ? <div className="status">Check In</div> : otherState(data.status)}</td>
                     <div style={hideedit}>
                         <div className="status editdelete" onClick={handleClickFunctionEdit}>Edit</div>
