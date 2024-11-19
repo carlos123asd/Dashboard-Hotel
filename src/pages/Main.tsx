@@ -67,7 +67,15 @@ export default function Main(){
             }
         }
     },[stateDbStatusBooking,stateDbStatusRoom])
-    
+
+    const newBookingsMonthActual = stateDbDataBooking.filter((booking) => {
+        return new Date(booking.orderdate).getMonth() === new Date().getMonth();
+    });
+    const newBookingsMonthBack = stateDbDataBooking.filter((booking) => {
+        return new Date(booking.orderdate).getMonth() === new Date().getMonth() - 1;
+    });
+    const percetageDiffNewBooking = ((newBookingsMonthActual.length - newBookingsMonthBack.length) / newBookingsMonthBack.length) * 100
+    console.log(percetageDiffNewBooking)
     if(loading === true){
         return <>
             <h1>Loading...</h1>
@@ -102,7 +110,7 @@ export default function Main(){
                                 <div className="flex items-center space-x-2.5 mt-3 place-content-between">
                                     <div>
                                         <span className="font-titDashboard text-gray-700 dark:text-gray-300 text-5xl">
-                                            {stateDbDataBooking.length}
+                                            {newBookingsMonthActual.length}
                                         </span>
                                         <span className="font-titDashboard">
                                             Rooms
