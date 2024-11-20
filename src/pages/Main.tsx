@@ -9,37 +9,6 @@ import DonutChart from "../components/DonutChart"
 import Graphic from "../components/Graphic"
 import Review from "../components/Review"
 import ProfitChar from "../components/ProfitsChar"
-
-const chartdata = [
-    {
-      month: "Jan 21",
-      Performance: 4000,
-    },
-    {
-      month: "Feb 21",
-      Performance: 3000,
-    },
-    {
-      month: "Mar 21",
-      Performance: 2000,
-    },
-    {
-      month: "Apr 21",
-      Performance: 2780,
-    },
-    {
-      month: "May 21",
-      Performance: 1890,
-    },
-    {
-      month: "Jun 21",
-      Performance: 2390,
-    },
-    {
-      month: "Jul 21",
-      Performance: 3490,
-    },
-  ]
   
 export default function Main(){
     const dispatch = appDispatch()
@@ -68,6 +37,8 @@ export default function Main(){
         }
     },[stateDbStatusBooking,stateDbStatusRoom])
 
+    //New Booking CARD 1
+    const chartdata = []
     const newBookingsMonthActual = stateDbDataBooking.filter((booking) => {
         return new Date(booking.orderdate).getMonth() === new Date().getMonth();
     });
@@ -75,7 +46,17 @@ export default function Main(){
         return new Date(booking.orderdate).getMonth() === new Date().getMonth() - 1;
     });
     const percetageDiffNewBooking = ((newBookingsMonthActual.length - newBookingsMonthBack.length) / newBookingsMonthBack.length) * 100
-    console.log(percetageDiffNewBooking)
+    const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    for (let index = 0; index < 12; index++) {
+        const countBookingForMonth = stateDbDataBooking.filter((booking) => {
+            return new Date(booking.orderdate).getMonth() === index
+        });
+        chartdata.push({
+            month: months[index],
+            Performance: countBookingForMonth.length
+        })
+    }
+    console.log(chartdata)
     if(loading === true){
         return <>
             <h1>Loading...</h1>
@@ -117,7 +98,7 @@ export default function Main(){
                                         </span>
                                     </div>
                                     <span className="rounded bg-green-400 px-2 py-1 text-lg font-medium text-white">
-                                        +1.72%
+                                        {percetageDiffNewBooking > 0 ? `+${percetageDiffNewBooking}%` : `${percetageDiffNewBooking}%`}
                                     </span>
                                 </div>
                             </div>
