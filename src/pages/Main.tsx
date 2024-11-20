@@ -60,7 +60,15 @@ export default function Main(){
     const RoomsBookeds = stateDbDataRoom.filter((room) => {
         return room.status === "Booked"
     });
-
+    //Bookings Check In FALTA
+    const BookingsCheckInToday = stateDbDataBooking.filter((booking) => {
+        return new Date(booking.checkin).toLocaleString("en-GB",{ day: '2-digit', month: '2-digit' }) ===  new Date().toLocaleString("en-GB",{ day: '2-digit', month: '2-digit' })
+    });
+    //Bookings check out FALTA
+    const BookingsCheckOutToday = stateDbDataBooking.filter((booking) => {
+        return new Date(booking.checkout).toLocaleString("en-GB",{ day: '2-digit', month: '2-digit' }) ===  new Date().toLocaleString("en-GB",{ day: '2-digit', month: '2-digit' })
+    });
+    
     if(loading === true){
         return <>
             <h1>Loading...</h1>
@@ -170,7 +178,7 @@ export default function Main(){
                                 <div className="flex items-center space-x-2.5 mt-3 place-content-between">
                                     <div>
                                         <span className="font-titDashboard text-gray-700 dark:text-gray-300 text-5xl">
-                                            {stateDbDataBooking.length}
+                                            {BookingsCheckInToday.length}
                                         </span>
                                         <span className="font-titDashboard">
                                             Rooms
@@ -208,7 +216,7 @@ export default function Main(){
                                 <div className="flex items-center space-x-2.5 mt-3 place-content-between">
                                     <div>
                                         <span className="font-titDashboard text-gray-700 dark:text-gray-300 text-5xl">
-                                            {stateDbDataBooking.length}
+                                            {BookingsCheckOutToday.length}
                                         </span>
                                         <span className="font-titDashboard">
                                             Rooms
