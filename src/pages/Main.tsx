@@ -56,7 +56,11 @@ export default function Main(){
             Performance: countBookingForMonth.length
         })
     }
-    console.log(chartdata)
+    //Total Rooms booked
+    const RoomsBookeds = stateDbDataRoom.filter((room) => {
+        return room.status === "Booked"
+    });
+
     if(loading === true){
         return <>
             <h1>Loading...</h1>
@@ -97,9 +101,9 @@ export default function Main(){
                                             Rooms
                                         </span>
                                     </div>
-                                    <span className="rounded bg-green-400 px-2 py-1 text-lg font-medium text-white">
-                                        {percetageDiffNewBooking > 0 ? `+${percetageDiffNewBooking}%` : `${percetageDiffNewBooking}%`}
-                                    </span>
+                                    {percetageDiffNewBooking > 0 ? 
+                                        <span className="rounded bg-green-400 px-2 py-1 text-lg font-medium text-white">+{percetageDiffNewBooking}%</span> 
+                                        : <span className="rounded bg-yellow-400 px-2 py-1 text-lg font-medium text-white">{percetageDiffNewBooking}%</span>}
                                 </div>
                             </div>
                         </Card>
@@ -112,7 +116,7 @@ export default function Main(){
                                         </svg>
                                     </div>
                                     <div className="flex-column items-center space-x-2.5">
-                                        <p className="font-titDashboard ml-2.5 text-gray-700 dark:text-gray-300 text-2xl">{monthActual}</p>
+                                        <p className="font-titDashboard ml-2.5 text-gray-700 dark:text-gray-300 text-2xl">Rooms</p>
                                         <span className="font-subTitDashboard text-sm text-gray-500 dark:text-gray-500 text-xl">
                                             Bookeds Rooms
                                         </span>
@@ -128,15 +132,15 @@ export default function Main(){
                                 <div className="flex items-center space-x-2.5 mt-3 place-content-between">
                                     <div>
                                         <span className="font-titDashboard text-gray-700 dark:text-gray-300 text-5xl">
-                                            {stateDbDataBooking.length}
+                                            {RoomsBookeds.length}
                                         </span>
                                         <span className="font-titDashboard">
                                             Rooms
                                         </span>
                                     </div>
-                                    <span className="rounded bg-yellow-400 px-2 py-1 text-lg font-medium text-white">
-                                        -1.72%
-                                    </span>
+                                    {percetageDiffNewBooking > 0 ? 
+                                        <span className="rounded bg-green-400 px-2 py-1 text-lg font-medium text-white">+{percetageDiffNewBooking}%</span> 
+                                        : <span className="rounded bg-yellow-400 px-2 py-1 text-lg font-medium text-white">{percetageDiffNewBooking}%</span>}
                                 </div>
                             </div>
                         </Card>
