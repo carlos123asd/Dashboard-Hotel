@@ -57,18 +57,26 @@ export default function Main(){
         })
     }
     //Total Rooms booked
-    const RoomsBookeds = stateDbDataRoom.filter((room) => {
+    const roomsBookeds = stateDbDataRoom.filter((room) => {
         return room.status === "Booked"
     });
     //Bookings Check In FALTA
-    const BookingsCheckInToday = stateDbDataBooking.filter((booking) => {
+    const bookingsCheckInToday = stateDbDataBooking.filter((booking) => {
         return new Date(booking.checkin).toLocaleString("en-GB",{ day: '2-digit', month: '2-digit' }) ===  new Date().toLocaleString("en-GB",{ day: '2-digit', month: '2-digit' })
     });
+    const bookingsCheckInBack = stateDbDataBooking.filter((booking) => {
+        return new Date(booking.checkin).toLocaleDateString("en-GB",{ day: '2-digit', month: '2-digit' }) === new Date(new Date().getTime() - (24 * 60 * 60 * 1000)).toLocaleString("en-GB",{ day: '2-digit', month: '2-digit'})
+    });
+    const percetageDiffCheckIn = ((bookingsCheckInToday.length - bookingsCheckInBack.length) / bookingsCheckInBack.length) * 100
     //Bookings check out FALTA
-    const BookingsCheckOutToday = stateDbDataBooking.filter((booking) => {
+    const bookingsCheckOutToday = stateDbDataBooking.filter((booking) => {
         return new Date(booking.checkout).toLocaleString("en-GB",{ day: '2-digit', month: '2-digit' }) ===  new Date().toLocaleString("en-GB",{ day: '2-digit', month: '2-digit' })
     });
-    
+    const bookingsCheckOutBack = stateDbDataBooking.filter((booking) => {
+        return new Date(booking.checkout).toLocaleDateString("en-GB",{ day: "2-digit", month: "2-digit" }) === new Date(new Date().getTime() - (24 * 60 * 60 * 1000)).toLocaleString("en-GB",{ day: "2-digit", month: "2-digit" }) 
+    })
+    const precentageDiffCheckOut = ((bookingsCheckOutToday.length - bookingsCheckOutBack.length) / bookingsCheckOutBack.length) * 100
+
     if(loading === true){
         return <>
             <h1>Loading...</h1>
@@ -140,7 +148,7 @@ export default function Main(){
                                 <div className="flex items-center space-x-2.5 mt-3 place-content-between">
                                     <div>
                                         <span className="font-titDashboard text-gray-700 dark:text-gray-300 text-5xl">
-                                            {RoomsBookeds.length}
+                                            {roomsBookeds.length}
                                         </span>
                                         <span className="font-titDashboard">
                                             Rooms
@@ -178,15 +186,15 @@ export default function Main(){
                                 <div className="flex items-center space-x-2.5 mt-3 place-content-between">
                                     <div>
                                         <span className="font-titDashboard text-gray-700 dark:text-gray-300 text-5xl">
-                                            {BookingsCheckInToday.length}
+                                            {bookingsCheckInToday.length}
                                         </span>
                                         <span className="font-titDashboard">
                                             Rooms
                                         </span>
                                     </div>
-                                    <span className="rounded bg-emerald-500 px-2 py-1 text-lg font-medium text-white">
-                                        +1.72%
-                                    </span>
+                                    {percetageDiffCheckIn > 0 ? 
+                                        <span className="rounded bg-green-400 px-2 py-1 text-lg font-medium text-white">+{percetageDiffCheckIn}%</span> 
+                                        : <span className="rounded bg-yellow-400 px-2 py-1 text-lg font-medium text-white">{percetageDiffCheckIn}%</span>}
                                 </div>
                             </div>
                         </Card>
@@ -216,15 +224,15 @@ export default function Main(){
                                 <div className="flex items-center space-x-2.5 mt-3 place-content-between">
                                     <div>
                                         <span className="font-titDashboard text-gray-700 dark:text-gray-300 text-5xl">
-                                            {BookingsCheckOutToday.length}
+                                            {bookingsCheckOutToday.length}
                                         </span>
                                         <span className="font-titDashboard">
                                             Rooms
                                         </span>
                                     </div>
-                                    <span className="rounded bg-emerald-500 px-2 py-1 text-lg font-medium text-white">
-                                        +1.72%
-                                    </span>
+                                    {precentageDiffCheckOut > 0 ? 
+                                        <span className="rounded bg-green-400 px-2 py-1 text-lg font-medium text-white">+{precentageDiffCheckOut}%</span> 
+                                        : <span className="rounded bg-yellow-400 px-2 py-1 text-lg font-medium text-white">{precentageDiffCheckOut}%</span>}
                                 </div>
                             </div>
                         </Card>
