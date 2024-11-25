@@ -3,7 +3,7 @@ import Message from "../../../class/CMessage";
 
 export const dbThunkMessage = createAsyncThunk('dbThunkMessage', async () => {
     const token = localStorage.getItem('TOKEN_AUTH')
-    const comment = await fetch('https://eympm1p3o7.execute-api.eu-west-3.amazonaws.com/production/messages/contact',{
+    const comment = await fetch('http://localhost:3000/messages/contact',{//https://eympm1p3o7.execute-api.eu-west-3.amazonaws.com/production/messages/contact
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

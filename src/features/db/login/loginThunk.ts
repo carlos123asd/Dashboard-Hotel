@@ -2,14 +2,14 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import userLogin from "../../../interfaces/InterfaceUserAuth";
 
 export const dbThunkUser = createAsyncThunk('dbusers', async (infoLogin:userLogin) => {
-        const login = await fetch('https://eympm1p3o7.execute-api.eu-west-3.amazonaws.com/production/auth/login', {
+        const login = await fetch('http://localhost:3000/auth/login', { //https://eympm1p3o7.execute-api.eu-west-3.amazonaws.com/production/auth/login
             method: "POST",
             body: JSON.stringify({
-                email: infoLogin.email,
-                password: infoLogin.password
+                "email": infoLogin.email,
+                "password": infoLogin.password
             }),
             headers: {
-                "Content-Type": "application/json;"
+                "Content-Type": "application/json"
             }
         })
         if(login.ok){
