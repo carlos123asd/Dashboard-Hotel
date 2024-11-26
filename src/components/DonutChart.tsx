@@ -1,9 +1,10 @@
 import { Card, DonutChart, ProgressBar } from "@tremor/react";
 
-export default function CustomDonutChart() {
+export default function CustomDonutChart({dataDonut}:any) {
+  const {availables,bookeds} = dataDonut
   const data = [
-    { name: "Available", amount: 20 },
-    { name: "Booked", amount: 10 },
+    { name: "Available", amount: availables},
+    { name: "Booked", amount: bookeds },
   ];
 
   return (
@@ -21,7 +22,7 @@ export default function CustomDonutChart() {
           }
         />
       </div>
-      <div className="mx-auto max-w-sm space-y-4">
+      <div className="w-[350px] space-y-4">
             <div className="flex items-center justify-between space-x-3">
                 <ProgressBar value={data[1].amount} tooltip={data[1].amount > 1 ? `${data[1].amount} rooms` : `${data[1].amount} room`} color="red" className="w-60" />
                 <span className="text-sm font-semibold text-gray-900 dark:text-gray-50">

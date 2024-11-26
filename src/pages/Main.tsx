@@ -109,6 +109,14 @@ export default function Main(){
             Performance: countCheckOutForMonth.length
         })
     }
+    //DonutChar
+    const roomsAvailable = stateDbDataRoom.filter((room) => {
+        return room.status === "Available"
+    });
+    const dataDonut = {
+        availables: roomsAvailable.length,
+        bookeds: roomsBookeds.length
+    }
     if(loading === true){
         return <>
             <h1>Loading...</h1>
@@ -282,7 +290,7 @@ export default function Main(){
                         </div>
                     </div>
                     <div className="div3">
-                        <DonutChart />
+                        <DonutChart dataDonut={dataDonut}/>
                         <div className="div6">
                             <Graphic />
                         </div>
