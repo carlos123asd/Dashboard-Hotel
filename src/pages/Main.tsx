@@ -45,7 +45,7 @@ export default function Main(){
     const newBookingsMonthBack = stateDbDataBooking.filter((booking) => {
         return new Date(booking.orderdate).getMonth() === new Date().getMonth() - 1;
     });
-    const percetageDiffNewBooking = ((newBookingsMonthActual.length - newBookingsMonthBack.length) / newBookingsMonthBack.length) * 100
+    const percetageDiffNewBooking = ((newBookingsMonthActual.length - newBookingsMonthBack.length) / (newBookingsMonthBack.length === 0 ? 1 : newBookingsMonthBack.length)) * 100
     const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
     for (let index = 0; index < 12; index++) {
         const countBookingForMonth = stateDbDataBooking.filter((booking) => {
