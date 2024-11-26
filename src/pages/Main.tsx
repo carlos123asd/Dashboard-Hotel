@@ -37,7 +37,8 @@ export default function Main(){
         }
     },[stateDbStatusBooking,stateDbStatusRoom])
 
-    //New Booking CARD 1
+    const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    //New Booking CARD 1 (Grafica bookings anual)
     const chartdata = []
     const newBookingsMonthActual = stateDbDataBooking.filter((booking) => {
         return new Date(booking.orderdate).getMonth() === new Date().getMonth();
@@ -46,7 +47,6 @@ export default function Main(){
         return new Date(booking.orderdate).getMonth() === new Date().getMonth() - 1;
     });
     const percetageDiffNewBooking = ((newBookingsMonthActual.length - newBookingsMonthBack.length) / (newBookingsMonthBack.length === 0 ? 1 : newBookingsMonthBack.length)) * 100
-    const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
     for (let index = 0; index < 12; index++) {
         const countBookingForMonth = stateDbDataBooking.filter((booking) => {
             return new Date(booking.orderdate).getMonth() === index
@@ -56,11 +56,25 @@ export default function Main(){
             Performance: countBookingForMonth.length
         })
     }
-    //Total Rooms booked
+    //Total Rooms booked (Ocupacion general)
+    const charDataBooked = []
     const roomsBookeds = stateDbDataRoom.filter((room) => {
         return room.status === "Booked"
     });
+    for (let index = 0; index < 12; index++) {
+        const countBookingForMonth = stateDbDataBooking.filter((booking) => {
+            return new Date(booking.orderdate).getMonth() === index
+        });
+        const countRoomForMonth = roomsBookeds.filter((room) => {
+            return countBookingForMonth.some(booking => booking.room_id === room.id)
+        });
+        charDataBooked.push({
+            month: months[index],
+            Performance: countRoomForMonth.length
+        })
+    }
     //Bookings Check In FALTA
+    const charDataBookingsCheckIn = []
     const bookingsCheckInToday = stateDbDataBooking.filter((booking) => {
         return new Date(booking.checkin).toLocaleString("en-GB",{ day: '2-digit', month: '2-digit' }) ===  new Date().toLocaleString("en-GB",{ day: '2-digit', month: '2-digit' })
     });
@@ -68,7 +82,17 @@ export default function Main(){
         return new Date(booking.checkin).toLocaleDateString("en-GB",{ day: '2-digit', month: '2-digit' }) === new Date(new Date().getTime() - (24 * 60 * 60 * 1000)).toLocaleString("en-GB",{ day: '2-digit', month: '2-digit'})
     });
     const percetageDiffCheckIn = ((bookingsCheckInToday.length - bookingsCheckInBack.length) / (bookingsCheckInBack.length === 0 ? 1 : bookingsCheckInBack.length)) * 100
-    //Bookings check out FALTA
+    for (let index = 0; index < 12; index++) {
+        const countCheckInForMonth = stateDbDataBooking.filter((booking) => {
+            return new Date(booking.checkin).getMonth() === index
+        });
+        charDataBookingsCheckIn.push({
+            month: months[index],
+            Performance: countCheckInForMonth.length
+        })
+    }
+    //Bookings check out
+    const charDataBookingCheckOut = []
     const bookingsCheckOutToday = stateDbDataBooking.filter((booking) => {
         return new Date(booking.checkout).toLocaleString("en-GB",{ day: '2-digit', month: '2-digit' }) ===  new Date().toLocaleString("en-GB",{ day: '2-digit', month: '2-digit' })
     });
@@ -76,7 +100,15 @@ export default function Main(){
         return new Date(booking.checkout).toLocaleDateString("en-GB",{ day: "2-digit", month: "2-digit" }) === new Date(new Date().getTime() - (24 * 60 * 60 * 1000)).toLocaleString("en-GB",{ day: "2-digit", month: "2-digit" }) 
     })
     const precentageDiffCheckOut = ((bookingsCheckOutToday.length - bookingsCheckOutBack.length) / (bookingsCheckOutBack.length === 0 ? 1 : bookingsCheckOutBack.length)) * 100
-
+    for (let index = 0; index < 12; index++) {
+        const countCheckOutForMonth = stateDbDataBooking.filter((booking) => {
+            return new Date(booking.checkout).getMonth() === index
+        });
+        charDataBookingCheckOut.push({
+            month: months[index],
+            Performance: countCheckOutForMonth.length
+        })
+    }
     if(loading === true){
         return <>
             <h1>Loading...</h1>
@@ -132,14 +164,14 @@ export default function Main(){
                                         </svg>
                                     </div>
                                     <div className="flex-column items-center space-x-2.5">
-                                        <p className="font-titDashboard ml-2.5 text-gray-700 dark:text-gray-300 text-2xl">Rooms</p>
+                                        <p className="font-titDashboard ml-2.5 text-gray-700 dark:text-gray-300 text-2xl">Occupation</p>
                                         <span className="font-subTitDashboard text-sm text-gray-500 dark:text-gray-500 text-xl">
                                             Bookeds Rooms
                                         </span>
                                     </div>
                                 </div>
                                 <SparkAreaChart
-                                    data={chartdata}
+                                    data={charDataBooked}
                                     categories={["Performance"]}
                                     index={"month"}
                                     colors={["teal"]}
@@ -177,7 +209,7 @@ export default function Main(){
                                     </div>
                                 </div>
                                 <SparkAreaChart
-                                    data={chartdata}
+                                    data={charDataBookingsCheckIn}
                                     categories={["Performance"]}
                                     index={"month"}
                                     colors={["green"]}
@@ -215,7 +247,7 @@ export default function Main(){
                                     </div>
                                 </div>
                                 <SparkAreaChart
-                                    data={chartdata}
+                                    data={charDataBookingCheckOut}
                                     categories={["Performance"]}
                                     index={"month"}
                                     colors={["yellow"]}
