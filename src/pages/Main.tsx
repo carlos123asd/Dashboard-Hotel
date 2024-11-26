@@ -67,7 +67,7 @@ export default function Main(){
     const bookingsCheckInBack = stateDbDataBooking.filter((booking) => {
         return new Date(booking.checkin).toLocaleDateString("en-GB",{ day: '2-digit', month: '2-digit' }) === new Date(new Date().getTime() - (24 * 60 * 60 * 1000)).toLocaleString("en-GB",{ day: '2-digit', month: '2-digit'})
     });
-    const percetageDiffCheckIn = ((bookingsCheckInToday.length - bookingsCheckInBack.length) / bookingsCheckInBack.length) * 100
+    const percetageDiffCheckIn = ((bookingsCheckInToday.length - bookingsCheckInBack.length) / (bookingsCheckInBack.length === 0 ? 1 : bookingsCheckInBack.length)) * 100
     //Bookings check out FALTA
     const bookingsCheckOutToday = stateDbDataBooking.filter((booking) => {
         return new Date(booking.checkout).toLocaleString("en-GB",{ day: '2-digit', month: '2-digit' }) ===  new Date().toLocaleString("en-GB",{ day: '2-digit', month: '2-digit' })
@@ -75,7 +75,7 @@ export default function Main(){
     const bookingsCheckOutBack = stateDbDataBooking.filter((booking) => {
         return new Date(booking.checkout).toLocaleDateString("en-GB",{ day: "2-digit", month: "2-digit" }) === new Date(new Date().getTime() - (24 * 60 * 60 * 1000)).toLocaleString("en-GB",{ day: "2-digit", month: "2-digit" }) 
     })
-    const precentageDiffCheckOut = ((bookingsCheckOutToday.length - bookingsCheckOutBack.length) / bookingsCheckOutBack.length) * 100
+    const precentageDiffCheckOut = ((bookingsCheckOutToday.length - bookingsCheckOutBack.length) / (bookingsCheckOutBack.length === 0 ? 1 : bookingsCheckOutBack.length)) * 100
 
     if(loading === true){
         return <>
