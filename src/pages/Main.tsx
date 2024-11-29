@@ -9,6 +9,7 @@ import DonutChart from "../components/DonutChart"
 import Graphic from "../components/Graphic"
 import Review from "../components/Review"
 import ProfitChar from "../components/ProfitsChar"
+import gainYear from "../features/db/fecths/getGainYear"
   
 export default function Main(){
     const dispatch = appDispatch()
@@ -20,11 +21,21 @@ export default function Main(){
     const stateDbDataRoom = appSelector(state => state.dbRoom.data)
     const [loading,setLoading] = useState<boolean>(true)
     const monthActual = new Date().toLocaleString("en-GB",{month:"long"})
+    const [gain,setGain] = useState(0);
 
     useEffect(() =>{
         if(stateDbStatusBooking === 'idle' && stateDbStatusRoom === 'idle'){
             dispatch(dbThunkRoom());
             dispatch(dbThunkBooking());
+            const fetchGain = async () => {
+                try {
+                    const gains = await gainYear()
+                    console.log(gains)
+                } catch (error) {
+                    console.error(error)
+                }
+            }
+            fetchGain();
         }else if(stateDbStatusBooking === 'fulfilled' && stateDbStatusRoom === 'fulfilled'){
             setLoading(false);
         }else if(stateDbStatusBooking === 'rejected' || stateDbStatusRoom === 'rejected'){
@@ -117,6 +128,14 @@ export default function Main(){
         availables: roomsAvailable.length,
         bookeds: roomsBookeds.length
     }
+    //Graphics Current Month
+    console.log(gain);
+    const dataGraphics = [
+        {
+            date: `${monthActual} (Current Month)`,
+            gains: gain,
+        }
+    ]
     if(loading === true){
         return <>
             <h1>Loading...</h1>
@@ -292,7 +311,7 @@ export default function Main(){
                     <div className="div3">
                         <DonutChart dataDonut={dataDonut}/>
                         <div className="div6">
-                            <Graphic />
+                            <Graphic data={dataGraphics}/>
                         </div>
                     </div>
                     <div className="div4">

@@ -42,14 +42,12 @@ export default function Review(){
 
     const handlePublish = (message:Message) => {
         //updateDataMessage(message._id)
-        updateStatusfetchMessage(message._id,'published','Message published')
+        updateStatusfetchMessage(message.id,'published','Message published')
     }
     const handleArchive = (message:Message) => {
         //updateDataMessage(message._id)
-        updateStatusfetchMessage(message._id,'archived','Message archived')
+        updateStatusfetchMessage(message.id,'archived','Message archived')
     }
-
-    console.log(stateDbDatadbMessage);
 
     if(loading === false){
         return <>
