@@ -176,8 +176,8 @@ export default function Main(){
                                         </span>
                                     </div>
                                     {percetageDiffNewBooking > 0 ? 
-                                        <span className="rounded bg-green-400 px-2 py-1 text-lg font-medium text-white">+{percetageDiffNewBooking}%</span> 
-                                        : <span className="rounded bg-yellow-400 px-2 py-1 text-lg font-medium text-white">{percetageDiffNewBooking}%</span>}
+                                        <span className="rounded bg-green-400 px-2 py-1 text-lg font-medium text-white">+{Math.round(percetageDiffNewBooking)}%</span> 
+                                        : <span className="rounded bg-yellow-400 px-2 py-1 text-lg font-medium text-white">{Math.round(percetageDiffNewBooking)}%</span>}
                                 </div>
                             </div>
                         </Card>
@@ -213,8 +213,8 @@ export default function Main(){
                                         </span>
                                     </div>
                                     {percetageDiffNewBooking > 0 ? 
-                                        <span className="rounded bg-green-400 px-2 py-1 text-lg font-medium text-white">+{percetageDiffNewBooking}%</span> 
-                                        : <span className="rounded bg-yellow-400 px-2 py-1 text-lg font-medium text-white">{percetageDiffNewBooking}%</span>}
+                                        <span className="rounded bg-green-400 px-2 py-1 text-lg font-medium text-white">+{Math.round(percetageDiffNewBooking)}%</span> 
+                                        : <span className="rounded bg-yellow-400 px-2 py-1 text-lg font-medium text-white">{Math.round(percetageDiffNewBooking)}%</span>}
                                 </div>
                             </div>
                         </Card>
@@ -251,8 +251,8 @@ export default function Main(){
                                         </span>
                                     </div>
                                     {percetageDiffCheckIn > 0 ? 
-                                        <span className="rounded bg-green-400 px-2 py-1 text-lg font-medium text-white">+{percetageDiffCheckIn}%</span> 
-                                        : <span className="rounded bg-yellow-400 px-2 py-1 text-lg font-medium text-white">{percetageDiffCheckIn}%</span>}
+                                        <span className="rounded bg-green-400 px-2 py-1 text-lg font-medium text-white">+{Math.round(percetageDiffCheckIn)}%</span> 
+                                        : <span className="rounded bg-yellow-400 px-2 py-1 text-lg font-medium text-white">{Math.round(percetageDiffCheckIn)}%</span>}
                                 </div>
                             </div>
                         </Card>
@@ -289,8 +289,8 @@ export default function Main(){
                                         </span>
                                     </div>
                                     {precentageDiffCheckOut > 0 ? 
-                                        <span className="rounded bg-green-400 px-2 py-1 text-lg font-medium text-white">+{precentageDiffCheckOut}%</span> 
-                                        : <span className="rounded bg-yellow-400 px-2 py-1 text-lg font-medium text-white">{precentageDiffCheckOut}%</span>}
+                                        <span className="rounded bg-green-400 px-2 py-1 text-lg font-medium text-white">+{Math.round(precentageDiffCheckOut)}%</span> 
+                                        : <span className="rounded bg-yellow-400 px-2 py-1 text-lg font-medium text-white">{Math.round(precentageDiffCheckOut)}%</span>}
                                 </div>
                             </div>
                         </Card>
