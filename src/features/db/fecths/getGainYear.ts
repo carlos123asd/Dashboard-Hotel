@@ -15,7 +15,7 @@ function extractDataFromResponse(response: any): number[] | null {
 
 
 const gainYear = async () => {
-    const fetchGain = await fetch("http://localhost:3000/bookings/booking/gains", {
+    const fetchGain = await fetch("http://localhost:3000/bookings/gains", {
         method: 'GET',
         headers: {
            'Content-Type': 'application/json',
@@ -24,12 +24,8 @@ const gainYear = async () => {
     })
     if(fetchGain.ok){
         const dataGain = await fetchGain.json()
-        const gainfinally:any = extractDataFromResponse(dataGain[1])
-        if(gainfinally){
-            const buffer = Buffer.from(gainfinally); // Crear buffer desde el array
-            const utf8String = buffer.toString('utf8'); // Convertir a UTF-8
-            console.log('Cadena UTF-8:', utf8String);
-        }
+        return dataGain[0][0]
+
     }else{
         console.error(`error fetchGain -> ${fetchGain.status}`);
     }

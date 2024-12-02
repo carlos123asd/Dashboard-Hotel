@@ -21,7 +21,7 @@ export default function Main(){
     const stateDbDataRoom = appSelector(state => state.dbRoom.data)
     const [loading,setLoading] = useState<boolean>(true)
     const monthActual = new Date().toLocaleString("en-GB",{month:"long"})
-    const [gain,setGain] = useState(0);
+    const [gain,setGain] = useState<any>({});
 
     useEffect(() =>{
         if(stateDbStatusBooking === 'idle' && stateDbStatusRoom === 'idle'){
@@ -30,7 +30,7 @@ export default function Main(){
             const fetchGain = async () => {
                 try {
                     const gains = await gainYear()
-                    console.log(gains)
+                    setGain(gains)
                 } catch (error) {
                     console.error(error)
                 }
@@ -129,11 +129,10 @@ export default function Main(){
         bookeds: roomsBookeds.length
     }
     //Graphics Current Month
-    console.log(gain);
     const dataGraphics = [
         {
             date: `${monthActual} (Current Month)`,
-            gains: gain,
+            gains: gain.gains,
         }
     ]
     if(loading === true){
