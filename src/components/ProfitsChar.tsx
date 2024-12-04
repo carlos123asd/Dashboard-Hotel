@@ -6,8 +6,8 @@ export default function ProfitChar({data}:any){
   const [currentProfit,setCurrentProfit] = useState("");
   const [gainTotal,setGainTotal] = useState(data.gainTotal);
   const handleEventChar = (val_month:string,val_gains:string) => {
-      setCurrentProfit(val_month);
-      setGainTotal(val_gains)
+        setCurrentProfit(val_month);
+        setGainTotal(val_gains);
   }
     return <>
         <Card className="h-full w-full flex gap-6">
@@ -19,11 +19,18 @@ export default function ProfitChar({data}:any){
                 valueFormatter={(number: number) =>
                 `$${Intl.NumberFormat("us").format(number).toString()}`
                 }
-                onValueChange={(e) => handleEventChar(e ? String(e.formatDate) : "",e ? e.Profits : data.gainTotal)}
+                onValueChange={(e:any) => {
+                  if (e && e.eventType === 'category') {
+                    setCurrentProfit("");
+                    setGainTotal(data.gainTotal);
+                  } else {
+                      handleEventChar(e ? String(e.formatDate) : "", e ? e.Profits : data.gainTotal);
+                  }
+                }}
               />
             <div className="h-full w-6/12">
-              <div>
-                <p className="text-sm text-gray-500 dark:text-gray-500">Total Profits</p>
+              <h2 className="text-sm text-gray-500 dark:text-gray-500">Total Profits</h2>
+              <div className="flex justify-between">
                 <p className="text-3xl font-semibold text-gray-900 dark:text-gray-50">
                     {`$${gainTotal}`}
                 </p>
