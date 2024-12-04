@@ -157,12 +157,14 @@ export default function Main(){
         if(countGainsForMonth.length >= 1){
             const gainforMonth = Object(countGainsForMonth[0]).gains
             chartGainsMonthYear.push({
-                date: months[index],
+                formatDate:  months[index],
+                date: months[index].slice(0,3),
                 Profits: gainforMonth,
             })
         }else{
             chartGainsMonthYear.push({
-                date: months[index],
+                formatDate:  months[index],
+                date: months[index].slice(0,3),
                 Profits: '0',
             })
         }
@@ -172,7 +174,7 @@ export default function Main(){
     const dataProfit = 
         {
             char:chartGainsMonthYear,
-            gainToal: gain.gains
+            gainTotal: gain.gains
         }
 
     if(loading === true){
