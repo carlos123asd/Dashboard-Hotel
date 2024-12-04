@@ -10,6 +10,7 @@ import Graphic from "../components/Graphic"
 import Review from "../components/Review"
 import ProfitChar from "../components/ProfitsChar"
 import gainYear from "../features/db/fecths/getGainYear"
+import getGainsMonthYear from "../features/db/fecths/getGainMonthYear"
   
 export default function Main(){
     const dispatch = appDispatch()
@@ -21,7 +22,9 @@ export default function Main(){
     const stateDbDataRoom = appSelector(state => state.dbRoom.data)
     const [loading,setLoading] = useState<boolean>(true)
     const monthActual = new Date().toLocaleString("en-GB",{month:"long"})
+    const yearActual = new Date().toLocaleString("en-GB",{year:"numeric"})
     const [gain,setGain] = useState<any>({});
+    const [gainMonthYear,setGainMonthYear] = useState<any>([]);
 
     useEffect(() =>{
         if(stateDbStatusBooking === 'idle' && stateDbStatusRoom === 'idle'){
@@ -35,7 +38,16 @@ export default function Main(){
                     console.error(error)
                 }
             }
+            const fetchGainMonthYear = async () => {
+                try {
+                    const gains = await getGainsMonthYear()
+                    setGainMonthYear(gains)
+                } catch (error) {
+                    console.error(error)
+                }
+            }
             fetchGain();
+            fetchGainMonthYear();
         }else if(stateDbStatusBooking === 'fulfilled' && stateDbStatusRoom === 'fulfilled'){
             setLoading(false);
         }else if(stateDbStatusBooking === 'rejected' || stateDbStatusRoom === 'rejected'){
@@ -131,10 +143,38 @@ export default function Main(){
     //Graphics Current Month
     const dataGraphics = [
         {
-            date: `${monthActual} (Current Month)`,
+            date: `${yearActual} (Current Year)`,
             gains: gain.gains,
         }
     ]
+    //Graphic Profit Year
+    const chartGainsMonthYear = []
+    for (let index = 0; index < 12; index++) {
+        const countGainsForMonth = gainMonthYear.filter((register:any) => {
+            return register.month === index + 1
+        });
+
+        if(countGainsForMonth.length >= 1){
+            const gainforMonth = Object(countGainsForMonth[0]).gains
+            chartGainsMonthYear.push({
+                date: months[index],
+                Profits: gainforMonth,
+            })
+        }else{
+            chartGainsMonthYear.push({
+                date: months[index],
+                Profits: '0',
+            })
+        }
+        
+
+    }
+    const dataProfit = 
+        {
+            char:chartGainsMonthYear,
+            gainToal: gain.gains
+        }
+
     if(loading === true){
         return <>
             <h1>Loading...</h1>
@@ -314,7 +354,7 @@ export default function Main(){
                         </div>
                     </div>
                     <div className="div4">
-                        <ProfitChar />
+                        <ProfitChar data={dataProfit}/>
                     </div>
                     <div className="div5">
                         <Review />
