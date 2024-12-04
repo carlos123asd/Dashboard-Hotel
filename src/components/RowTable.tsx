@@ -24,7 +24,6 @@ import handleValidateFormEditUser from "../features/forms/validationformEditUser
 import { appSelector } from "../features/hooks/hooks";
 import { valuesEditBooking } from "../interfaces/InterfacePropsValidateFormEditBooking";
 import { valuesEditUser } from "../interfaces/InterfacePropsValidateFormEditUser";
-import { InterfacePropsRowTable } from "../interfaces/InterfacePropsRowTable";
 import Room from "../class/CRoom";
 import fetchGetRoom from "../features/db/fecths/getRoom";
 
