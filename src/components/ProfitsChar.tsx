@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import { AreaChart, Card, Divider } from "@tremor/react"
 import { useState } from "react"
+import { Spoiler } from "spoiled";
 
 export default function ProfitChar({data}:any){
   const [currentProfit,setCurrentProfit] = useState("");
@@ -9,6 +10,7 @@ export default function ProfitChar({data}:any){
         setCurrentProfit(val_month);
         setGainTotal(val_gains);
   }
+  const [hidden, setHidden] = useState(false);
     return <>
         <Card className="h-full w-full flex gap-6">
             <AreaChart
@@ -34,18 +36,20 @@ export default function ProfitChar({data}:any){
                 <p className="text-3xl font-semibold text-gray-900 dark:text-gray-50">
                     {`$${gainTotal}`}
                 </p>
-                <Button onClick={() => {}} variant="contained" size="small">
+                <Button onClick={() => setHidden((s) => !s)} variant="contained" size="small">
                   Analysis Generate 
                 </Button>
               </div>
                 <Divider>Details {currentProfit}</Divider>
-                <p className="mt-2 text-sm leading-7 text-gray-500 dark:text-gray-500">
-                    Ticket sales peaked in March, largely due to the "March Mountain
-                    Madness" event on March 12th, drawing significant tourist interest.
-                    Operational efficiencies and local hotel partnerships further boosted
-                    sales. Additionally, targeted social media promotions ahead of the event
-                    significantly increased online bookings.
-                </p>
+                <Spoiler hidden={hidden}>
+                  <p className="mt-2 text-sm leading-7 text-gray-500 dark:text-gray-500">
+                      Ticket sales peaked in March, largely due to the "March Mountain
+                      Madness" event on March 12th, drawing significant tourist interest.
+                      Operational efficiencies and local hotel partnerships further boosted
+                      sales. Additionally, targeted social media promotions ahead of the event
+                      significantly increased online bookings.
+                  </p>
+                </Spoiler>
             </div>
         </Card>
     </>

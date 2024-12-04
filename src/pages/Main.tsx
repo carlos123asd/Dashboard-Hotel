@@ -133,7 +133,7 @@ export default function Main(){
         })
     }
     //DonutChar
-    const roomsAvailable = stateDbDataRoom.filter((room) => {
+    const roomsAvailable = stateDbDataRoom.filter((room:any) => {
         return room.status === "Available"
     });
     const dataDonut = {

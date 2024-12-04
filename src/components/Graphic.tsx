@@ -35,9 +35,9 @@ export default function Graphic({data}:any){
               </Button>
             </div>
             <div className="flex gap-2">
-              <div><span style={{display:"inline-block"}} className="w-[15px] h-[15px] rounded-full mr-1 bg-red-600"></span><span style={{display:"inline-block"}}>Low</span></div>
-              <div><span style={{display:"inline-block"}} className="inline-block w-[15px] h-[15px] rounded-full mr-1 bg-yellow-600"></span><span style={{display:"inline-block"}}>Middle</span></div>
-              <div><span style={{display:"inline-block"}} className="inline-block w-[15px] h-[15px] rounded-full mr-1 bg-green-600"></span><span style={{display:"inline-block"}}>Hight</span></div>
+              <div><span style={{display:"inline-block"}} className="w-[15px] h-[15px] rounded-full mr-1 bg-red-500"></span><span style={{display:"inline-block"}}>Low</span></div>
+              <div><span style={{display:"inline-block"}} className="inline-block w-[15px] h-[15px] rounded-full mr-1 bg-yellow-500"></span><span style={{display:"inline-block"}}>Middle</span></div>
+              <div><span style={{display:"inline-block"}} className="inline-block w-[15px] h-[15px] rounded-full mr-1 bg-green-500"></span><span style={{display:"inline-block"}}>Hight</span></div>
             </div>
           </div>
           <BarChart

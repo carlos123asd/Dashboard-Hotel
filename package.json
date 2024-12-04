@@ -39,6 +39,7 @@
     "react-spinners-kit": "^1.9.1",
     "recharts": "^2.13.3",
     "redux": "^5.0.1",
+    "spoiled": "^0.3.2",
     "styled-components": "^6.1.12",
     "swiper": "^11.1.9",
     "toastify-js": "^1.12.0",
