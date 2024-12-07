@@ -135,9 +135,9 @@ export default function BtnTableTopNew(props:InterfacePropsBtnTableTopNew){
     const validFormRoom:FormEventHandler<formLogin> = (e) => {
         let lastObjectRoom = dataRooms.map((room) => {
             return room
-        }).sort((a,b) => Number(a._id) - Number(b._id))
-        let idnew = ((lastObjectRoom[lastObjectRoom.length - 1])._id) + 1
-        handlesubmitnewRoom(e,idnew)
+        }).sort((a,b) => Number(a.id) - Number(b.id))
+        let idnew = ((lastObjectRoom[lastObjectRoom.length - 1]).id) + 1
+        handlesubmitnewRoom(e,String(idnew))
         handleClose()
     }
 
@@ -327,9 +327,9 @@ export default function BtnTableTopNew(props:InterfacePropsBtnTableTopNew){
                                 <ul>
                                     {
                                         dataRooms.map(room => {
-                                            if(room.status === "Available" && room.typeRoom === Typeroombooking){
+                                            if(room.status === "Available" && room.type_room === Typeroombooking){
                                                 return <>
-                                                    <li><input onChange={() => setRoomid(room._id)} type="checkbox" value={room._id}/>{room.typeRoom}-{room.roomNumber}</li>
+                                                    <li><input onChange={() => setRoomid(String(room.id))} type="checkbox" value={room.id}/>{room.type_room}-{room.room_number}</li>
                                                 </>
                                             }
                                             

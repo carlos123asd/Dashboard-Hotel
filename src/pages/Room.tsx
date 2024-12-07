@@ -51,7 +51,7 @@ export default function Room(){
         return <>
             <ContentPageMain>
                 {/* contentflex='true' */}
-                <div>
+                <div className="flex place-content-between">
                     <FilterTableTop title={filterstop} />
                     <BtnTableTopNew title='New Room' />
                 </div>
