@@ -260,7 +260,7 @@ export const TrMainTable = styled.tr`
             margin-right: 1.75em;
         }
         & td[notes="true"]{
-            height: 3.063em;
+            //height: 3.063em;
             border: 1px solid #799283;
             border-radius: 1rem;
             padding: .5em;
@@ -293,7 +293,6 @@ export const TableObj = styled.table`
     }
     & tr th:nth-child(1){
         width: 24.375em;
-        text-align: left;
     }
     & tr th:nth-child(2){
         width: 24.375em;
