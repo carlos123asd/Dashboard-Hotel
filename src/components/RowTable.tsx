@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TrMainTable } from "../styles/table/table";
 import handleValidateFormEditRoom from "../features/forms/validationformEditRoom";
 import handleValidateFormEditBooking from "../features/forms/validationformEditBooking"
@@ -6,7 +6,7 @@ import deleteRoom from "../features/db/fecths/deleteRoom";
 import { useLocation } from "react-router-dom";
 import ViewBooking from "./ViewBooking";
 import deleteBooking from "../features/db/fecths/deleteBooking";
-import { Modal } from "@mui/material";
+import { IconButton, Menu, MenuItem, Modal } from "@mui/material";
 import { ModalNewNotes } from "../styles/table/ModalNotes";
 import phonecontact from '../assets/imgs/phone.svg'
 import { ModalNewRoom } from "../styles/table/ModalNewRoom";
@@ -26,6 +26,21 @@ import { valuesEditBooking } from "../interfaces/InterfacePropsValidateFormEditB
 import { valuesEditUser } from "../interfaces/InterfacePropsValidateFormEditUser";
 import Room from "../class/CRoom";
 import fetchGetRoom from "../features/db/fecths/getRoom";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+const ITEM_HEIGHT = 48;
+const options = [
+    {
+        tit: 'Edit',
+        icon: <EditIcon className="mr-2"/>
+    },
+    {
+        tit: 'Delete',
+        icon: <DeleteIcon className="mr-2"/>
+    }
+  ];
 
 export default function RowTable(props:any){
     const {data}:any = props
@@ -70,6 +85,15 @@ export default function RowTable(props:any){
     const [descriptionedituser,setDescriptionedituser] = useState<string>("")
     const [statusedituser,setStatusedituser] = useState<string>("")
 
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const openmore = Boolean(anchorEl);
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
     useEffect(() => {
         if(locationname === '/bookings'){
             async function fetchroom(){
@@ -85,31 +109,11 @@ export default function RowTable(props:any){
     }
     
     const handleClickFunctionEdit = () => {
-        if(edit === false){
-            setEdit(true)
-            setShowbtngroup2({
-                display: 'inline-block'
-            })
-            setHideedit({
-                display: 'none'
-            })
-        }else{
-            setEdit(false)
-            setShowbtngroup2({
-                display: 'none'
-            })
-            setHideedit({
-                display: 'inline-block'
-            })
-        }
+        edit ? setEdit(!edit) : setEdit(edit)
+        handleClose()
     }
     const handleClickFunctionDelete = () => {
-            setShowbtngroup3({
-                display: 'inline-block'
-            })
-            setHideedit({
-                display: 'none'
-            })
+        handleClose()
     }
     const handleClickFunctionCancelDelete = () => {
         setShowbtngroup3({
@@ -245,15 +249,15 @@ export default function RowTable(props:any){
     if(locationname === '/room'){
         return (edit === true) ? <>
                 <TrMainTable>
-                    <div className="content-evenly ml-6" style={{textAlignLast:"left",height:"inherit"}}>
-                        <td className="block h-[150px] content-center">
+                    <td className="content-evenly ml-6" style={{textAlignLast:"left",height:"inherit"}}>
+                        <div className="flex block h-[150px] items-stretch">
                             <img className="imgroomnameColum" width={150} height={77} src={data.photo} alt="Image Room" />
-                            <div className="roomnameColumn">
+                            <div className="roomnameColumn content-center">
                                 <span className="numtit">{`#000${data.id}`}</span>
                                 <span className="deluxenum">{`${data.type_room}-${data.room_number}`}<input onChange={(e) => setNumroomedit(e.target.value)} name="roomNumberEditable" className="inputText" type="text" placeholder={data.room_number}/></span>
                             </div>
-                        </td>
-                    </div>
+                        </div>
+                    </td>
                     <td>
                         <span className="deluxenum">
                             <select name="typeroomEditable" className="inputSelect" onChange={(e) => handlechangeTypeRoom(e.target.value)} id="contentRoomNewRoom__roomtype">
@@ -269,7 +273,22 @@ export default function RowTable(props:any){
                     <td>{`$${(Number(data.price.slice(1))-((Number(data.price.slice(1))*data.discount)/100)).toFixed(2)}`}<input onChange={(e) => setDiscountedit(e.target.value)} name="discountEditable" className="inputText" placeholder={`${data.discount}%`}></input></td>
                     <td><textarea onChange={(e) => setCancelationedit(e.target.value)} name="cancelationedit" className="textareainputroomeditable" placeholder={data.cancellation}></textarea></td>
                     <td><textarea onChange={(e) => setDescriptionedit(e.target.value)} name="descriptionedit" className="textareainputroomeditable" placeholder={data.description}></textarea></td>
-                    <td>{data.status === 'Available' ? <div className="status"><select onSelect={(e:any) => setStatusedit(e.target.value)} name="statusEditable" value={data.status} className="inputSelect inputSelect--statusAvaible"><option value="Available">Available</option><option value="Booked">Booked</option></select></div> : <div className="status statusbooked"><select onChange={(e) => setStatusedit(e.target.value)} name="statusEditable" className="inputSelect inputSelect--statusBooked"><option value="Available">Available</option><option value="Booked">Booked</option></select></div>}</td>
+                    <td>
+                        {data.status === 'Available' ? 
+                            <div className="status">
+                                <select onSelect={(e:any) => setStatusedit(e.target.value)} name="statusEditable" value={data.status} className="inputSelect inputSelect--statusAvaible">
+                                    <option value="Available">Available</option>
+                                    <option value="Booked">Booked</option>
+                                </select>
+                            </div> 
+                            : 
+                            <div className="status statusbooked">
+                                <select onChange={(e) => setStatusedit(e.target.value)} name="statusEditable" className="inputSelect inputSelect--statusBooked">
+                                    <option value="Available">Available</option>
+                                    <option value="Booked">Booked</option>
+                                </select>
+                            </div>}
+                    </td>
                     <td style={{position:'relative'}}>
                         <div style={hideedit}>
                             <div className="status editdelete" onClick={handleClickFunctionEdit}>Edit</div>
@@ -288,35 +307,80 @@ export default function RowTable(props:any){
             </> :
             <>
                 <TrMainTable>
-                    <div className="content-evenly ml-6" style={{textAlignLast:"left",height:"inherit"}}>
-                        <td className="block h-[150px] content-center">
+                    <td className="content-evenly ml-6" style={{textAlignLast:"left",height:"inherit"}}>
+                        <div className="flex block h-[150px] items-stretch">
                             <img className="imgroomnameColum" width={150} height={77} src={data.photo} alt="Image Room" />
-                            <div className="roomnameColumn">
+                            <div className="roomnameColumn content-center">
                                 <span className="numtit">{`#000${data.id}`}</span>
                                 <span className="deluxenum mediumletter">{`${data.type_room}-${data.room_number}`}</span>
                             </div>
-                        </td>
-                    </div>
+                        </div>
+                    </td>
                     <td className="content-center pb-0 mediumletter">{data.type_room}</td>
                     <td className="content-center pb-0 mediumletter">{data.amenities}</td>
                     <td className="content-center pb-0"><span className="priceRoom">{data.price}</span><span className="nightroom"> /night</span></td>
                     <td className="content-center pb-0">{`$${(Number(data.price.slice(1))-((Number(data.price.slice(1))*data.discount)/100)).toFixed(2)}(${data.discount}%)`}</td>
-                    <td className="content-center pb-0 mediumletter">{data.cancellation}</td>
-                    <td className="content-center pb-0 mediumletter">{data.description}</td>
-                    <td>{data.status === 'Available' ? <div className="status">Available</div> : <div className="status statusbooked">Booked</div>}</td>
+                    <td className="content-center pb-0 mediumletter">
+                        <div className="h-3/4 overflow-y-auto">
+                            {data.cancellation}
+                        </div>
+                    </td>
+                    <td className="content-center pb-0 mediumletter">
+                        <div className="h-3/4 overflow-y-auto">
+                            {data.description}
+                        </div>
+                    </td>
+                    <td>
+                        {data.status === 'Available' ?
+                            <div>
+                                <div className="status">Available</div>
+                            </div> 
+                         : 
+                            <div>
+                                <div className="status statusbooked">Booked</div>
+                            </div>}
+                    </td>
                     <td style={{position:'relative'}}>
-                        <div style={hideedit}>
-                            <div className="status editdelete" onClick={handleClickFunctionEdit}>Edit</div>
-                            <div className="status statusbooked editdelete" onClick={handleClickFunctionDelete}>Delete</div>
-                        </div>
-                        <div style={showbtngroup2}>
-                            <div className="status editdelete" >Save</div>
-                            <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
-                        </div>
-                        <div style={showbtngroup3}>
-                        <div className="status editdelete" onClick={() => handledeleteRoom()}>Confirm</div>
-                            <div className="status statusbooked editdelete" onClick={handleClickFunctionCancelDelete}>Cancel</div>
-                        </div>
+                        <IconButton
+                            aria-label="more"
+                            id="long-button"
+                            aria-controls={openmore ? 'long-menu' : undefined}
+                            aria-expanded={openmore ? 'true' : undefined}
+                            aria-haspopup="true"
+                            onClick={handleClick}
+                        >
+                            <MoreVertIcon />
+                        </IconButton>
+                        <Menu
+                            id="long-menu"
+                            MenuListProps={{
+                            'aria-labelledby': 'long-button',
+                            }}
+                            anchorEl={anchorEl}
+                            open={openmore}
+                            onClose={handleClose}
+                            slotProps={{
+                            paper: {
+                                style: {
+                                maxHeight: ITEM_HEIGHT * 4.5,
+                                width: '20ch',
+                                },
+                            },
+                            }}
+                        >
+                            {options.map((option,index) => (
+                                option.tit === 'Edit' ?
+                                <MenuItem key={index} onClick={handleClickFunctionEdit}>
+                                    {option.icon}
+                                    {option.tit}
+                                </MenuItem>
+                                :
+                                <MenuItem key={index} onClick={handleClickFunctionDelete}>
+                                    {option.icon}
+                                    {option.tit}
+                                </MenuItem>
+                            ))}
+                        </Menu>
                     </td>
                 </TrMainTable>
             </>
@@ -382,15 +446,15 @@ export default function RowTable(props:any){
                     </ModalNewRoom>
                 </Modal>
                 <TrMainTable>
-                    <div>
-                        <td onClick={() => handleOpenViewBooking()}>
+                    <td>
+                        <div className="flex items-stretch" onClick={() => handleOpenViewBooking()}>
                             <img className="imgroomnameColum" width={150} height={77} src={roombooking.photos} alt="Image Room" />
-                            <div className="roomnameColumn">
+                            <div className="roomnameColumn content-center">
                                 <span className="deluxenum numtit--black"><input className="inputEditBookingGuest" onChange={(e) => setNamebookingedit(e.target.value)} type="text" placeholder={data.guest} /></span>
                                 <span className="numtit">{`${roombooking.type_room}-${roombooking.room_number}`}<img onClick={() => setOpeneditroombooking(true)} src={editRoomBooking} alt="Edit Reservation Room"></img></span>
                             </div>
-                        </td>
-                    </div>
+                        </div>
+                    </td>
                     <td>
                         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
                         <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
@@ -472,15 +536,15 @@ export default function RowTable(props:any){
                     </ModalNewNotes>
                 </Modal>
                 <TrMainTable>
-                    <div>
-                        <td onClick={() => setBookingvisible(true)}>
+                    <td>
+                        <div className="flex items-stretch" onClick={() => setBookingvisible(true)}>
                             <img className="imgroomnameColum" width={150} height={77} src={roombooking.photos} alt="Image Room" />
-                            <div className="roomnameColumn">
+                            <div className="roomnameColumn content-center">
                                 <span className="deluxenum numtit--black namebooking">{`${data.guest}`}</span>
                                 <span className="numtit">{`${roombooking.type_room}-${roombooking.room_number}`}</span>
                             </div>
-                        </td>
-                    </div>
+                        </div>
+                    </td>
                     <td className="content-center">{data.orderdate.toString().split("T")[0]}</td>
                     <td className="content-center"><span className="namebooking">{data.checkin.toString().split("T")[0]}</span><br/><span className="timeinbooking">{(data.checkin.toString().split("T")[1]).split("Z")[0]}</span></td>
                     <td className="content-center"><span className="namebooking">{data.checkout.toString().split("T")[0]}</span><br/><span className="timeinbooking">{(data.checkout.toString().split("T")[1]).split("Z")[0]}</span></td>
@@ -505,15 +569,15 @@ export default function RowTable(props:any){
     }else if(locationname === '/users'){
         return (edit === true) ? <>
             <TrMainTable>
-                <div>
-                    <td>
+                <td>
+                    <div className="flex items-stretch">
                         <img className="imgroomnameColum" width={150} height={77} src={data.photo} alt="Image Employee" />
-                        <div className="roomnameColumn">
+                        <div className="roomnameColumn content-center">
                             <input onChange={(e:any) => setNameedituser(e.target.value)} className="inputEditBookingGuest" style={{height:'3em'}} type="text" name="nameuseredit" placeholder={data.name} />
                             <span className="deluxenum">#{data.id}<br/>Joined on {data.startdate}</span>
                         </div>
-                    </td>
-                </div>
+                    </div>
+                </td>
                 <td className="descriptionemployee textareainputbookingeditable"><textarea onChange={(e) => setDescriptionedituser(e.target.value)} className="textareainputroomeditable" placeholder={data.description} name="descriptionuseredit"></textarea></td>
                 <td style={{alignContent: 'stretch'}} className="contactemployee">
                     <MuiPhoneNumber style={{display:'block'}} defaultCountry={'es'} onChange={(e:any) => setNumberphonestate(e.target.value)}/>
@@ -545,15 +609,15 @@ export default function RowTable(props:any){
         :
         <>
             <TrMainTable>
-                <div>
-                    <td>
+                <td>
+                    <div className="flex items-stretch">
                         <img className="imgroomnameColum" width={150} height={77} src={data.photo} alt="Image Employee" />
-                        <div className="roomnameColumn">
+                        <div className="roomnameColumn content-center">
                             <span className="nameemployee">{data.name}</span>
                             <span className="deluxenum">#{data.id}<br/>Joined on {data.startdate.toString().split("T")[0]}</span>
                         </div>
-                    </td>
-                </div>
+                    </div>
+                </td>
                 <td className="descriptionemployee">{data.description ? data.description : "Not Description"}</td>
                 <td className="contactemployee"><span><img src={phonecontact} alt="Contact Employee" />{data.phone ? data.phone : "Not Phone"}</span><br /><span>{data.email}</span></td>
                 {data.status === 'active' ? <td className="statusemployee statusemployee--active">{data.status}</td> : <td className="statusemployee statusemployee--inactive">{data.status}</td>}
@@ -576,9 +640,9 @@ export default function RowTable(props:any){
     }else if(locationname === '/contact'){
         return (edit === false) ? <>
             <TrMainTable>
-                <div>
-                    <td>#000{data.id}</td>
-                </div>
+                <td>
+                    <div>#000{data.id}</div>
+                </td>
                 <td>{data.date}</td>
                 <td>{data.customer}</td>
                 <td>{data.comment}</td>
@@ -599,3 +663,16 @@ export default function RowTable(props:any){
         </>: <></>
     }
 }
+
+/*<div style={hideedit}>
+                            <div className="status editdelete" onClick={handleClickFunctionEdit}>Edit</div>
+                            <div className="status statusbooked editdelete" onClick={handleClickFunctionDelete}>Delete</div>
+                        </div>
+                        <div style={showbtngroup2}>
+                            <div className="status editdelete" >Save</div>
+                            <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
+                        </div>
+                        <div style={showbtngroup3}>
+                        <div className="status editdelete" onClick={() => handledeleteRoom()}>Confirm</div>
+                            <div className="status statusbooked editdelete" onClick={handleClickFunctionCancelDelete}>Cancel</div>
+                        </div> */

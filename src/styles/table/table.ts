@@ -225,7 +225,8 @@ export const TrMainTable = styled.tr`
             color: #799283;
         }
         & td{
-            vertical-align: baseline;
+            //display: block;
+            height: 200px;
             text-align: -webkit-center;
         }
         & td:nth-child(5){
@@ -279,7 +280,7 @@ export const TrMainTable = styled.tr`
 `
 
 export const TableObj = styled.table`
-    width: max-content;
+    width: 100%;
     text-align: center;
     background: #fff;
     border-radius: 1.25em;
