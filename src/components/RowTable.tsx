@@ -6,7 +6,7 @@ import deleteRoom from "../features/db/fecths/deleteRoom";
 import { useLocation } from "react-router-dom";
 import ViewBooking from "./ViewBooking";
 import deleteBooking from "../features/db/fecths/deleteBooking";
-import { IconButton, Menu, MenuItem, Modal } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Menu, MenuItem, Modal } from "@mui/material";
 import { ModalNewNotes } from "../styles/table/ModalNotes";
 import phonecontact from '../assets/imgs/phone.svg'
 import { ModalNewRoom } from "../styles/table/ModalNewRoom";
@@ -29,6 +29,8 @@ import fetchGetRoom from "../features/db/fecths/getRoom";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import DoDisturbIcon from '@mui/icons-material/DoDisturb';
+import SaveIcon from '@mui/icons-material/Save';
 
 const ITEM_HEIGHT = 48;
 const options = [
@@ -40,7 +42,17 @@ const options = [
         tit: 'Delete',
         icon: <DeleteIcon className="mr-2"/>
     }
-  ];
+];
+const optionsEdit = [
+    {
+        tit: 'Save',
+        icon: <SaveIcon className="mr-2"/>
+    },
+    {
+        tit: 'Cancel',
+        icon: <DoDisturbIcon className="mr-2"/>
+    }
+];
 
 export default function RowTable(props:any){
     const {data}:any = props
@@ -94,6 +106,17 @@ export default function RowTable(props:any){
         setAnchorEl(null);
     };
 
+    //Modal delete
+    const [opendelete, setOpendelete] = React.useState(false);
+    const handleClickOpenDelete = () => {
+        setOpendelete(true);
+    };
+
+    const handleCloseDelete = () => {
+        setOpendelete(false);
+    };
+
+
     useEffect(() => {
         if(locationname === '/bookings'){
             async function fetchroom(){
@@ -109,10 +132,11 @@ export default function RowTable(props:any){
     }
     
     const handleClickFunctionEdit = () => {
-        edit ? setEdit(!edit) : setEdit(edit)
+        edit ? setEdit(!edit) : setEdit(!edit)
         handleClose()
     }
     const handleClickFunctionDelete = () => {
+        handleClickOpenDelete()
         handleClose()
     }
     const handleClickFunctionCancelDelete = () => {
@@ -159,8 +183,8 @@ export default function RowTable(props:any){
     }
 
     const handledeleteRoom = () => {
-        deleteRoom(data._id)
-        handleClickFunctionCancelDelete()
+        deleteRoom(data.id)
+        handleCloseDelete()
     }
 
     const otherState = (state:string) => {
@@ -250,7 +274,7 @@ export default function RowTable(props:any){
         return (edit === true) ? <>
                 <TrMainTable>
                     <td className="content-evenly ml-6" style={{textAlignLast:"left",height:"inherit"}}>
-                        <div className="flex block h-[150px] items-stretch">
+                        <div className="flex block h-[150px] items-stretch ml-4">
                             <img className="imgroomnameColum" width={150} height={77} src={data.photo} alt="Image Room" />
                             <div className="roomnameColumn content-center">
                                 <span className="numtit">{`#000${data.id}`}</span>
@@ -290,25 +314,78 @@ export default function RowTable(props:any){
                             </div>}
                     </td>
                     <td style={{position:'relative'}}>
-                        <div style={hideedit}>
-                            <div className="status editdelete" onClick={handleClickFunctionEdit}>Edit</div>
-                            <div className="status statusbooked editdelete" onClick={handleClickFunctionDelete}>Delete</div>
-                        </div>
-                        <div style={showbtngroup2}>
-                            <div className="status editdelete" onClick={() => handleClickSave()}>Save</div>
-                            <div className="status statusbooked editdelete" onClick={handleClickFunctionEdit}>Cancel</div>
-                        </div>
-                        <div style={showbtngroup3}>
-                            <div className="status editdelete" onClick={() => handledeleteRoom()}>Confirm</div>
-                            <div className="status statusbooked editdelete" onClick={handleClickFunctionCancelDelete}>Cancel</div>
-                        </div>
+                        <IconButton
+                            aria-label="more"
+                            id="long-button"
+                            aria-controls={openmore ? 'long-menu' : undefined}
+                            aria-expanded={openmore ? 'true' : undefined}
+                            aria-haspopup="true"
+                            onClick={handleClick}
+                        >
+                            <MoreVertIcon />
+                        </IconButton>
+                        <Menu
+                            id="long-menu"
+                            MenuListProps={{
+                            'aria-labelledby': 'long-button',
+                            }}
+                            anchorEl={anchorEl}
+                            open={openmore}
+                            onClose={handleClose}
+                            slotProps={{
+                            paper: {
+                                style: {
+                                maxHeight: ITEM_HEIGHT * 4.5,
+                                width: '20ch',
+                                },
+                            },
+                            }}
+                        >
+                            {optionsEdit.map((option,index) => (
+                                option.tit === 'Edit' ?
+                                <MenuItem key={index} onClick={handleClickSave}>
+                                    {option.icon}
+                                    {option.tit}
+                                </MenuItem>
+                                :
+                                <MenuItem key={index} onClick={handleClickFunctionEdit}>
+                                    {option.icon}
+                                    {option.tit}
+                                </MenuItem>
+                            ))}
+                        </Menu>
                     </td>
                 </TrMainTable>
             </> :
             <>
+                <Dialog
+                    open={opendelete}
+                    onClose={handleCloseDelete}
+                    aria-labelledby="draggable-dialog-title"
+                >
+                    <div className="p-4">
+                        <DialogTitle>
+                            Confirm Deletion
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                Are you sure you want to delete this room? This action is irreversible and will permanently remove all associated data.
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button variant="outlined" startIcon={<DoDisturbIcon />} onClick={handleCloseDelete}>
+                                Cancel
+                            </Button>
+                            <Button variant="contained" endIcon={<DeleteIcon />} onClick={handledeleteRoom}>
+                                Delete
+                            </Button>
+                        </DialogActions>
+                    </div>
+                </Dialog>
+
                 <TrMainTable>
                     <td className="content-evenly ml-6" style={{textAlignLast:"left",height:"inherit"}}>
-                        <div className="flex block h-[150px] items-stretch">
+                        <div className="flex block h-[150px] items-stretch ml-4">
                             <img className="imgroomnameColum" width={150} height={77} src={data.photo} alt="Image Room" />
                             <div className="roomnameColumn content-center">
                                 <span className="numtit">{`#000${data.id}`}</span>
@@ -321,12 +398,12 @@ export default function RowTable(props:any){
                     <td className="content-center pb-0"><span className="priceRoom">{data.price}</span><span className="nightroom"> /night</span></td>
                     <td className="content-center pb-0">{`$${(Number(data.price.slice(1))-((Number(data.price.slice(1))*data.discount)/100)).toFixed(2)}(${data.discount}%)`}</td>
                     <td className="content-center pb-0 mediumletter">
-                        <div className="h-3/4 overflow-y-auto">
+                        <div className="w-[90%] h-3/4 overflow-y-auto content-center">
                             {data.cancellation}
                         </div>
                     </td>
                     <td className="content-center pb-0 mediumletter">
-                        <div className="h-3/4 overflow-y-auto">
+                        <div className="w-[90%] h-3/4 overflow-y-auto content-center">
                             {data.description}
                         </div>
                     </td>
@@ -447,7 +524,7 @@ export default function RowTable(props:any){
                 </Modal>
                 <TrMainTable>
                     <td>
-                        <div className="flex items-stretch" onClick={() => handleOpenViewBooking()}>
+                        <div className="flex items-stretch ml-4" onClick={() => handleOpenViewBooking()}>
                             <img className="imgroomnameColum" width={150} height={77} src={roombooking.photos} alt="Image Room" />
                             <div className="roomnameColumn content-center">
                                 <span className="deluxenum numtit--black"><input className="inputEditBookingGuest" onChange={(e) => setNamebookingedit(e.target.value)} type="text" placeholder={data.guest} /></span>
@@ -537,7 +614,7 @@ export default function RowTable(props:any){
                 </Modal>
                 <TrMainTable>
                     <td>
-                        <div className="flex items-stretch" onClick={() => setBookingvisible(true)}>
+                        <div className="flex items-stretch ml-4" onClick={() => setBookingvisible(true)}>
                             <img className="imgroomnameColum" width={150} height={77} src={roombooking.photos} alt="Image Room" />
                             <div className="roomnameColumn content-center">
                                 <span className="deluxenum numtit--black namebooking">{`${data.guest}`}</span>
@@ -570,7 +647,7 @@ export default function RowTable(props:any){
         return (edit === true) ? <>
             <TrMainTable>
                 <td>
-                    <div className="flex items-stretch">
+                    <div className="flex items-stretch ml-4">
                         <img className="imgroomnameColum" width={150} height={77} src={data.photo} alt="Image Employee" />
                         <div className="roomnameColumn content-center">
                             <input onChange={(e:any) => setNameedituser(e.target.value)} className="inputEditBookingGuest" style={{height:'3em'}} type="text" name="nameuseredit" placeholder={data.name} />
@@ -610,7 +687,7 @@ export default function RowTable(props:any){
         <>
             <TrMainTable>
                 <td>
-                    <div className="flex items-stretch">
+                    <div className="flex items-stretch ml-4">
                         <img className="imgroomnameColum" width={150} height={77} src={data.photo} alt="Image Employee" />
                         <div className="roomnameColumn content-center">
                             <span className="nameemployee">{data.name}</span>

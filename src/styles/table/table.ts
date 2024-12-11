@@ -233,7 +233,7 @@ export const TrMainTable = styled.tr`
             font-family: 'poppinssemibold';
         }
         & th{
-            width: 200px;
+            width: 300px;
             height: 4.063em;
             font-size: 1.13rem;
             line-height: 27px;
@@ -242,8 +242,8 @@ export const TrMainTable = styled.tr`
             border-bottom: 1px solid #fefefe;
             text-align: center;
         }
-        & th:nth-last-child(-n+1){
-            width: 16em;
+        & th:nth-last-child(1){
+            width: 0px;
         }
         & .roomnameColumn,.imgroomnameColum{
             display: inline-block
@@ -293,7 +293,7 @@ export const TableObj = styled.table`
         width: 100%;
     }
     & tr th:nth-child(1){
-        width: 24.375em;
+        width: 20%;
     }
     & tr th:nth-child(2){
         width: 24.375em;
@@ -306,7 +306,6 @@ export const TableObj = styled.table`
 
 export const ContentTable = styled.div`
     width: 100%;
-    overflow: scroll;
 `
 
 export const PaginationTable = styled.div`
