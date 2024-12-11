@@ -12,6 +12,7 @@ import CRoom from "../class/CRoom";
 import CBooking from "../class/CBooking";
 import CMessage from "../class/CMessage";
 import CEmployee from "../class/CEmployee";
+import BtnFilterTableTop from "./BtnFilterTableTop";
 
 {/* props:InterfacePropsTable */}
 export default function Table(props:any){
@@ -21,7 +22,7 @@ export default function Table(props:any){
     const locationname = useLocation().pathname;
     const [desc,setDesc] = useState<boolean>(false);
     const [descletter,setDescletter] = useState<boolean>(false);
-    const [rotate,setRotate] = useState<object>({});
+    
     const [datastate,setDatastate] = useState<CBooking[]|CEmployee[]|CMessage[]|CRoom[]>(data.map((info:any) => {
         return info
     }))
@@ -61,81 +62,60 @@ export default function Table(props:any){
 
     const othercolumns = (column:string) => {
         if(column === 'Room Type'){
-            return <span style={rotate} onClick={handleOrderByLetter} className="filtercolumn"></span>
+            return <BtnFilterTableTop click={handleOrderByLetter} />
         }
     }
     const othercolumnsBooking = (column:string) => {
         if(column === 'Check in'){
-            return <span style={rotate} onClick={() => handleOrderByDate('checkin')} className="filtercolumn"></span>
+            return <span onClick={() => handleOrderByDate('checkin')} className="filtercolumn"></span>
         }else if(column === 'Check out'){
-            return <span style={rotate} onClick={() => handleOrderByDate('checkout')} className="filtercolumn"></span>
+            return <span onClick={() => handleOrderByDate('checkout')} className="filtercolumn"></span>
         }else if(column === 'Order Date'){
-            return <span style={rotate} onClick={() => handleOrderByDate('checkdate')} className="filtercolumn"></span>
+            return <span onClick={() => handleOrderByDate('checkdate')} className="filtercolumn"></span>
         }
     }
 
-    const rotateiconOrderBy = (order:boolean) =>{
-        if(order === true){
-            setRotate({
-                transform: 'rotate(45deg)',
-                verticalAlign: 'text-top'
-            })
-        }else{
-            setRotate({
-                transform: 'rotate(224deg)',
-                verticalAlign: 'sub'
-            })
-        }
-    }
+    
 
     const handleOrderBy = () => {
         if(desc === false){
             setDesc(true)
-            rotateiconOrderBy(false)
-            setDatastate(datastate.sort((a:any, b:any) => Number(a.price.split("$")[1])  -  Number(b.price.split("$")[1])));
+            setDatastate(datastate.sort((a:any, b:any) => Number(a.price)  -  Number(b.price)));
         }else{
             setDesc(false)
-            rotateiconOrderBy(true)
-            setDatastate(datastate.sort((a:any, b:any) => Number(b.price.split("$")[1])  - Number(a.price.split("$")[1])));
+            setDatastate(datastate.sort((a:any, b:any) => Number(b.price)  - Number(a.price)));
         }
     }
     const handleOrderByNameEmployee = () => {
         if(desc === false){
             setDesc(true)
-            rotateiconOrderBy(false)
             setDatastate(datastate.sort((a:any, b:any) => a.name.localeCompare(b.name))); 
         }else{
             setDesc(false)
-            rotateiconOrderBy(true)
             setDatastate(datastate.sort((a:any, b:any) => b.name.localeCompare(a.name))); 
         }
     }
     const handleOrderByLetter = () => {
         if(descletter === false){
             setDescletter(true)
-            rotateiconOrderBy(false)
-            setDatastate(datastate.sort((a:any, b:any) => a.typeRoom.localeCompare(b.typeRoom))); 
+            setDatastate(datastate.sort((a:any, b:any) => a.type_room.localeCompare(b.type_room))); 
         }else{
             setDescletter(false)
-            rotateiconOrderBy(true)
-            setDatastate(datastate.sort((a:any, b:any) => b.typeRoom.localeCompare(a.typeRoom))); 
+            setDatastate(datastate.sort((a:any, b:any) => b.type_room.localeCompare(a.type_room))); 
         }
     }
     const handleOrderByLetterBooking = () => {
         if(descletter === false){
             setDescletter(true)
-            rotateiconOrderBy(false)
             setDatastate(datastate.sort((a:any, b:any) => a.guest.localeCompare(b.guest))); 
         }else{
             setDescletter(false)
-            rotateiconOrderBy(true)
             setDatastate(datastate.sort((a:any, b:any) => b.guest.localeCompare(a.guest))); 
         }
     }
     const handleOrderByDate = (typedate:string) => {
         if(descletter === false){
             setDescletter(true)
-            rotateiconOrderBy(false)
             if(typedate === 'checkin'){
                 setDatastate(datastate.sort((a:any, b:any) => Number(new Date(a.checkin).getTime()) - Number(new Date(b.checkin).getTime()))); 
             }else if(typedate === 'checkout'){
@@ -145,7 +125,6 @@ export default function Table(props:any){
             }
         }else{
             setDescletter(false)
-            rotateiconOrderBy(true)
             if(typedate === 'checkin'){
                 setDatastate(datastate.sort((a:any, b:any) => Number(new Date(b.checkin).getTime()) - Number(new Date(a.checkin).getTime()))); 
             }else if(typedate === 'checkout'){
@@ -165,7 +144,7 @@ export default function Table(props:any){
                         {
                             columns.map((column:any) => {
                                 return <>
-                                    <th className="headercolumn">{column}{column === 'Guest' ? <span style={rotate} onClick={handleOrderByLetterBooking} className="filtercolumn"></span> : othercolumnsBooking(column)}</th>
+                                    <th className="headercolumn">{column}{column === 'Guest' ? <span onClick={handleOrderByLetterBooking} className="filtercolumn"></span> : othercolumnsBooking(column)}</th>
                                 </>
                             })
                         }
@@ -215,14 +194,17 @@ export default function Table(props:any){
                             columns.map((column:any) => {
                                 return <>
                                     {column === 'Cancellation' || column === 'Description' ?
-                                            <th className="headercolumn" style={{width:"500px"}}>{column}{column === 'Price' ? 
-                                                <span style={rotate} onClick={handleOrderBy} className="filtercolumn"></span> 
+                                            <th className="headercolumn" style={{width:"500px"}}>
+                                                {column}{column === 'Price' ? 
+                                                <>
+                                                    <BtnFilterTableTop click={handleOrderBy} />
+                                                </> 
                                                 :
                                                 othercolumns(column)}
                                             </th>
                                         :
                                             <th className="headercolumn">{column}{column === 'Price' ? 
-                                                <span style={rotate} onClick={handleOrderBy} className="filtercolumn"></span> 
+                                                    <BtnFilterTableTop click={handleOrderBy} />
                                                 :
                                                 othercolumns(column)}
                                             </th>
@@ -325,7 +307,7 @@ export default function Table(props:any){
                             {
                                 columns.map((column:any) => {
                                     return <>
-                                        <th className="headercolumn">{column}{column === 'Name' ? <span style={rotate} onClick={handleOrderByNameEmployee} className="filtercolumn"></span> : <></>}</th>
+                                        <th className="headercolumn">{column}{column === 'Name' ? <span onClick={handleOrderByNameEmployee} className="filtercolumn"></span> : <></>}</th>
                                     </>
                                 })
                             }
