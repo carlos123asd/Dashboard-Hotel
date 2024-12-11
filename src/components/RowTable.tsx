@@ -115,7 +115,16 @@ export default function RowTable(props:any){
     const handleCloseDelete = () => {
         setOpendelete(false);
     };
+    //Modal Save
+    const [openedit, setOpenedit] = React.useState(false);
+    const handleClickOpenEdit = () => {
+        setOpenedit(true);
+        handleClose()
+    };
 
+    const handleCloseEdit = () => {
+        setOpenedit(false);
+    };
 
     useEffect(() => {
         if(locationname === '/bookings'){
@@ -149,7 +158,8 @@ export default function RowTable(props:any){
     }
 
     const handleClickSave = () => {
-        let objetDataSaveRoom: Object = {
+        handleCloseEdit()
+        /*let objetDataSaveRoom: Object = {
             typeRoom: (typeroomedit !== '') ? typeroomedit : data.typeRoom,
             roomNumber: (numroomedit !== '') ? numroomedit : data.roomNumber,
             amenities: (facilitiesedit !== '') ? facilitiesedit : data.amenities,
@@ -179,7 +189,7 @@ export default function RowTable(props:any){
             }
         }
         const response = handleValidateFormEditRoom(data._id,objetDataSaveRoom as Room)
-        response === true ? handleClickFunctionEdit() : <></>
+        response === true ? handleClickFunctionEdit() : <></>*/
     }
 
     const handledeleteRoom = () => {
@@ -272,6 +282,30 @@ export default function RowTable(props:any){
 
     if(locationname === '/room'){
         return (edit === true) ? <>
+                <Dialog
+                    open={openedit}
+                    onClose={handleCloseEdit}
+                    aria-labelledby="draggable-dialog-title"
+                >
+                    <div className="p-4">
+                        <DialogTitle>
+                            Confirm Changes
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                Are you sure you want to save the changes made to this room? Please review them carefully before confirming.
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button variant="outlined" startIcon={<DoDisturbIcon />} onClick={handleCloseEdit}>
+                                Cancel
+                            </Button>
+                            <Button variant="contained" endIcon={<SaveIcon />} onClick={handleClickSave}>
+                                Confirm
+                            </Button>
+                        </DialogActions>
+                    </div>
+                </Dialog>
                 <TrMainTable>
                     <td className="content-evenly ml-6" style={{textAlignLast:"left",height:"inherit"}}>
                         <div className="flex block h-[150px] items-stretch ml-4">
@@ -342,8 +376,8 @@ export default function RowTable(props:any){
                             }}
                         >
                             {optionsEdit.map((option,index) => (
-                                option.tit === 'Edit' ?
-                                <MenuItem key={index} onClick={handleClickSave}>
+                                option.tit === 'Save' ?
+                                <MenuItem key={index} onClick={handleClickOpenEdit}>
                                     {option.icon}
                                     {option.tit}
                                 </MenuItem>
@@ -376,7 +410,7 @@ export default function RowTable(props:any){
                             <Button variant="outlined" startIcon={<DoDisturbIcon />} onClick={handleCloseDelete}>
                                 Cancel
                             </Button>
-                            <Button variant="contained" endIcon={<DeleteIcon />} onClick={handledeleteRoom}>
+                            <Button variant="contained" color="error" endIcon={<DeleteIcon />} onClick={handledeleteRoom}>
                                 Delete
                             </Button>
                         </DialogActions>
