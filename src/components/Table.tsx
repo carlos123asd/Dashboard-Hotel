@@ -214,7 +214,19 @@ export default function Table(props:any){
                         {
                             columns.map((column:any) => {
                                 return <>
-                                    <th className="headercolumn">{column}{column === 'Price' ? <span style={rotate} onClick={handleOrderBy} className="filtercolumn"></span> : othercolumns(column)}</th>
+                                    {column === 'Cancellation' || column === 'Description' ?
+                                            <th className="headercolumn" style={{width:"500px"}}>{column}{column === 'Price' ? 
+                                                <span style={rotate} onClick={handleOrderBy} className="filtercolumn"></span> 
+                                                :
+                                                othercolumns(column)}
+                                            </th>
+                                        :
+                                            <th className="headercolumn">{column}{column === 'Price' ? 
+                                                <span style={rotate} onClick={handleOrderBy} className="filtercolumn"></span> 
+                                                :
+                                                othercolumns(column)}
+                                            </th>
+                                    }
                                 </>
                             })
                         }
