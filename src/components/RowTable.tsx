@@ -53,19 +53,23 @@ const optionsEdit = [
         icon: <DoDisturbIcon className="mr-2"/>
     }
 ];
+const optionSelectTypeRoom = ["Single Bed",
+   "Double Bed",
+    "Double Superior",
+    "Suite"]
 
 export default function RowTable(props:any){
     const {data}:any = props
     const [locationname,setLocationname] = useState(useLocation().pathname);
     const [roombooking,setRoombooking] = useState(Object);
     const [typeroomedit,setTyperoomedit] = useState<string>("")
-    const [numroomedit,setNumroomedit] = useState<string>("")
-    const [facilitiesedit,setFacilitiesedit] = useState<string>("")
-    const [cancelationedit,setCancelationedit] = useState<string>("")
-    const [descriptionedit,setDescriptionedit] = useState<string>("")
-    const [priceedit,setPriceedit] = useState<string>("")
-    const [discountedit,setDiscountedit] = useState<string>("")
-    const [statusedit,setStatusedit] = useState<string>("")
+    const [numroomedit,setNumroomedit] = useState<string>(data.room_number)
+    const [facilitiesedit,setFacilitiesedit] = useState<string>(data.amenities)
+    const [cancelationedit,setCancelationedit] = useState<string>(data.cancellation)
+    const [descriptionedit,setDescriptionedit] = useState<string>(data.description)
+    const [priceedit,setPriceedit] = useState<string>(data.price)
+    const [discountedit,setDiscountedit] = useState<string>(data.discount)
+    const [statusedit,setStatusedit] = useState<string>(data.status)
 
     const [edit,setEdit] = useState<boolean>(false)
     const [showbtngroup2,setShowbtngroup2] = useState<object>({
@@ -312,40 +316,40 @@ export default function RowTable(props:any){
                             <img className="imgroomnameColum" width={150} height={77} src={data.photo} alt="Image Room" />
                             <div className="roomnameColumn content-center">
                                 <span className="numtit">{`#000${data.id}`}</span>
-                                <span className="deluxenum">{`${data.type_room}-${data.room_number}`}<input onChange={(e) => setNumroomedit(e.target.value)} name="roomNumberEditable" className="inputText" type="text" placeholder={data.room_number}/></span>
+                                <span className="deluxenum">{`${data.type_room}-`}
+                                    <input onChange={(e) => setNumroomedit(e.target.value)} name="roomNumberEditable" className="text-center inputText" type="text" value={numroomedit} />
+                                </span>
                             </div>
                         </div>
                     </td>
                     <td>
                         <span className="deluxenum">
                             <select name="typeroomEditable" className="inputSelect" onChange={(e) => handlechangeTypeRoom(e.target.value)} id="contentRoomNewRoom__roomtype">
-                                <option value='Single Bed'>Single Bed</option>
-                                <option value='Double Bed'>Double Bed</option>
-                                <option value='Double Superior'>Double Superior</option>
-                                <option value='Suite'>Suite</option>
+                                {
+                                    optionSelectTypeRoom.map((option) => {
+                                        return option === data.type_room ? <option value={option} selected>{option}</option> : <option value={option}>{option}</option>
+                                    })
+                                }
                             </select>
                         </span>
                     </td>
-                    <td><textarea onChange={(e) => setFacilitiesedit(e.target.value)} name="amenitiesEditable" className="textareainputroomeditable" placeholder={data.amenities}></textarea></td>
-                    <td><input onChange={(e) => setPriceedit(e.target.value)} name="priceEditable" className="inputText inputText--size" type="text" placeholder={data.price}/><span className="nightroom"> /night</span></td>
-                    <td>{`$${(Number(data.price.slice(1))-((Number(data.price.slice(1))*data.discount)/100)).toFixed(2)}`}<input onChange={(e) => setDiscountedit(e.target.value)} name="discountEditable" className="inputText" placeholder={`${data.discount}%`}></input></td>
-                    <td><textarea onChange={(e) => setCancelationedit(e.target.value)} name="cancelationedit" className="textareainputroomeditable" placeholder={data.cancellation}></textarea></td>
-                    <td><textarea onChange={(e) => setDescriptionedit(e.target.value)} name="descriptionedit" className="textareainputroomeditable" placeholder={data.description}></textarea></td>
+                    <td><textarea onChange={(e) => setFacilitiesedit(e.target.value)} name="amenitiesEditable" className="textareainputroomeditable" value={facilitiesedit}></textarea></td>
+                    <td><input onChange={(e) => setPriceedit(e.target.value)} name="priceEditable" className="inputText inputText--size" type="text" value={priceedit}/><span className="nightroom"> /night</span></td>
+                    <td>{`$${(Number(data.price.slice(1))-((Number(data.price.slice(1))*data.discount)/100)).toFixed(2)}`}<input onChange={(e) => setDiscountedit(e.target.value)} name="discountEditable" className="inputText" value={`${discountedit}%`}></input></td>
+                    <td><textarea onChange={(e) => setCancelationedit(e.target.value)} name="cancelationedit" className="textareainputroomeditable" value={cancelationedit}></textarea></td>
+                    <td><textarea onChange={(e) => setDescriptionedit(e.target.value)} name="descriptionedit" className="textareainputroomeditable" value={descriptionedit}></textarea></td>
                     <td>
-                        {data.status === 'Available' ? 
-                            <div className="status">
-                                <select onSelect={(e:any) => setStatusedit(e.target.value)} name="statusEditable" value={data.status} className="inputSelect inputSelect--statusAvaible">
-                                    <option value="Available">Available</option>
+                        {statusedit === 'Available' ? 
+                                <select onSelect={(e:any) => setStatusedit(e.target.value)} name="statusEditable" className="inputSelect inputSelect--statusAvaible">
+                                    <option value="Available" selected>Available</option>
                                     <option value="Booked">Booked</option>
                                 </select>
-                            </div> 
                             : 
-                            <div className="status statusbooked">
-                                <select onChange={(e) => setStatusedit(e.target.value)} name="statusEditable" className="inputSelect inputSelect--statusBooked">
+                                <select onSelect={(e:any) => setStatusedit(e.target.value)} name="statusEditable" className="inputSelect inputSelect--statusBooked">
                                     <option value="Available">Available</option>
-                                    <option value="Booked">Booked</option>
+                                    <option value="Booked" selected>Booked</option>
                                 </select>
-                            </div>}
+                           }
                     </td>
                     <td style={{position:'relative'}}>
                         <IconButton
@@ -430,7 +434,7 @@ export default function RowTable(props:any){
                     <td className="content-center pb-0 mediumletter">{data.type_room}</td>
                     <td className="content-center pb-0 mediumletter">{data.amenities}</td>
                     <td className="content-center pb-0"><span className="priceRoom">{data.price}</span><span className="nightroom"> /night</span></td>
-                    <td className="content-center pb-0">{`$${(Number(data.price.slice(1))-((Number(data.price.slice(1))*data.discount)/100)).toFixed(2)}(${data.discount}%)`}</td>
+                    <td className="content-center pb-0">{`$${(Number(data.price)-((Number(data.price)*Number(data.discount))/100)).toFixed(2)}(${data.discount}%)`}</td>
                     <td className="content-center pb-0 mediumletter">
                         <div className="w-[90%] h-3/4 overflow-y-auto content-center">
                             {data.cancellation}

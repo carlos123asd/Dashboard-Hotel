@@ -74,8 +74,6 @@ export const TrMainTable = styled.tr`
             border-radius: 1em;
         }
         & .inputSelect{
-            width: 60%;
-            height: 100%;
             border-radius: 1em;
             border: none;
             &--statusemployee{
@@ -233,7 +231,7 @@ export const TrMainTable = styled.tr`
             font-family: 'poppinssemibold';
         }
         & th{
-            width: 300px;
+            width: 500px;
             height: 4.063em;
             font-size: 1.13rem;
             line-height: 27px;
@@ -296,7 +294,7 @@ export const TableObj = styled.table`
         width: 20%;
     }
     & tr th:nth-child(2){
-        width: 24.375em;
+       // width: 24.375em;
     }
     & tr th:nth-child(4){
         //width: 15.563em;

@@ -42,6 +42,7 @@
     "redux": "^5.0.1",
     "spoiled": "^0.3.2",
     "styled-components": "^6.1.12",
+    "sweetalert2": "^11.14.5",
     "swiper": "^11.1.9",
     "toastify-js": "^1.12.0",
     "toasty": "^6.0.3"

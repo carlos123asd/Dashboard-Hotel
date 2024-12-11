@@ -1,4 +1,5 @@
-import Toastify from 'toastify-js'
+import Swal from 'sweetalert2'
+
 const token = localStorage.getItem('TOKEN_AUTH')
 const deleteRoom = (room:string) => {
     fetch(`http://localhost:3000/rooms/room/delete/${room}`,{
@@ -9,15 +10,11 @@ const deleteRoom = (room:string) => {
         }
     }).then(response => {
         if(response.ok){
-            Toastify({
+            Swal.fire({
+                title: "Room removed",
                 text: "Room Deleted Successfully",
-                duration: 3000,
-                gravity: 'top',
-                position: 'center',
-                style:{
-                    background: '#135846'
-                }
-            }).showToast();
+                icon: "success"
+              });
         }
     }).catch(error => console.error(error))
 }
