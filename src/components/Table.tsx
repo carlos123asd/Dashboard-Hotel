@@ -58,7 +58,7 @@ export default function Table(props:any){
     const numPickedPaginationData = (num:number) => {
         setActualdate((num * 10) - 10);
         setNextdate(num * 10);
-    }
+    };
 
     const othercolumns = (column:string) => {
         if(column === 'Room Type'){
